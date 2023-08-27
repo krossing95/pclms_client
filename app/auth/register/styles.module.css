@@ -1,0 +1,80 @@
+@import url('https://fonts.cdnfonts.com/css/plance');
+
+.login_header,
+.radio {
+    font-family: 'Plance', sans-serif !important;
+}
+
+.login_input {
+    width: 100%;
+    padding: 14px 10px;
+    border-color: #000000;
+    font-family: 'Plance', sans-serif !important;
+    font-size: 15px;
+    border-left: hidden;
+    border-right: hidden;
+    border-top: hidden;
+    border-width: 1px;
+}
+
+.login_input:focus {
+    border-width: 1.5px !important;
+    border-color: #026FBD !important;
+    outline: none;
+}
+
+.input_container {
+    display: flex;
+}
+
+.ahref {
+    text-decoration: none;
+    color: black;
+    opacity: 0.7;
+    font-family: 'Plance', sans-serif !important;
+}
+
+.hl {
+    margin: 10px auto;
+    width: 100%;
+}
+
+.success_reg_p {
+    line-height: 37px;
+}
+
+.success_reg_btns {
+    display: flex;
+    justify-content: flex-start;
+    margin-top: 30px;
+}
+
+.success_reg_btns button {
+    background-color: #026FBD !important;
+    margin-right: 10px;
+    padding: 10px;
+}
+
+.success_reg_btns button:hover {
+    background-color: #026FBD !important;
+}
+
+.otpBox_container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.otpBox {
+    width: 50px;
+    margin-right: 10px;
+    height: 50px;
+    text-align: center;
+    font-size: x-large;
+    border: 2px #1f1e1e solid;
+    border-radius: 3px;
+    outline: none;
+}
+
+.otpBox:focus {
+    border: 2px #026FBD dashed !important;
+}

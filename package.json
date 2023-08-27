@@ -1,0 +1,49 @@
+{
+  "name": "limsapp",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@emotion/react": "^11.10.4",
+    "@emotion/styled": "^11.10.4",
+    "@mui/icons-material": "^5.10.3",
+    "@mui/joy": "^5.0.0-alpha.80",
+    "@mui/lab": "^5.0.0-alpha.99",
+    "@mui/x-date-pickers": "^5.0.11",
+    "@reduxjs/toolkit": "^1.8.5",
+    "@types/js-cookie": "^3.0.3",
+    "@types/node": "20.3.2",
+    "@types/react": "18.2.14",
+    "@types/react-dom": "18.2.6",
+    "@types/react-google-recaptcha": "^2.1.5",
+    "axios": "^1.3.4",
+    "chart.js": "^4.2.1",
+    "dayjs": "^1.11.7",
+    "eslint": "8.43.0",
+    "eslint-config-next": "13.4.7",
+    "framer-motion": "^4.1.17",
+    "grecaptcha": "^1.0.3",
+    "js-cookie": "^3.0.5",
+    "moment": "^2.29.4",
+    "next": "13.4.7",
+    "query-string": "^8.1.0",
+    "react": "18.2.0",
+    "react-chartjs-2": "^5.2.0",
+    "react-dom": "18.2.0",
+    "react-draggable": "^4.4.5",
+    "react-google-recaptcha": "^2.1.0",
+    "react-moment": "^1.1.3",
+    "react-redux": "^8.0.2",
+    "react-toastify": "^9.1.1",
+    "typescript": "5.1.3",
+    "uuidv4": "^6.2.13"
+  },
+  "devDependencies": {
+    "@types/grecaptcha": "^3.0.4"
+  }
+}

@@ -33,7 +33,7 @@ const VerificationForm = () => {
     let btnClasses: SubmitButtonClasses = {}
     const { validateOTP, validateResendOTP } = useValidations()
     const navigate = useRouter()
-    const handleSetCookie = (name: string, value: string, expires: any) => Cookies.set(name, value, { expires: expires })
+    // const handleSetCookie = (name: string, value: string, expires: any) => Cookies.set(name, value, { expires: expires })
     const [cookieState, setCookieState] = React.useState<CookieState>({ cookie: null })
     const [states, setStates] = React.useState<VerificationStates>({
         loading: false, open: false, isErrorFree: false, message: '', formSwitcher: false,
@@ -42,8 +42,8 @@ const VerificationForm = () => {
     const { preventCopyPaste } = useCustomMethods()
     React.useEffect(() => {
         const getCookie = () => {
-            const cookieObj = Cookies.get('__successfullyRegistered') || '{}'
-            const cookie = typeof Cookies.get('__successfullyRegistered') === 'undefined' ? null : JSON.parse(cookieObj)
+            const cookieObj = Cookies.get('__requesting_verification') || '{}'
+            const cookie = typeof Cookies.get('__requesting_verification') === 'undefined' ? null : JSON.parse(cookieObj)
             return setCookieState(prev => ({ ...prev, cookie }))
         }
         getCookie()
@@ -100,9 +100,8 @@ const VerificationForm = () => {
             if (parseInt(userVerification.data?.code) !== 200) return setStates(prev => ({ ...prev, message: userVerification.data?.message, open: true, isErrorFree: false }))
             const expiration = new Date()
             expiration.setTime(expiration.getTime() + 120 * 60 * 1000)
-            await remove_cookie({ cookie_name: '__signedInUserObj' })
+            await remove_cookie({ cookie_name: '__requesting_verification' })
             await set_cookie({ name: '__signedInUserObj', value: JSON.stringify({ ...userVerification.data?.data }), options: { expires: expiration } })
-            // handleSetCookie('__signedInUserObj', JSON.stringify({ ...userVerification.data?.data }), expiration)
             setStates(prev => ({ ...prev, isErrorFree: true, message: userVerification?.data?.message, open: true }))
             return navigate.push('/system/dashboard')
         } catch (error) {

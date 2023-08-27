@@ -1,9 +1,13 @@
 export const register_meta = {
-    title: 'Sign Up | PCLMS - Laboratory Management System',
+    title: 'Register | PCLMS - Laboratory Management System',
     description: 'Sign up to the platform to elevate your research career'
 }
+export const login_meta = {
+    title: 'Login | PCLMS - Laboratory Management System',
+    description: 'Sign into the platform to elevate your research career'
+}
 export const verify_meta = {
-    title: 'Verification | PCLMS - Laboratory Management System',
+    title: 'User Verification | PCLMS - Laboratory Management System',
     description: 'Sign up to the platform to elevate your research career'
 }
 export const Regex = {

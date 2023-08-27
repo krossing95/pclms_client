@@ -4,6 +4,7 @@ import * as React from 'react'
 import { Box, Typography, Container } from '@mui/material'
 import { motion } from 'framer-motion'
 import styles from '../styles.module.css'
+import Footer from '@/app/components/Footer/Footer'
 
 interface AuthLayerProps {
     children: React.ReactNode
@@ -35,7 +36,7 @@ const AuthLayer: React.FC<AuthLayerProps> = ({ children, header, img, alt }) => 
                     </Box>
                 </Box>
             </Container>
-            {/* <Footer /> */}
+            <Footer />
         </React.Fragment>
     )
 }

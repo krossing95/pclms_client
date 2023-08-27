@@ -32,9 +32,21 @@ const useValidations = () => {
         if (!user_id.match(MONGODB) || tk_value.trim().length === 0) return { error: 'Cannot process an invalid data' }
         return next()
     }
+    const validateLogin = ({ ...params }) => {
+        const { data, next, takeOutPassword } = params
+        const { phone, password, captcha } = data
+        takeOutPassword((prev: any) => ({ ...prev, password: '', password_confirmation: '' }))
+        if (captcha.length === 0) return { error: 'Please check the box' }
+        if (!phone.length || !password.length || !captcha.length) return { error: 'All fields are required' }
+        if (!phone.match(NUMERIC) || phone.length !== 10 ||
+            parseInt(phone.charAt(0)) !== 0) return { error: 'Incorrect credentials' }
+        if (!password.match(PASSWORD)) return { error: 'Incorrect credentials' }
+        if (password.length < 8) return { error: 'Incorrect credentials' }
+        return next()
+    }
 
     return {
-        validateRegistration, validateOTP, validateResendOTP
+        validateRegistration, validateOTP, validateResendOTP, validateLogin
     }
 }
 export default useValidations

@@ -8,13 +8,13 @@ import MessageBox from '@/app/utils/components/MessageBox'
 import useCustomMethods from '@/app/hooks/useCustomMethods'
 import InputField from '@/app/components/Input'
 import SubmitButton from '@/app/components/SubmitButton'
-import { SubmitButtonClasses } from '../../components/types'
 import Link from 'next/link'
 import useValidations from '@/app/hooks/useValidations'
 import register from '@/app/actions/authentication/auth.register'
 import Cookies from 'js-cookie'
 import { useRouter } from 'next/navigation'
 import set_cookie from '@/app/actions/cookies/cookie.set'
+import { SubmitButtonClasses } from '@/app/components/types'
 
 type RegisterStates = {
     firstname: string
@@ -45,7 +45,6 @@ const Form = () => {
         loading: false, open: false, isErrorFree: false, message: ''
     })
     const { preventCopyPaste } = useCustomMethods()
-    const handleSetCookie = (name: string, value: string, expires: any) => Cookies.set(name, value, { expires: expires })
     const navigate = useRouter()
     const handleSubmit = async () => {
         setStates(prev => ({ ...prev, isErrorFree: false, message: '', open: false }))
@@ -80,10 +79,9 @@ const Form = () => {
             if (parseInt(create.data?.code) !== 201) return setStates(prev => ({ ...prev, isErrorFree: false, message: create?.data?.message, open: true }))
             const expiration = new Date()
             expiration.setTime(expiration.getTime() + 10 * 60 * 1000)
-            await set_cookie({ name: '__signedInUserObj', value: JSON.stringify({ ...create.data?.data }), options: { expires: expiration } })
-            // handleSetCookie('__successfullyRegistered', JSON.stringify({ ...create.data?.data }), expiration)
+            await set_cookie({ name: '__requesting_verification', value: JSON.stringify({ ...create.data?.data }), options: { expires: expiration } })
             setStates(prev => ({ ...prev, isErrorFree: true, message: create?.data?.message, open: true }))
-            return navigate.push('/register/verify')
+            return navigate.push('/auth/register/verify')
         } catch (error) {
             console.log('REGISTER_ERROR')
         }
@@ -174,7 +172,7 @@ const Form = () => {
                         <Typography gutterBottom variant='body2' color='GrayText'>By clicking on the create button above, you have accepted all our terms and conditions</Typography>
                     </Grid>
                     <Grid item xs>
-                        <Link href="/login" className={styles.ahref}>I already have an account <LinkIcon /></Link>
+                        <Link href="/auth/login" className={styles.ahref}>I already have an account <LinkIcon /></Link>
                     </Grid>
                 </React.Fragment>
             </Grid>

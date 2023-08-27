@@ -6,18 +6,34 @@ const nextConfig = {
     async redirects() {
         return [
             {
-                source: '/register/verify',
+                source: '/auth',
+                permanent: false,
+                destination: '/auth/register',
+            },
+            {
+                source: '/auth/register/verify',
                 missing: [
                     {
                         type: 'cookie',
-                        key: '__successfullyRegistered'
+                        key: '__requesting_verification'
                     }
                 ],
                 permanent: false,
-                destination: '/register',
+                destination: '/auth/register',
             },
             {
-                source: '/register/:path*',
+                source: '/auth/login/verify',
+                missing: [
+                    {
+                        type: 'cookie',
+                        key: '__requesting_verification'
+                    }
+                ],
+                permanent: false,
+                destination: '/auth/login',
+            },
+            {
+                source: '/auth/:path*',
                 has: [
                     {
                         type: 'cookie',
@@ -36,7 +52,7 @@ const nextConfig = {
                     }
                 ],
                 permanent: false,
-                destination: '/register',
+                destination: '/auth/register',
             }
         ]
     }

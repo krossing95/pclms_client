@@ -1,9 +1,13 @@
 import { configureStore } from "@reduxjs/toolkit"
 import dashboardReducer from "./dashboard/slice.dashboard"
+import appReducer from "./app/slice.app"
+import daysReducer from "./days_management/slice.days_management"
 
 export const store = configureStore({
     reducer: {
-        dashboardReducer
+        dashboardReducer,
+        appReducer,
+        daysReducer
     },
     devTools: process.env.NODE_ENV !== "production",
 })

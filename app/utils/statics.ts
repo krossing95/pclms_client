@@ -14,6 +14,10 @@ export const dashboard_meta = {
     title: 'Dashboard | PCLMS - Laboratory Management System',
     description: 'Sign up to the platform to elevate your research career'
 }
+export const days_mgt_meta = {
+    title: 'Days Management | PCLMS - Laboratory Management System',
+    description: 'Sign up to the platform to elevate your research career'
+}
 export const Regex = {
     PASSWORD: new RegExp(/^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{7,100}$/), //eslint-disable-line
     ALPHANUMERIC: new RegExp(/^([a-zA-Z0-9 _-]+)$/), //eslint-disable-line

@@ -18,10 +18,10 @@ const SideBarDrawer = React.forwardRef<() => void, DrawerProps>((props, ref) => 
     const cookieOfInterest = cookies !== undefined ? cookies : '{}'
     const cookieObj = JSON.parse(cookieOfInterest)?.user
 
-    const handleRoute = (route: string) => router.push(`/${route}`)
+    const handleRoute = (route: string) => router.push(`/system/${route}`)
     const handleSignOut = async () => {
         await remove_cookie({ cookie_name: '__signedInUserObj' })
-        return handleRoute('/auth/register')
+        return router.push('/auth/register')
     }
     React.useEffect(() => {
         props.auto_close() // eslint-disable-next-line

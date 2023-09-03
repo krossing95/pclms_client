@@ -4,7 +4,7 @@ import * as React from 'react'
 
 interface InputFieldProps {
     value: string
-    type?: 'text' | 'password' | 'email'
+    type?: 'text' | 'password' | 'email' | 'date'
     onChange: (e: React.FormEvent<HTMLInputElement>) => void
     classes: string
     placeholder: string

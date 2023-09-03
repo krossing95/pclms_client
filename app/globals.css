@@ -1,5 +1,52 @@
+@import url('https://fonts.cdnfonts.com/css/plance');
+
 :root,
 html,
 body {
   height: 100%;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  scroll-behavior: smooth;
+  background-color: #F9FAFB;
+}
+
+.text {
+  font-family: 'Plance', sans-serif !important;
+}
+
+input[type='text'],
+input[type='password'],
+input[type='radio'],
+textarea {
+  background-color: #F9FAFB;
+  font-size: 15px;
+}
+
+::selection {
+  background-color: #000000;
+  color: #F9FAFB;
+}
+
+.ahref,
+.ahref:hover {
+  text-decoration: none;
+  color: #212B36;
+}
+
+.MuiDrawer-paper {
+  background-color: #F9FAFB !important;
+}
+
+.css-i9fmh8-MuiBackdrop-root-MuiModal-backdrop,
+.css-zw3mfo-MuiModal-root-MuiDialog-root {
+  background-color: rgba(33, 43, 54, 0.8) !important;
+}
+
+.underliner {
+  width: 50px;
+  height: 4px;
+  background-color: #026FBD;
+  border-radius: 4px;
+  margin-top: 10px;
 }

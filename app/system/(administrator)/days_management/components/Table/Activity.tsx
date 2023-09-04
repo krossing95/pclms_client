@@ -14,10 +14,10 @@ export default function Activity({ id }: ActivityProps) {
     const app = useAppSelector(state => state.appReducer.app)
     return (
         <React.Fragment>
-            <IconButton onClick={() => dispatch(SaveAppData({ ...app, day_id: id, hasOpenedDeleteDayPrompt: true }))} className={styles.activity_remove}>
+            <IconButton onClick={() => dispatch(SaveAppData({ ...app, selectedDayId: id, hasOpenedDeleteDayPrompt: true }))} className={styles.activity_remove}>
                 <DeleteSweepOutlined fontSize='small' />
             </IconButton>
-            <IconButton onClick={() => dispatch(SaveAppData({ ...app, day_id: id, hasOpenedEditDayPrompt: true }))} className={styles.activity_edit}>
+            <IconButton onClick={() => dispatch(SaveAppData({ ...app, selectedDayId: id, hasOpenedEditDayPrompt: true }))} className={styles.activity_edit}>
                 <ModeEditOutlineOutlined fontSize='small' />
             </IconButton>
         </React.Fragment>

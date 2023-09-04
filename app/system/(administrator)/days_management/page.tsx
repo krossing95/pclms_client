@@ -16,6 +16,9 @@ import CreateBlockedDay from './components/Prompts/Create'
 import get_dates from '@/app/actions/days/day.get_dates'
 import { FetchDays } from '@/redux/days_management/slice.days_management'
 import SuspenseLoader from '@/app/components/Loader'
+import Search from './components/Prompts/Search'
+import Update from './components/Prompts/Update'
+import Remove from './components/Prompts/Remove'
 
 interface DaysManagementStates {
     refreshing: boolean
@@ -35,7 +38,7 @@ const DaysManagementPage = () => {
             setStates(prev => ({ ...prev, refreshing: false }))
             if (parseInt(days.data?.code) !== 200) return toast('Something went wrong')
             dispatch(SaveAppData({ ...app, isDaysSearchResultDisplayed: false }))
-            return dispatch(FetchDays([...days.data?.data]))
+            return dispatch(FetchDays([...days.data?.data?.blocked_days]))
         } catch (error) {
             return toast('Something went wrong')
         }
@@ -47,7 +50,7 @@ const DaysManagementPage = () => {
             setStates(prev => ({ ...prev, loading: false }))
             if (parseInt(days.data?.code) !== 200) return toast('Something went wrong')
             dispatch(SaveAppData({ ...app, isDaysSearchResultDisplayed: false }))
-            return dispatch(FetchDays([...days.data?.data?.block_days]))
+            return dispatch(FetchDays([...days.data?.data?.blocked_days]))
         } catch (error) {
             return toast('Something went wrong')
         }
@@ -113,14 +116,13 @@ const DaysManagementPage = () => {
             </Box>
             {app.hasOpenedCreateDayPrompt ? (
                 <CreateBlockedDay />
-            ) : null}
-            {/* {app.hasOpenedEditDayPrompt ? (
+            ) : app.hasOpenedSearchBoxPrompt ? (
+                <Search />
+            ) : app.hasOpenedEditDayPrompt ? (
                 <Update />
             ) : app.hasOpenedDeleteDayPrompt ? (
                 <Remove />
-            ) : app.hasOpenedSearchBoxPrompt ? (
-                <Search />
-            ) : null} */}
+            ) : null}
         </Box >
     )
 }

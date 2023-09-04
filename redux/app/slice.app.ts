@@ -7,6 +7,7 @@ type AppDataState = {
         hasOpenedDeleteDayPrompt: boolean
         hasOpenedEditDayPrompt: boolean
         hasOpenedCreateDayPrompt: boolean
+        selectedDayId: string
     }
 }
 

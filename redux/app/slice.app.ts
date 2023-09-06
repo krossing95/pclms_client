@@ -8,11 +8,22 @@ type AppDataState = {
         hasOpenedEditDayPrompt: boolean
         hasOpenedCreateDayPrompt: boolean
         selectedDayId: string
+    },
+    equipment: {
+        isSearchResultDisplayed: boolean
+        hasOpenedSearchBoxPrompt: boolean
+        hasOpenedDeleteEquipmentPrompt: boolean
+        hasOpenedEditEquipmentPrompt: boolean
+        hasOpenedCreateEquipmentPrompt: boolean
+        hasOpenedEquipmentFilter: boolean
+        isWillingToShowReloadBtn: boolean
+        selectedEquipmentId: string
     }
 }
 
 const initialState = {
     app: {},
+    equipment: {}
 } as AppDataState
 
 export const app = createSlice({
@@ -21,9 +32,12 @@ export const app = createSlice({
     reducers: {
         SaveAppData: (state, action: PayloadAction<{}>) => {
             state.app = { ...state.app, ...action.payload }
+        },
+        SaveEquipmentPageState: (state, action: PayloadAction<{}>) => {
+            state.equipment = { ...state.equipment, ...action.payload }
         }
     },
 })
 
-export const { SaveAppData } = app.actions
+export const { SaveAppData, SaveEquipmentPageState } = app.actions
 export default app.reducer

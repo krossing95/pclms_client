@@ -133,7 +133,7 @@ const LoginForm = () => {
                         <Typography gutterBottom variant='body2' color='GrayText'>By clicking on the create button above, you have accepted all our terms and conditions</Typography>
                     </Grid>
                     <Grid item xs>
-                        <Link href="/auth/register" className={styles.ahref}>Don't have an account? Click here<LinkIcon /></Link>
+                        <Link href="/auth/register" as={"/auth/register"} className={styles.ahref}>Don't have an account? Click here<LinkIcon /></Link>
                     </Grid>
                 </React.Fragment>
             </Grid>

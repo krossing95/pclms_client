@@ -11,7 +11,7 @@ const Footer = () => {
         <div className={styles.wrapper}>
             <Typography sx={{ pb: { xs: '15px', sm: '0px' } }} className='text' variant='body2'>Version 0.1.0-Beta</Typography>
             <Typography sx={{ pb: { xs: '15px', sm: '0px' } }} className='text' variant='body2'>&copy; {year} - All rights reserved</Typography>
-            <Link className='ahref' href={location}>
+            <Link className='ahref' href={location} as={location}>
                 <img title="System logo" src='/images/logo.png' alt="System logo" width='75' />
             </Link>
             <Box sx={{ pt: { xs: '12px', sm: '0px' } }} component='a' title="See developer's page" className='ahref' target='_blank' href='https://xoese-kalenu.netlify.app/'>

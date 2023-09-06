@@ -24,7 +24,7 @@ const AppHeader: React.FC<AppHeaderProps> = ({ children }) => {
         <React.Fragment>
             <AppBar className={styles.topbar} elevation={1}>
                 <Box component='div' className={styles.topItemHolder}>
-                    <Link className='ahref' href={pathname}>
+                    <Link className='ahref' href={pathname} as={pathname}>
                         <img src="/images/logo.png" alt="System logo" width='75' />
                     </Link>
                     <IconButton onClick={handleBarToggling} className={styles.menuButton}>

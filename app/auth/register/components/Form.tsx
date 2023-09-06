@@ -172,7 +172,7 @@ const Form = () => {
                         <Typography gutterBottom variant='body2' color='GrayText'>By clicking on the create button above, you have accepted all our terms and conditions</Typography>
                     </Grid>
                     <Grid item xs>
-                        <Link href="/auth/login" className={styles.ahref}>I already have an account <LinkIcon /></Link>
+                        <Link href="/auth/login" as={"/auth/login"} className={styles.ahref}>I already have an account <LinkIcon /></Link>
                     </Grid>
                 </React.Fragment>
             </Grid>

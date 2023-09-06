@@ -1,7 +1,7 @@
-import { Regex } from "../utils/statics"
+import { Availability_Status, Functionality_Status, Regex } from "../utils/statics"
 
 const useValidations = () => {
-    const { ALPHA, EMAIL, PASSWORD, NUMERIC, MONGODB } = Regex
+    const { ALPHA, EMAIL, PASSWORD, NUMERIC, MONGODB, CSVDOT_HYPHEN } = Regex
 
     const validateRegistration = ({ ...params }) => {
         const { data, next, takeOutPassword } = params
@@ -44,9 +44,22 @@ const useValidations = () => {
         if (password.length < 8) return { error: 'Incorrect credentials' }
         return next()
     }
+    const validateEquipment = ({ ...params }) => {
+        const { data, next } = params
+        const { name, description, system_error, functionality_status, availability_status } = data
+        if (!name.length || !description.length) return { error: 'All fields are required' }
+        if (!name.match(CSVDOT_HYPHEN)) return { error: 'Unexpected chars found in name' }
+        if (name.length < 3 || name.length > 100) return { error: 'Name must be in the range of 3 to 100 chars' }
+        if (description.length < 20) return { error: 'Enter a description of at least 20 chars for the equipment' }
+        if (!Functionality_Status.some(data => data.value === functionality_status)) return { error: 'Chosen functionality status was rejected' }
+        if (!Availability_Status.some(data => data.value === availability_status)) return { error: 'Chosen availability status was rejected' }
+        if (functionality_status === 1 && system_error.length < 5) return { error: 'Provide the system errors associated with the equipment' }
+        return next()
+    }
 
     return {
-        validateRegistration, validateOTP, validateResendOTP, validateLogin
+        validateRegistration, validateOTP, validateResendOTP, validateLogin,
+        validateEquipment
     }
 }
 export default useValidations

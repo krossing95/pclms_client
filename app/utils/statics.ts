@@ -18,6 +18,10 @@ export const days_mgt_meta = {
     title: 'Days Management | PCLMS - Laboratory Management System',
     description: 'Sign up to the platform to elevate your research career'
 }
+export const equipment_meta = {
+    title: 'Lab Equipment | PCLMS - Laboratory Management System',
+    description: 'Sign up to the platform to elevate your research career'
+}
 export const Regex = {
     PASSWORD: new RegExp(/^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{7,100}$/), //eslint-disable-line
     ALPHANUMERIC: new RegExp(/^([a-zA-Z0-9 _-]+)$/), //eslint-disable-line
@@ -28,3 +32,11 @@ export const Regex = {
     SPECIALCHARS: new RegExp(/\W|_/g), //eslint-disable-line
     CSVDOT_HYPHEN: /^[a-zA-Z0-9 .,-]{0,150}$/ //eslint-disable-line
 }
+export const Functionality_Status = [
+    { value: 1, name: 'Malfunctioning' },
+    { value: 2, name: 'Functioning' }
+]
+export const Availability_Status = [
+    { value: 1, name: 'Unavailable' },
+    { value: 2, name: 'Available' }
+]

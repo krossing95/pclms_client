@@ -16,7 +16,7 @@ type AppDataState = {
         hasOpenedEditEquipmentPrompt: boolean
         hasOpenedCreateEquipmentPrompt: boolean
         hasOpenedEquipmentFilter: boolean
-        isWillingToShowReloadBtn: boolean
+        isFilteredResultDispayed: boolean
         selectedEquipmentId: string
     }
 }

@@ -9,6 +9,7 @@ import MessageBox from '@/app/utils/components/MessageBox'
 import InputField from '@/app/components/Input'
 import search_equipment from '@/app/actions/equipment/equipment.search'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
+import { FetchEquipment } from '@/redux/equipment/slice.equipment'
 
 interface EquipmentSearchStates {
     keyword: string
@@ -18,7 +19,11 @@ interface EquipmentSearchStates {
     loading: boolean
 }
 
-const Search = () => {
+interface EquipmentSearchProps {
+    paginate: (page: number, totalItem: number, totalPages: number) => void
+}
+
+const Search: React.FC<EquipmentSearchProps> = ({ paginate }) => {
     const app = useAppSelector(state => state.appReducer.equipment)
     const router = useRouter()
     const pathname = usePathname()
@@ -32,35 +37,36 @@ const Search = () => {
         isErrorFree: false,
         loading: false
     })
+    const appendQueryParameter = (str: string) => {
+        const existingQuery = new URLSearchParams(Array.from(searchParams.entries()))
+        existingQuery.set('q', str)
+        const search = existingQuery.toString()
+        const query = search ? `?${search}` : ""
+        router.replace(`${pathname}${query}`, { shallow: true })
+    }
     const handleClose = () => {
         if (states.loading) return false
         dispatch(SaveEquipmentPageState({ ...app, hasOpenedSearchBoxPrompt: false }))
-    }
-    const handleTyping = (str: string) => {
-        const existingQuery = new URLSearchParams(Array.from(searchParams.entries()))
-        if (!textProcessor(str).length) return existingQuery.delete('q')
-        existingQuery.set('q', str)
-        setStates(prev => ({ ...prev, keyword: str }))
-        const search = existingQuery.toString()
-        const query = search ? `?${search}` : ""
-        router.push(`${pathname}${query}`)
     }
     const searchHandler = async () => {
         setStates(prev => ({ ...prev, open: false, message: '', isErrorFree: false }))
         const word = textProcessor(states.keyword).trim()
         if (word.length === 0) return setStates(prev => ({ ...prev, keyword: '' }))
+        appendQueryParameter(word)
         setStates(prev => ({ ...prev, loading: true }))
         try {
             const result = await search_equipment({ page: 1, keyword: word })
+            setStates(prev => ({ ...prev, loading: false, keyword: '' }))
+            if (parseInt(result.data?.code) !== 200) return setStates(prev => ({ ...prev, message: 'Something went wrong', open: true, isErrorFree: false }))
+            const collection = result.data?.data
+            if (collection?.equipment?.length === 0) return setStates(prev => ({ ...prev, message: 'No matching records found', open: true, isErrorFree: false }))
+            dispatch(FetchEquipment([...collection?.equipment]))
+            dispatch(SaveEquipmentPageState({ ...app, isSearchResultDisplayed: true, isFilteredResultDispayed: false }))
+            const page_data = collection?.page_data
+            paginate(page_data?.currentPage, page_data?.totalCount, page_data?.totalPages)
         } catch (error) {
             return setStates(prev => ({ ...prev, message: 'Something went wrong', open: true, isErrorFree: false }))
         }
-        // 
-        // setStates(prev => ({ ...prev, loading: false, keyword: '' }))
-        // if (result.status !== 200 || !Array.isArray(result.data)) return setStates(prev => ({ ...prev, message: 'Whoops! Something went wrong', open: true, isErrorFree: false }))
-        // if (result.data.length === 0) return setStates(prev => ({ ...prev, message: 'No matching records found', open: true, isErrorFree: false }))
-        // dispatch(FetchEquipment(result.data))
-        // dispatch(SetAppState({ ...app, equipment_search: false, equipment_resultDisplayed: true }))
     }
     return (
         <Dialog open={app.hasOpenedSearchBoxPrompt} PaperComponent={MovablePrompt} aria-labelledby="draggable-dialog-title">

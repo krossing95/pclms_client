@@ -15,12 +15,12 @@ import EmptyList from '@/app/utils/components/EmptyList'
 import Create from './components/Prompts/Create'
 import EquipmentList from './components/List'
 import Search from './components/Prompts/Search'
+import { usePathname, useRouter, useSearchParams } from 'next/navigation'
+import Filter from './components/Prompts/Filter'
 
 export type EquipmentPageStates = {
     loading: boolean
-    search_mode: boolean
     refreshing: boolean
-    reloadingData: boolean
     shouldGoTop: boolean
     currentPage: number
     totalCount: number
@@ -28,57 +28,76 @@ export type EquipmentPageStates = {
 }
 
 const Equipment = () => {
+    const searchParams = useSearchParams()
+    const router = useRouter()
+    const pathname = usePathname()
     const dispatch = useAppDispatch()
     const app = useAppSelector(state => state.appReducer.equipment)
     const equipment = useAppSelector(state => state.equipmentReducer.equipment)
     const [states, setStates] = React.useState<EquipmentPageStates>({
         currentPage: 1, totalPages: 0, totalCount: 0,
         shouldGoTop: false, loading: true,
-        search_mode: false, refreshing: false, reloadingData: false,
+        refreshing: false
     })
     React.useEffect(() => {
         const initStates = () => dispatch(SaveEquipmentPageState({
             hasOpenedCreateEquipmentPrompt: false,
             hasOpenedSearchBoxPrompt: false,
-            isWillingToShowReloadBtn: false,
+            isFilteredResultDispayed: false,
             isSearchResultDisplayed: false,
             hasOpenedEquipmentFilter: false
         }))
         initStates() //eslint-disable-next-line
     }, [])
-    React.useEffect(() => {
-        const getEquipment = async () => {
-            try {
-                const equipment = await get_equipment({ page: states.currentPage })
-                setStates(prev => ({ ...prev, loading: false }))
-                if (parseInt(equipment.data?.code) !== 200) return toast(equipment.data?.message)
-                if (states.shouldGoTop) window.scrollTo(0, 0)
-                const data = equipment.data?.data
-                setStates(prev => ({
-                    ...prev,
-                    reloadingData: false,
-                    search_mode: false,
-                    shouldGoTop: false,
-                    refreshing: false,
-                    currentPage: data?.page_data?.currentPage,
-                    totalCount: data?.page_data?.totalCount,
-                    totalPages: data?.page_data?.totalPages
-                }))
-                dispatch(FetchEquipment([...data?.equipment]))
-                return dispatch(SaveEquipmentPageState({ ...app, isSearchResultDisplayed: false, isWillingToShowReloadBtn: false }))
-            } catch (error) {
-                return toast('Something went wrong')
-            }
+    const getEquipment = async (page: number) => {
+        try {
+            const equipment = await get_equipment({ page })
+            if (parseInt(equipment.data?.code) !== 200) return toast(equipment.data?.message)
+            setStates(prev => ({ ...prev, loading: false }))
+            if (states.shouldGoTop) window.scrollTo(0, 0)
+            const data = equipment.data?.data
+            setStates(prev => ({
+                ...prev,
+                shouldGoTop: false,
+                refreshing: false,
+                currentPage: data?.page_data?.currentPage,
+                totalCount: data?.page_data?.totalCount,
+                totalPages: data?.page_data?.totalPages
+            }))
+            dispatch(FetchEquipment([...data?.equipment]))
+            return dispatch(SaveEquipmentPageState({ ...app, isSearchResultDisplayed: false, isFilteredResultDispayed: false }))
+        } catch (error) {
+            return toast('Something went wrong')
         }
-        getEquipment() //eslint-disable-next-line
+    }
+    React.useEffect(() => {
+        getEquipment(states.currentPage) //eslint-disable-next-line
     }, [states.currentPage])
+    React.useEffect(() => {
+        const setPageUrl = () => {
+            if (app.hasOpenedSearchBoxPrompt || app.isSearchResultDisplayed) return false
+            const existingQuery = new URLSearchParams(Array.from(searchParams.entries()))
+            existingQuery.delete('q')
+            router.replace(pathname, { shallow: true })
+        }
+        setPageUrl() //eslint-disable-next-line
+    }, [app.hasOpenedSearchBoxPrompt, app.isSearchResultDisplayed])
     const searchEnvBuilder = () => {
-        setStates(prev => ({ ...prev, search_mode: true }))
         return dispatch(SaveEquipmentPageState({ ...app, hasOpenedSearchBoxPrompt: true }))
     }
-    const refreshHandler = () => setStates(prev => ({ ...prev, currentPage: 1, refreshing: true }))
+    const refreshHandler = async () => {
+        try {
+            const existingQuery = new URLSearchParams(Array.from(searchParams.entries()))
+            existingQuery.delete('q')
+            router.replace(pathname, { shallow: true })
+            setStates(prev => ({ ...prev, currentPage: 1, refreshing: true }))
+            await getEquipment(1)
+        } catch (error) {
+            return toast('Something went wrong')
+        }
+    }
     const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
-        setStates(prev => ({ ...prev, page: value }))
+        setStates(prev => ({ ...prev, currentPage: value }))
     }
     return (
         <Box component='div'>
@@ -103,8 +122,18 @@ const Equipment = () => {
                                     <SearchRounded />
                                 )}
                             </IconButton>
-                            <IconButton onClick={() => dispatch(SaveEquipmentPageState({ ...app, hasOpenedEquipmentFilter: true }))}>
-                                <SortOutlined />
+                            <IconButton onClick={app.isFilteredResultDispayed ? refreshHandler : () => dispatch(SaveEquipmentPageState({ ...app, hasOpenedEquipmentFilter: true }))}>
+                                {app.isFilteredResultDispayed ? (
+                                    <React.Fragment>
+                                        {states.refreshing ? (
+                                            <CircularProgress color='inherit' size={18} />
+                                        ) : (
+                                            <ReplayOutlined />
+                                        )}
+                                    </React.Fragment>
+                                ) : (
+                                    <SortOutlined />
+                                )}
                             </IconButton>
                         </React.Fragment>
                     ) : null}
@@ -131,22 +160,12 @@ const Equipment = () => {
                             sx={{ marginTop: '30px' }}
                         />
                     ) : null}
-
-                    {/* {(app.isWillingToShowReloadBtn && !app.isSearchResultDisplayed) ? (
-                        <Button onClick={() => setStates(prev => ({ ...prev, shouldGoTop: true, reloadingData: true, limit: Math.round(prev?.limit + 20) }))} sx={{ p: 2 }} variant='contained'>
-                            {states.reloadingData ? (
-                                <CircularProgress color='inherit' size={20} />
-                            ) : 'reload data'}
-                        </Button>
-                    ) : null} */}
                 </Box>
             </Box>
             {app.hasOpenedCreateEquipmentPrompt ? (
                 <Create
-                    trigger_loading={(page: number, totalItem: number, totalPages: number) => setStates(prev => ({
+                    paginate={(page: number, totalItem: number, totalPages: number) => setStates(prev => ({
                         ...prev,
-                        reloadingData: false,
-                        search_mode: false,
                         shouldGoTop: false,
                         refreshing: false,
                         currentPage: page,
@@ -155,14 +174,28 @@ const Equipment = () => {
                     }))}
                 />
             ) : app.hasOpenedSearchBoxPrompt ? (
-                <Search />
+                <Search
+                    paginate={(page: number, totalItem: number, totalPages: number) => setStates(prev => ({
+                        ...prev,
+                        shouldGoTop: false,
+                        refreshing: false,
+                        currentPage: page,
+                        totalCount: totalItem,
+                        totalPages: totalPages
+                    }))}
+                />
+            ) : app.hasOpenedEquipmentFilter ? (
+                <Filter
+                    paginate={(page: number, totalItem: number, totalPages: number) => setStates(prev => ({
+                        ...prev,
+                        shouldGoTop: false,
+                        refreshing: false,
+                        currentPage: page,
+                        totalCount: totalItem,
+                        totalPages: totalPages
+                    }))}
+                />
             ) : null}
-            {/* {app.equipment_search ? (
-                <Search />
-            ) : null} */}
-            {/* {app.equipment_filter ? (
-                <Filter />
-            ) : null} */}
         </Box>
     )
 }

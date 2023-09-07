@@ -28,10 +28,10 @@ interface EquipmentCreationStates {
 }
 
 interface EquipmentCreationProps {
-    trigger_loading: (page: number, totalItem: number, totalPages: number) => void
+    paginate: (page: number, totalItem: number, totalPages: number) => void
 }
 
-const Create: React.FC<EquipmentCreationProps> = ({ trigger_loading }) => {
+const Create: React.FC<EquipmentCreationProps> = ({ paginate }) => {
     const app = useAppSelector(state => state.appReducer.equipment)
     const dispatch = useAppDispatch()
     const { validateEquipment } = useValidations()
@@ -67,9 +67,9 @@ const Create: React.FC<EquipmentCreationProps> = ({ trigger_loading }) => {
             if (parseInt(save.data?.code) !== 201) return setStates(prev => ({ ...prev, message: save.data?.message, open: true, isErrorFree: false }))
             const collection = save.data?.data
             dispatch(FetchEquipment([...collection?.equipment]))
-            dispatch(SaveEquipmentPageState({ ...app, isSearchResultDisplayed: false, isWillingToShowReloadBtn: false }))
+            dispatch(SaveEquipmentPageState({ ...app, isSearchResultDisplayed: false, isFilteredResultDispayed: false }))
             const page_data = collection?.page_data
-            trigger_loading(page_data?.currentPage, page_data?.totalCount, page_data?.totalPages)
+            paginate(page_data?.currentPage, page_data?.totalCount, page_data?.totalPages)
             return setStates(prev => ({ ...prev, message: save.data?.message, open: true, isErrorFree: true, name: '', system_error: '', description: '' }))
         } catch (error) {
             return setStates(prev => ({ ...prev, message: 'Something went wrong', open: true, isErrorFree: false }))

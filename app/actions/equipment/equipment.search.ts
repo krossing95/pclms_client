@@ -2,11 +2,12 @@ import axios from "axios"
 
 interface GetEquipmentProps {
     page: number
+    keyword: string
 }
 
-const get_equipment = async ({ page }: GetEquipmentProps) => {
+const search_equipment = async ({ page, keyword }: GetEquipmentProps) => {
     const HOST = process.env.NEXT_PUBLIC_HTTPHOST
-    const url = `${HOST}equipment?page=${page}`
+    const url = `${HOST}equipment/search?q=${keyword}&page=${page}`
     try {
         const res = await axios({
             method: 'GET',
@@ -20,4 +21,4 @@ const get_equipment = async ({ page }: GetEquipmentProps) => {
         return { data: error?.response?.data }
     }
 }
-export default get_equipment
+export default search_equipment

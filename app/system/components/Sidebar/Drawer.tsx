@@ -3,7 +3,7 @@ import * as React from 'react'
 import { AccountCircleOutlined, CalendarMonthOutlined, DashboardOutlined, FavoriteBorderOutlined, HomeRepairServiceOutlined, LogoutOutlined, MenuBookOutlined, PeopleAltOutlined } from '@mui/icons-material'
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
-import get_cookie from '@/app/actions/cookies/cookie.get'
+// import get_cookie from '@/app/actions/cookies/cookie.get'
 import remove_cookie from '@/app/actions/cookies/cookie.delete'
 import Cookies from 'js-cookie'
 
@@ -29,7 +29,7 @@ const SideBarDrawer = React.forwardRef<() => void, DrawerProps>((props, ref) => 
     return (
         <div>
             <Box component='div' sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', p: 1.1 }}>
-                <Link className='ahref' href={pathname}>
+                <Link className='ahref' as={pathname} href={pathname}>
                     <img src='/images/logo.png' alt='System logo' width='75' />
                 </Link>
             </Box>

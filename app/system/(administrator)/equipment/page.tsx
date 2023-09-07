@@ -14,6 +14,7 @@ import { FetchEquipment } from '@/redux/equipment/slice.equipment'
 import EmptyList from '@/app/utils/components/EmptyList'
 import Create from './components/Prompts/Create'
 import EquipmentList from './components/List'
+import Search from './components/Prompts/Search'
 
 export type EquipmentPageStates = {
     loading: boolean
@@ -48,7 +49,7 @@ const Equipment = () => {
     React.useEffect(() => {
         const getEquipment = async () => {
             try {
-                const equipment = await get_equipment({ limit: states.currentPage })
+                const equipment = await get_equipment({ page: states.currentPage })
                 setStates(prev => ({ ...prev, loading: false }))
                 if (parseInt(equipment.data?.code) !== 200) return toast(equipment.data?.message)
                 if (states.shouldGoTop) window.scrollTo(0, 0)
@@ -153,10 +154,9 @@ const Equipment = () => {
                         totalPages: totalPages
                     }))}
                 />
+            ) : app.hasOpenedSearchBoxPrompt ? (
+                <Search />
             ) : null}
-            {/* ,
-                    
-                     */}
             {/* {app.equipment_search ? (
                 <Search />
             ) : null} */}

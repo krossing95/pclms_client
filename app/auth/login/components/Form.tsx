@@ -113,7 +113,7 @@ const LoginForm = () => {
                     </Grid>
                     <Grid item xs={12} className={styles.input_container} >
                         <SubmitButton
-                            text='create' icon={() => <LoginOutlined />}
+                            text='login' icon={() => <LoginOutlined />}
                             loading={states.loading}
                             design='contained'
                             handleSubmit={handleSubmit}

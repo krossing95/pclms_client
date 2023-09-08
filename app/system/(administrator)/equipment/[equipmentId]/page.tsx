@@ -43,4 +43,5 @@ const SingleEquipmentPage = async ({ params }: { params: { equipmentId: string }
         </React.Suspense>
     )
 }
+
 export default SingleEquipmentPage

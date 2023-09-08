@@ -7,11 +7,11 @@ interface EquipmentLayoutProps {
     children: React.ReactNode
 }
 
-const DaysManagementLayout: React.FC<EquipmentLayoutProps> = ({ children }) => {
+const EquipmentLayout: React.FC<EquipmentLayoutProps> = ({ children }) => {
     return (
         <React.Fragment>
             {children}
         </React.Fragment>
     )
 }
-export default DaysManagementLayout
+export default EquipmentLayout

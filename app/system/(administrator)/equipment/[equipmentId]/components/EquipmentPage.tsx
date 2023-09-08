@@ -57,7 +57,6 @@ const EquipmentPage: React.FC<Props> = ({ equipment }) => {
                             <img className={styles.image} src={equipment.photo_url ? equipment.photo_url : '/images/noimage.webp'} alt={equipment.name} style={{ width: '90vw' }} />
                         </Box>
                     </Grid>
-                    sdfdasdas
                     {/* <Grid item xs={12} sm={6}>
                             <DataDisplay />
                         </Grid> */}

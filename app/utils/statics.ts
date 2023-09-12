@@ -40,3 +40,5 @@ export const Availability_Status = [
     { value: 1, name: 'Unavailable' },
     { value: 2, name: 'Available' }
 ]
+export const SelectableFiles = ['image/jpg', 'image/png', 'image/jpeg', 'image/webp']
+export const SelectableFilesToBase64 = ['data:image/png;base64', 'data:image/jpeg;base64', 'data:image/jpg;base64', 'data:image/webp;base64']

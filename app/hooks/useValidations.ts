@@ -1,4 +1,4 @@
-import { Availability_Status, Functionality_Status, Regex } from "../utils/statics"
+import { Availability_Status, Functionality_Status, Regex, SelectableFiles } from "../utils/statics"
 
 const useValidations = () => {
     const { ALPHA, EMAIL, PASSWORD, NUMERIC, MONGODB, CSVDOT_HYPHEN } = Regex
@@ -56,10 +56,16 @@ const useValidations = () => {
         if (functionality_status === 1 && system_error.length < 5) return { error: 'Provide the system errors associated with the equipment' }
         return next()
     }
+    const fileValidator = ({ ...params }) => {
+        const { data } = params
+        if (!data) return { error: 'No file was chosen' }
+        if (!SelectableFiles.includes(data.type)) return { error: 'Choose only an image file (jpg, jpeg, png)' }
+        if (data.size > 2000000) return { error: 'Choose a photo of size not more than 2MB' }
+    }
 
     return {
         validateRegistration, validateOTP, validateResendOTP, validateLogin,
-        validateEquipment
+        validateEquipment, fileValidator
     }
 }
 export default useValidations

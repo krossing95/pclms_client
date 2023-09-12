@@ -42,7 +42,7 @@ const EquipmentItem: React.FC<EquipmentItemProps> = ({ equipment }) => {
                 </CardContent>
             </CardActionArea>
             <CardActions sx={{ display: 'flex', justifyContent: 'space-between' }}>
-                <IconButton onClick={() => navigate.push(`/view-equipment?equipment=${equipment.id}`)}>
+                <IconButton onClick={() => navigate.push(`/system/equipment/${equipment.id}`)}>
                     <LaunchOutlined fontSize='small' />
                 </IconButton>
                 <Box component='div'>

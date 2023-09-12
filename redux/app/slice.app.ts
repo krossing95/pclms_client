@@ -17,7 +17,11 @@ type AppDataState = {
         hasOpenedCreateEquipmentPrompt: boolean
         hasOpenedEquipmentFilter: boolean
         isFilteredResultDispayed: boolean
+        hasOpenedEquipmentReview: boolean
+        hasOpenedEquipmentBooking: boolean
+        hasOpenedEquipmentPhotoPreview: boolean
         selectedEquipmentId: string
+        selectedEquipmentFile: string
     }
 }
 

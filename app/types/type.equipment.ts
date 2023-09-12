@@ -2,7 +2,6 @@ export type Equipment = {
     id: string
     created_by: string
     name: string
-    slug?: string
     description?: string
     system_error?: string
     functionality_status: boolean

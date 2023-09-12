@@ -21,16 +21,22 @@ import useValidations from '@/app/hooks/useValidations'
 import Preview from './Prompts/Preview'
 import Update from './Prompts/Update'
 import Remove from './Prompts/Remove'
+import NavigatorButton from '@/app/utils/components/NavigatorButton'
+import { notFound } from 'next/navigation'
 
-interface SingleEquipmentString {
+interface SingleEquipmentStates {
     file: string
     loading: boolean
     loaded: boolean
 }
 
-const EquipmentPage = () => {
+interface SingleEquipmentPageProps {
+    data: Equipment
+}
+
+const EquipmentPage: React.FC<SingleEquipmentPageProps> = ({ data }) => {
     const params = useParams()
-    const [states, setStates] = React.useState<SingleEquipmentString>({ file: '', loading: true, loaded: false })
+    const [states, setStates] = React.useState<SingleEquipmentStates>({ file: '', loading: true, loaded: false })
     const dispatch = useAppDispatch()
     const app = useAppSelector(state => state.appReducer.equipment)
     const equipment = useAppSelector(state => state.equipmentReducer.equipment)?.[0]
@@ -43,7 +49,8 @@ const EquipmentPage = () => {
         try {
             const equipment = await getone_equipment({ equipment_id: params?.equipmentId })
             setStates(prev => ({ ...prev, loading: false }))
-            if (parseInt(equipment.data?.code) !== 200) return setStates(prev => ({ ...prev, loaded: false }))
+            if (parseInt(equipment.data?.code) !== 200) notFound()
+            // return setStates(prev => ({ ...prev, loaded: false }))
             setStates(prev => ({ ...prev, loaded: true }))
             const data: Equipment = equipment.data?.data
             dispatch(FetchEquipment([data]))
@@ -75,12 +82,20 @@ const EquipmentPage = () => {
 
     return (
         <Box component='div'>
+            <p>{data.name}</p>
             {states.loading ? (
                 <SuspenseLoader text='Loading data' issueOptionalHeight={true} />
             ) : (
                 <React.Fragment>
                     {!states.loaded ? (
-                        <EmptyList />
+                        <React.Fragment>
+                            <EmptyList />
+                            <NavigatorButton
+                                destination='/system/equipment'
+                                direction='backward'
+                                reason='No record found. Please click the button below to go back'
+                            />
+                        </React.Fragment>
                     ) : (
                         <React.Fragment>
                             <Box component='div' className={styles.header}>

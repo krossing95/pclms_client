@@ -22,13 +22,14 @@ const Remove = () => {
     const equipment = useAppSelector(state => state.equipmentReducer.equipment)?.[0]
     const router = useRouter()
     const dispatch = useAppDispatch()
+    const confirmStatement: string = `sudo delete ${equipment.name.trim().toLowerCase()}`
     const [states, setStates] = React.useState<EquipmentDeleteStates>({ name: '', open: false, message: '', isErrorFree: false, loading: false })
     const handleClose = () => {
         if (states.loading) return false
         dispatch(SaveEquipmentPageState({ ...app, hasOpenedDeleteEquipmentPrompt: false }))
     }
     const removeHandler = async () => {
-        if (equipment.name.trim().toLowerCase() !== states.name.trim().toLowerCase()) return false
+        if (confirmStatement !== states.name.trim().toLowerCase()) return false
         setStates(prev => ({ ...prev, loading: true, name: '' }))
         try {
             const remove = await remove_equipment({ id: equipment.id })
@@ -49,8 +50,8 @@ const Remove = () => {
                 isErrorFree={states.isErrorFree}
             />
             <DialogContent>
-                <Typography gutterBottom variant='body2'>{'Are you absolutely sure you want to delete '}<strong>{equipment.name}</strong></Typography>
-                <Typography gutterBottom variant='body2'>This action cannot be undone, therefore, tread cautiously.</Typography>
+                <Typography gutterBottom variant='body2'>{"Are you sure you want to remove this item?"}</Typography>
+                <Typography gutterBottom variant='body2'>{'To confirm the action, enter '}<strong style={{ color: '#026FBD' }}>{`sudo delete ${equipment.name.toLowerCase()}`}</strong></Typography>
                 <Grid container spacing={1}>
                     <Grid item xs={12} className={styles.input_container}>
                         <InputField
@@ -58,7 +59,7 @@ const Remove = () => {
                             onChange={(e: React.SyntheticEvent<EventTarget>) => setStates(prev => ({ ...prev, name: (e.target as HTMLInputElement).value }))}
                             classes={styles.input}
                             disabled={states.loading}
-                            placeholder='Enter name of the equipment here'
+                            placeholder=''
                         />
                     </Grid>
                 </Grid>
@@ -67,7 +68,7 @@ const Remove = () => {
                 <Button className={styles.dashedBoaderBtn} autoFocus onClick={handleClose}>
                     Cancel
                 </Button>
-                <Button disabled={equipment.name.trim().toLowerCase() === states.name.trim().toLowerCase() ? false : true} className={styles.dashedBoaderBtn} onClick={removeHandler}>
+                <Button disabled={confirmStatement === states.name.trim().toLowerCase() ? false : true} className={styles.dashedBoaderBtn} onClick={removeHandler}>
                     {states.loading ? (
                         <CircularProgress color='inherit' size={15} />
                     ) : 'remove'}

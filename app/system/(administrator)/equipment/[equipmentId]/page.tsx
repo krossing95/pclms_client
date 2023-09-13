@@ -24,7 +24,7 @@ export async function generateMetadata(
         }
         const equipment: Equipment = getData.data?.data
         return {
-            title: equipment?.name,
+            title: `${equipment?.name} | PCLMS - Laboratory Management System`,
             description: equipment?.description
         }
     } catch (error) {

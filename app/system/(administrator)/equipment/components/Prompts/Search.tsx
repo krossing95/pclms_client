@@ -56,13 +56,19 @@ const Search: React.FC<EquipmentSearchProps> = ({ paginate }) => {
         setStates(prev => ({ ...prev, loading: true }))
         try {
             const result = await search_equipment({ page: 1, keyword: word })
-            setStates(prev => ({ ...prev, loading: false, keyword: '' }))
+            setStates(prev => ({ ...prev, loading: false }))
             if (parseInt(result.data?.code) !== 200) return setStates(prev => ({ ...prev, message: 'Something went wrong', open: true, isErrorFree: false }))
             const collection = result.data?.data
             if (collection?.equipment?.length === 0) return setStates(prev => ({ ...prev, message: 'No matching records found', open: true, isErrorFree: false }))
             dispatch(FetchEquipment([...collection?.equipment]))
-            dispatch(SaveEquipmentPageState({ ...app, isSearchResultDisplayed: true, isFilteredResultDispayed: false }))
             const page_data = collection?.page_data
+            dispatch(SaveEquipmentPageState({
+                ...app,
+                isSearchResultDisplayed: true,
+                isFilteredResultDispayed: false,
+                hasOpenedSearchBoxPrompt: false,
+                equipmentSearchQuery: page_data?.totalPages > 1 ? word : ''
+            }))
             paginate(page_data?.currentPage, page_data?.totalCount, page_data?.totalPages)
         } catch (error) {
             return setStates(prev => ({ ...prev, message: 'Something went wrong', open: true, isErrorFree: false }))

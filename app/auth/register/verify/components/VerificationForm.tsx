@@ -29,7 +29,11 @@ type CookieState = {
     cookie: any
 }
 
-const VerificationForm = () => {
+interface VerificationFormProps {
+    page: 'sign-in' | 'sign-up'
+}
+
+const VerificationForm: React.FC<VerificationFormProps> = ({ page }) => {
     let btnClasses: SubmitButtonClasses = {}
     const { validateOTP, validateResendOTP } = useValidations()
     const navigate = useRouter()
@@ -88,14 +92,14 @@ const VerificationForm = () => {
         setStates(prev => ({ ...prev, isErrorFree: false, message: '', open: false }))
         const params = {
             data: {
-                user_id: !cookieState.cookie ? '' : cookieState.cookie?.id, verification_code: states.verification_code.join('')
+                user_id: !cookieState.cookie ? '' : cookieState.cookie?.id, verification_code: states.verification_code.join(''), page
             },
             next: () => setStates(prev => ({ ...prev, loading: true }))
         }
         const validate = validateOTP({ ...params })
         if (validate?.error !== undefined) return setStates(prev => ({ ...prev, message: validate?.error, open: true, isErrorFree: false }))
         try {
-            const userVerification = await verify({ user_id: params.data.user_id, verification_code: states.verification_code.join('') })
+            const userVerification = await verify({ user_id: params.data.user_id, verification_code: states.verification_code.join(''), page })
             setStates(prev => ({ ...prev, loading: false, verification_code: prev.verification_code.map(() => '') }))
             if (parseInt(userVerification.data?.code) !== 200) return setStates(prev => ({ ...prev, message: userVerification.data?.message, open: true, isErrorFree: false }))
             const expiration = new Date()

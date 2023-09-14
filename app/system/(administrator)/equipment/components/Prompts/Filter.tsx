@@ -56,8 +56,17 @@ const Filter: React.FC<EquipmentFilterProps> = ({ paginate }) => {
             if (parseInt(results.data?.code) !== 200) return setStates(prev => ({ ...prev, message: 'Something went wrong', open: true, isErrorFree: false }))
             const collection = results.data?.data
             dispatch(FetchEquipment([...collection?.equipment]))
-            dispatch(SaveEquipmentPageState({ ...app, isFilteredResultDispayed: true, hasOpenedEquipmentFilter: false }))
             const page_data = collection?.page_data
+            dispatch(SaveEquipmentPageState({
+                ...app,
+                isFilteredResultDispayed: true,
+                isSearchResultDisplayed: false,
+                hasOpenedEquipmentFilter: false,
+                equipmentFilters: page_data?.totalPages > 1 ? {
+                    functionality_status: f_status,
+                    availability_status: a_status
+                } : {}
+            }))
             paginate(page_data?.currentPage, page_data?.totalCount, page_data?.totalPages)
         } catch (error) {
             return toast('Something went wrong')

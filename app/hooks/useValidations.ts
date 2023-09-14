@@ -20,10 +20,11 @@ const useValidations = () => {
     }
     const validateOTP = ({ ...params }) => {
         const { data, next } = params
-        const { user_id, verification_code } = data
+        const { user_id, verification_code, page } = data
         if (!user_id.match(MONGODB)) return { error: 'Cannot process an invalid data' }
         if (!verification_code.match(NUMERIC)) return { error: 'Invalid verification code' }
         if (verification_code.length !== 6) return { error: 'Invalid verification code' }
+        if (!['sign-in', 'sign-up'].includes(page)) return { error: 'Invalid request' }
         return next()
     }
     const validateResendOTP = ({ ...params }) => {

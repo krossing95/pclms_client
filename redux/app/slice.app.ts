@@ -22,6 +22,11 @@ type AppDataState = {
         hasOpenedEquipmentPhotoPreview: boolean
         selectedEquipmentId: string
         selectedEquipmentFile: string
+        equipmentSearchQuery: string
+        equipmentFilters: {
+            functionality_status: boolean | null,
+            availability_status: boolean | null
+        }
     }
 }
 

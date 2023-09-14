@@ -16,7 +16,7 @@ const Verify = () => {
                 width='80vw' xs_display='block' md_display='none'
             />
             <Box sx={{ mb: 2 }} />
-            <VerificationForm />
+            <VerificationForm page='sign-in' />
         </AuthLayer>
     )
 }

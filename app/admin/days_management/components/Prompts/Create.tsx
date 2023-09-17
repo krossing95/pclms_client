@@ -22,7 +22,11 @@ type BlockDaysStates = {
     name: string
 }
 
-const CreateBlockedDay = () => {
+interface CreateDayProps {
+    paginate: (page: number, totalItem: number, totalPages: number) => void
+}
+
+const CreateBlockedDay: React.FC<CreateDayProps> = ({ paginate }) => {
     const [states, setStates] = React.useState<BlockDaysStates>({ date: '', name: '', message: '', open: false, isErrorFree: false, loading: false })
     const dispatch = useAppDispatch()
     const app = useAppSelector(state => state.appReducer.app)
@@ -41,8 +45,12 @@ const CreateBlockedDay = () => {
             const save = await save_date({ name: states.name, date: states.date })
             setStates(prev => ({ ...prev, loading: false }))
             if (parseInt(save.data?.code) !== 201) return setStates(prev => ({ ...prev, message: save.data?.message, open: true, isErrorFree: false }))
-            dispatch(FetchDays([{ ...save.data?.data }, ...blockedDays]))
-            return setStates(prev => ({ ...prev, message: save.data.message, open: true, isErrorFree: true }))
+            const collection = save.data?.data
+            dispatch(FetchDays([...collection?.blocked_days]))
+            dispatch(SaveAppData({ ...app, isDaysSearchResultDisplayed: false }))
+            const page_data = collection?.page_data
+            paginate(page_data?.currentPage, page_data?.totalCount, page_data?.totalPages)
+            return setStates(prev => ({ ...prev, message: save.data?.message, open: true, isErrorFree: true, name: '', date: '' }))
         } catch (error) {
             return setStates(prev => ({ ...prev, message: 'Something went wrong!', open: true, isErrorFree: false }))
         }

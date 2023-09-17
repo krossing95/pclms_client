@@ -7,7 +7,7 @@ interface DashboardLayoutProps {
     children: React.ReactNode
 }
 
-const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) => {
+const DashboardLayout: React.FC<DashboardLayoutProps> = async ({ children }) => {
     return (
         <React.Fragment>
             {children}

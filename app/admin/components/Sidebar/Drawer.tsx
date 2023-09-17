@@ -17,8 +17,9 @@ const SideBarDrawer = React.forwardRef<() => void, DrawerProps>((props, ref) => 
     const cookies = Cookies.get('__signedInUserObj')
     const cookieOfInterest = cookies !== undefined ? cookies : '{}'
     const cookieObj = JSON.parse(cookieOfInterest)?.user
+    const usertype: number = cookieObj?.usertype || 0
 
-    const handleRoute = (route: string) => router.push(`/system/${route}`)
+    const handleRoute = (route: string) => router.push(`/${usertype === 2 ? 'admin' : usertype === 1 ? 'user' : ''}/${route}`)
     const handleSignOut = async () => {
         await remove_cookie({ cookie_name: '__signedInUserObj' })
         return router.push('/auth/register')

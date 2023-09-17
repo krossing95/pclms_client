@@ -1,12 +1,13 @@
 import axios from "axios"
 
-interface GetDayProps {
+interface SearchDayProps {
     page: number
+    keyword: string
 }
 
-const get_dates = async ({ page }: GetDayProps) => {
+const search_days = async ({ page, keyword }: SearchDayProps) => {
     const HOST = process.env.NEXT_PUBLIC_HTTPHOST
-    const url = `${HOST}days_management?page=${page}`
+    const url = `${HOST}days_management/search?q=${keyword}&page=${page}`
     try {
         const res = await axios({
             method: 'GET',
@@ -19,7 +20,5 @@ const get_dates = async ({ page }: GetDayProps) => {
     } catch (error: any) {
         return { data: error?.response?.data }
     }
-
 }
-
-export default get_dates
+export default search_days

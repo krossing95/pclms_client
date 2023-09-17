@@ -8,6 +8,7 @@ type AppDataState = {
         hasOpenedEditDayPrompt: boolean
         hasOpenedCreateDayPrompt: boolean
         selectedDayId: string
+        daySearchQuery: string
     },
     equipment: {
         isSearchResultDisplayed: boolean

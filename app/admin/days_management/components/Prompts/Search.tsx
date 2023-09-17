@@ -11,8 +11,9 @@ import InputField from '@/app/components/Input'
 import StringMethods from '@/helpers/helper.string_methods'
 import { toast } from 'react-toastify'
 import { FetchDays } from '@/redux/days_management/slice.days_management'
+import search_days from '@/app/actions/days/day.search_dates'
 
-interface SearchDaysProps {
+interface SearchDayStates {
     open: boolean
     isErrorFree: boolean
     loading: boolean
@@ -20,27 +21,40 @@ interface SearchDaysProps {
     keyword: string
 }
 
-const Search = () => {
+interface SearchDayProps {
+    paginate: (page: number, totalItem: number, totalPages: number) => void
+}
+
+const Search: React.FC<SearchDayProps> = ({ paginate }) => {
     const app = useAppSelector(state => state.appReducer.app)
-    const blockedDays = useAppSelector(state => state.daysReducer.blocked_days)
+    // const blockedDays = useAppSelector(state => state.daysReducer.blocked_days)
     const dispatch = useAppDispatch()
     const { textProcessor } = StringMethods()
-    const [states, setStates] = React.useState<SearchDaysProps>({ keyword: '', open: false, message: '', isErrorFree: false, loading: false })
+    const [states, setStates] = React.useState<SearchDayStates>({ keyword: '', open: false, message: '', isErrorFree: false, loading: false })
     const handleClose = () => {
         if (states.loading) return false
         dispatch(SaveAppData({ ...app, hasOpenedSearchBoxPrompt: false }))
     }
     const searchHandler = async () => {
+        setStates(prev => ({ ...prev, open: false, message: '', isErrorFree: false }))
+        const word = textProcessor(states.keyword)?.trim()
+        if (word.length === 0) return setStates(prev => ({ ...prev, keyword: '' }))
+        setStates(prev => ({ ...prev, loading: true }))
         try {
-            setStates(prev => ({ ...prev, open: false, message: '', isErrorFree: false }))
-            const word = textProcessor(states.keyword)?.trim()
-            if (word.length === 0) return setStates(prev => ({ ...prev, keyword: '' }))
-            setStates(prev => ({ ...prev, loading: true }))
-            const result = blockedDays.filter(row => JSON.stringify(row).toLowerCase().includes(word.toLowerCase()))
-            setStates(prev => ({ ...prev, loading: false, keyword: '' }))
-            if (result.length === 0) return setStates(prev => ({ ...prev, message: 'No matching records found', open: true, isErrorFree: false }))
-            dispatch(FetchDays([...result]))
-            dispatch(SaveAppData({ ...app, hasOpenedSearchBoxPrompt: false, isDaysSearchResultDisplayed: true }))
+            const result = await search_days({ page: 1, keyword: word })
+            setStates(prev => ({ ...prev, loading: false }))
+            if (parseInt(result.data?.code) !== 200) return setStates(prev => ({ ...prev, message: 'Something went wrong', open: true, isErrorFree: false }))
+            const collection = result.data?.data
+            if (collection?.blocked_days?.length === 0) return setStates(prev => ({ ...prev, message: 'No matching records found', open: true, isErrorFree: false }))
+            dispatch(FetchDays([...collection?.equipment]))
+            const page_data = collection?.page_data
+            dispatch(SaveAppData({
+                ...app,
+                isSearchResultDisplayed: true,
+                hasOpenedSearchBoxPrompt: false,
+                daySearchQuery: page_data?.totalPages > 1 ? word : ''
+            }))
+            paginate(page_data?.currentPage, page_data?.totalCount, page_data?.totalPages)
         } catch (error) {
             return toast('Something went wrong')
         }

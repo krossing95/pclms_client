@@ -36,7 +36,7 @@ const Remove = () => {
             setStates(prev => ({ ...prev, loading: false }))
             if (parseInt(remove.data?.code) !== 200) return setStates(prev => ({ ...prev, message: remove.data?.message, open: true, isErrorFree: false }))
             handleClose()
-            router.push('/system/equipment')
+            router.push('/admin/equipment')
         } catch (error) {
             return setStates(prev => ({ ...prev, message: 'Something went wrong', open: true, isErrorFree: false }))
         }

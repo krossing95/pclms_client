@@ -27,7 +27,6 @@ interface SearchDayProps {
 
 const Search: React.FC<SearchDayProps> = ({ paginate }) => {
     const app = useAppSelector(state => state.appReducer.app)
-    // const blockedDays = useAppSelector(state => state.daysReducer.blocked_days)
     const dispatch = useAppDispatch()
     const { textProcessor } = StringMethods()
     const [states, setStates] = React.useState<SearchDayStates>({ keyword: '', open: false, message: '', isErrorFree: false, loading: false })
@@ -46,11 +45,11 @@ const Search: React.FC<SearchDayProps> = ({ paginate }) => {
             if (parseInt(result.data?.code) !== 200) return setStates(prev => ({ ...prev, message: 'Something went wrong', open: true, isErrorFree: false }))
             const collection = result.data?.data
             if (collection?.blocked_days?.length === 0) return setStates(prev => ({ ...prev, message: 'No matching records found', open: true, isErrorFree: false }))
-            dispatch(FetchDays([...collection?.equipment]))
+            dispatch(FetchDays([...collection?.blocked_days]))
             const page_data = collection?.page_data
             dispatch(SaveAppData({
                 ...app,
-                isSearchResultDisplayed: true,
+                isDaysSearchResultDisplayed: true,
                 hasOpenedSearchBoxPrompt: false,
                 daySearchQuery: page_data?.totalPages > 1 ? word : ''
             }))

@@ -12,6 +12,7 @@ import MovablePrompt from '@/app/utils/components/MovablePrompt'
 import InputField from '@/app/components/Input'
 import update_day from '@/app/actions/days/day.update_day'
 import { UpdateDay } from '@/redux/days_management/slice.days_management'
+import useCustomMethods from '@/app/hooks/useCustomMethods'
 
 interface DaysManagementStates {
     date: string
@@ -26,28 +27,8 @@ const Update = () => {
     const app = useAppSelector(state => state.appReducer.app)
     const blockedDays = useAppSelector(state => state.daysReducer.blocked_days).filter(item => item.id === app.selectedDayId)?.[0]
     const dispatch = useAppDispatch()
+    const methodHooks = useCustomMethods()
     const { CSVDOT_HYPHEN } = Regex
-    const datePickerRef = React.useRef<HTMLInputElement>(null)
-
-
-    const validate = (dateString: string) => {
-        const day = (new Date(dateString)).getDay()
-        if (day === 0 || day === 6) {
-            return false
-        }
-        return true
-    }
-    // React.useEffect(() => {
-    //     const checkDateSelection = () => {
-    //         datePickerRef.current?.querySelector('input[date]')?.addEventListener('change', function (evt) {
-    //             if (!validate((evt.target as HTMLInputElement).value)) {
-    //                 // setStates(prev => ({...prev, date: ''}))
-    //                 // evt.target.value = ''
-    //             }
-    //         })
-    //     }
-    //     checkDateSelection()
-    // }, [])
 
     const [states, setStates] = React.useState<DaysManagementStates>({ date: blockedDays?.date?.split('T', 2)?.[0] || '', name: blockedDays?.name || '', message: '', open: false, isErrorFree: false, loading: false })
     const handleClose = () => {
@@ -73,7 +54,8 @@ const Update = () => {
         }
     }
     const handleDateSelection = (date: string) => {
-        if (moment(date).isBefore(moment(new Date()))) return setStates(prev => ({ ...prev, message: 'Cannot select a past date', open: true, isErrorFree: false, date: '' }))
+        const { status, message } = methodHooks.handleDateSelection(date)
+        if (!status) return setStates(prev => ({ ...prev, message, open: true, isErrorFree: false, date: '' }))
         setStates(prev => ({ ...prev, date }))
     }
     return (

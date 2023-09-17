@@ -12,6 +12,7 @@ import MovablePrompt from '@/app/utils/components/MovablePrompt'
 import InputField from '@/app/components/Input'
 import save_date from '@/app/actions/days/day.save_date'
 import { FetchDays } from '@/redux/days_management/slice.days_management'
+import useCustomMethods from '@/app/hooks/useCustomMethods'
 
 type BlockDaysStates = {
     open: boolean
@@ -30,7 +31,7 @@ const CreateBlockedDay: React.FC<CreateDayProps> = ({ paginate }) => {
     const [states, setStates] = React.useState<BlockDaysStates>({ date: '', name: '', message: '', open: false, isErrorFree: false, loading: false })
     const dispatch = useAppDispatch()
     const app = useAppSelector(state => state.appReducer.app)
-    const blockedDays = useAppSelector(state => state.daysReducer.blocked_days)
+    const methodHooks = useCustomMethods()
     const { CSVDOT_HYPHEN } = Regex
     const handleClose = () => {
         if (states.loading) return false
@@ -56,7 +57,8 @@ const CreateBlockedDay: React.FC<CreateDayProps> = ({ paginate }) => {
         }
     }
     const handleDateSelection = (date: string) => {
-        if (moment(date).isBefore(moment(new Date()))) return setStates(prev => ({ ...prev, message: 'Cannot select a past date', open: true, isErrorFree: false, date: '' }))
+        const { status, message } = methodHooks.handleDateSelection(date)
+        if (!status) return setStates(prev => ({ ...prev, message, open: true, isErrorFree: false, date: '' }))
         setStates(prev => ({ ...prev, date }))
     }
 

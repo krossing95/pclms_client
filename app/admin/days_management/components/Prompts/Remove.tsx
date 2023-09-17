@@ -8,18 +8,22 @@ import { FetchDays } from '@/redux/days_management/slice.days_management'
 import remove_day from '@/app/actions/days/day.remove_day'
 import MessageBox from '@/app/utils/components/MessageBox'
 
-interface RemoveDayProps {
+interface RemoveDayStates {
     open: boolean
     message: string
     isErrorFree: boolean
     loading: boolean
 }
 
-const Remove = () => {
+interface RemoveDayProps {
+    paginate: (page: number, totalItem: number, totalPages: number) => void
+}
+
+const Remove: React.FC<RemoveDayProps> = () => {
     const app = useAppSelector(state => state.appReducer.app)
     const blockedDays = useAppSelector(state => state.daysReducer.blocked_days)
     const dispatch = useAppDispatch()
-    const [states, setStates] = React.useState<RemoveDayProps>({ open: false, message: '', isErrorFree: false, loading: false })
+    const [states, setStates] = React.useState<RemoveDayStates>({ open: false, message: '', isErrorFree: false, loading: false })
     const handleClose = () => {
         if (states.loading) return false
         dispatch(SaveAppData({ ...app, hasOpenedDeleteDayPrompt: false, selectedDayId: undefined }))
@@ -30,7 +34,8 @@ const Remove = () => {
             const remove = await remove_day({ id: app.selectedDayId })
             setStates(prev => ({ ...prev, loading: false }))
             if (parseInt(remove.data?.code) !== 200) return setStates(prev => ({ ...prev, message: remove.data?.message, open: true, isErrorFree: false }))
-            dispatch(FetchDays([...blockedDays].filter(day => day.id !== app.selectedDayId)))
+            const collection = remove.data?.data
+            dispatch(FetchDays([...collection?.blocked_days]))
             return handleClose()
         } catch (error) {
             return setStates(prev => ({ ...prev, message: 'Something went wrong', open: true, isErrorFree: false }))

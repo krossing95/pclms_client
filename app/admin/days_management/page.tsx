@@ -84,8 +84,8 @@ const DaysManagementPage = () => {
                     </Tooltip>
                     {(!states.loading && blockedDays.length > 0) ? (
                         <Tooltip title='Search blocked days'>
-                            <IconButton onClick={app?.isDaysSearchResultDisplayed ? refreshHandler : () => dispatch(SaveAppData({ ...app, hasOpenedSearchBoxPrompt: true }))}>
-                                {app?.isDaysSearchResultDisplayed ? (
+                            <IconButton onClick={app.isDaysSearchResultDisplayed ? refreshHandler : () => dispatch(SaveAppData({ ...app, hasOpenedSearchBoxPrompt: true }))}>
+                                {app.isDaysSearchResultDisplayed ? (
                                     <ReplayOutlined />
                                 ) : (
                                     <SearchRounded />
@@ -155,7 +155,15 @@ const DaysManagementPage = () => {
             ) : app.hasOpenedEditDayPrompt ? (
                 <Update />
             ) : app.hasOpenedDeleteDayPrompt ? (
-                <Remove />
+                <Remove
+                    paginate={(page: number, totalItem: number, totalPages: number) => setStates(prev => ({
+                        ...prev,
+                        shouldGoTop: false,
+                        currentPage: page,
+                        totalCount: totalItem,
+                        totalPages: totalPages
+                    }))}
+                />
             ) : null}
         </Box >
     )

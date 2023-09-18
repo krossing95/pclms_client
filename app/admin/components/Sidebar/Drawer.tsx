@@ -47,11 +47,11 @@ const SideBarDrawer = React.forwardRef<() => void, DrawerProps>((props, ref) => 
                 {cookieObj?.usertype === Number(process.env.NEXT_PUBLIC_APP_ADMIN) ? (
                     <React.Fragment>
                         <ListItem disablePadding>
-                            <ListItemButton onClick={() => handleRoute('users')}>
+                            <ListItemButton onClick={() => handleRoute('accounts')}>
                                 <ListItemIcon>
                                     <PeopleAltOutlined />
                                 </ListItemIcon>
-                                <ListItemText primary='Accounts' />
+                                <ListItemText primary='User Management' />
                             </ListItemButton>
                         </ListItem>
                         <ListItem disablePadding>

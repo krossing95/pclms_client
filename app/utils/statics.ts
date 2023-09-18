@@ -15,11 +15,15 @@ export const dashboard_meta = {
     description: 'Sign up to the platform to elevate your research career'
 }
 export const days_mgt_meta = {
-    title: 'Days Management | PCLMS - Laboratory Management System',
+    title: 'Blocked Days Management | PCLMS - Laboratory Management System',
     description: 'Sign up to the platform to elevate your research career'
 }
 export const equipment_meta = {
     title: 'Lab Equipment | PCLMS - Laboratory Management System',
+    description: 'Sign up to the platform to elevate your research career'
+}
+export const accounts_meta = {
+    title: 'User Management | PCLMS - Laboratory Management System',
     description: 'Sign up to the platform to elevate your research career'
 }
 export const Regex = {

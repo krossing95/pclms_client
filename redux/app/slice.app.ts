@@ -1,39 +1,16 @@
+import type { BlockDaysInterfaceStateManagement, EquipmentInterfaceStateManagement, UserManagementInterfaceStateManagement } from "@/app/types/type.app_management"
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 
 type AppDataState = {
-    app: {
-        isDaysSearchResultDisplayed: boolean
-        hasOpenedSearchBoxPrompt: boolean
-        hasOpenedDeleteDayPrompt: boolean
-        hasOpenedEditDayPrompt: boolean
-        hasOpenedCreateDayPrompt: boolean
-        selectedDayId: string
-        daySearchQuery: string
-    },
-    equipment: {
-        isSearchResultDisplayed: boolean
-        hasOpenedSearchBoxPrompt: boolean
-        hasOpenedDeleteEquipmentPrompt: boolean
-        hasOpenedEditEquipmentPrompt: boolean
-        hasOpenedCreateEquipmentPrompt: boolean
-        hasOpenedEquipmentFilter: boolean
-        isFilteredResultDispayed: boolean
-        hasOpenedEquipmentReview: boolean
-        hasOpenedEquipmentBooking: boolean
-        hasOpenedEquipmentPhotoPreview: boolean
-        selectedEquipmentId: string
-        selectedEquipmentFile: string
-        equipmentSearchQuery: string
-        equipmentFilters: {
-            functionality_status: boolean | null,
-            availability_status: boolean | null
-        }
-    }
+    app: BlockDaysInterfaceStateManagement,
+    equipment: EquipmentInterfaceStateManagement,
+    users: UserManagementInterfaceStateManagement
 }
 
 const initialState = {
     app: {},
-    equipment: {}
+    equipment: {},
+    users: {}
 } as AppDataState
 
 export const app = createSlice({
@@ -45,9 +22,12 @@ export const app = createSlice({
         },
         SaveEquipmentPageState: (state, action: PayloadAction<{}>) => {
             state.equipment = { ...state.equipment, ...action.payload }
+        },
+        SaveUsersPageState: (state, action: PayloadAction<{}>) => {
+            state.users = { ...state.users, ...action.payload }
         }
     },
 })
 
-export const { SaveAppData, SaveEquipmentPageState } = app.actions
+export const { SaveAppData, SaveEquipmentPageState, SaveUsersPageState } = app.actions
 export default app.reducer

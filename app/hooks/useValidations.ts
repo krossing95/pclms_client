@@ -1,4 +1,4 @@
-import { Availability_Status, Functionality_Status, Regex, SelectableFiles } from "../utils/statics"
+import { Availability_Status, Functionality_Status, Regex, SelectableFiles, User_Status } from "../utils/statics"
 
 const useValidations = () => {
     const { ALPHA, EMAIL, PASSWORD, NUMERIC, MONGODB, CSVDOT_HYPHEN } = Regex
@@ -63,10 +63,21 @@ const useValidations = () => {
         if (!SelectableFiles.includes(data.type)) return { error: 'Choose only an image file (jpg, jpeg, png)' }
         if (data.size > 2000000) return { error: 'Choose a photo of size not more than 2MB' }
     }
+    const validateUserUpdate = ({ ...params }) => {
+        const { data, next } = params
+        const { firstname, lastname, email, phone, user_status } = data
+        if (!firstname.length || !lastname.length || !email.length || !phone.length) return { error: 'All fields are required' }
+        if (!firstname.match(ALPHA) || !lastname.match(ALPHA)) return { error: 'Only English alphabets and whitespaces are allowed in names' }
+        if (!email.match(EMAIL)) return { error: 'Incorrect email address' }
+        if (!phone.match(NUMERIC) || phone.length !== 10) return { error: 'Phone number must be a numeric entity of 10 chars' }
+        if (firstname.length < 3 || firstname.length > 30 || lastname.length < 3 || lastname.length > 30) return { error: 'Names must be in the range of 3 to 30 chars' }
+        if (!User_Status.some(data => data.value === user_status)) return { error: 'Chosen user role was rejected' }
+        next()
+    }
 
     return {
         validateRegistration, validateOTP, validateResendOTP, validateLogin,
-        validateEquipment, fileValidator
+        validateEquipment, fileValidator, validateUserUpdate
     }
 }
 export default useValidations

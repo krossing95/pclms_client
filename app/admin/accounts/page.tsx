@@ -4,7 +4,7 @@ import { ReplayOutlined, SearchRounded } from '@mui/icons-material'
 import { Box, IconButton, Pagination, TableContainer, Table, Tooltip } from '@mui/material'
 import * as React from 'react'
 import { motion } from 'framer-motion'
-import { EmptyList, SuspenseLoader, Title, Head, Data, Search } from './exports'
+import { EmptyList, SuspenseLoader, Title, Head, Data, Search, Update } from './exports'
 import styles from './styles.module.css'
 import { useAppDispatch, useAppSelector } from '@/redux/hooks'
 import { toast } from 'react-toastify'
@@ -12,6 +12,7 @@ import { SaveUsersPageState } from '@/redux/app/slice.app'
 import { FetchUsers } from '@/redux/user_management/slice.user_management'
 import get_users from '@/app/actions/users/user.get_users'
 import search_users from '@/app/actions/users/user.search_users'
+
 
 interface UserManagementStates {
     loading: boolean
@@ -137,6 +138,8 @@ const UsersManagementPage = () => {
                         totalPages: totalPages
                     }))}
                 />
+            ) : app.hasOpenedEditDayPrompt ? (
+                <Update />
             ) : null}
             {/* {app.hasOpenedEditDayPrompt ? (
                 // <Update />

@@ -31,8 +31,8 @@ export type BlockDaysInterfaceStateManagement = {
 export type UserManagementInterfaceStateManagement = {
     isUserSearchResultDisplayed: boolean
     hasOpenedSearchBoxPrompt: boolean
-    hasOpenedDeleteDayPrompt: boolean
-    hasOpenedEditDayPrompt: boolean
+    hasOpenedDeleteUserPrompt: boolean
+    hasOpenedEditUserPrompt: boolean
     selectedUserId: string
     userSearchQuery: string
 }

@@ -19,9 +19,8 @@ interface RemoveDayProps {
     paginate: (page: number, totalItem: number, totalPages: number) => void
 }
 
-const Remove: React.FC<RemoveDayProps> = () => {
+const Remove: React.FC<RemoveDayProps> = ({ paginate }) => {
     const app = useAppSelector(state => state.appReducer.app)
-    const blockedDays = useAppSelector(state => state.daysReducer.blocked_days)
     const dispatch = useAppDispatch()
     const [states, setStates] = React.useState<RemoveDayStates>({ open: false, message: '', isErrorFree: false, loading: false })
     const handleClose = () => {
@@ -36,7 +35,13 @@ const Remove: React.FC<RemoveDayProps> = () => {
             if (parseInt(remove.data?.code) !== 200) return setStates(prev => ({ ...prev, message: remove.data?.message, open: true, isErrorFree: false }))
             const collection = remove.data?.data
             dispatch(FetchDays([...collection?.blocked_days]))
-            return handleClose()
+            const page_data = collection?.page_data
+            dispatch(SaveAppData({
+                ...app,
+                isDaysSearchResultDisplayed: false,
+                hasOpenedDeleteDayPrompt: false
+            }))
+            paginate(page_data?.currentPage, page_data?.totalCount, page_data?.totalPages)
         } catch (error) {
             return setStates(prev => ({ ...prev, message: 'Something went wrong', open: true, isErrorFree: false }))
         }

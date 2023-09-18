@@ -4,7 +4,7 @@ import { ReplayOutlined, SearchRounded } from '@mui/icons-material'
 import { Box, IconButton, Pagination, TableContainer, Table, Tooltip } from '@mui/material'
 import * as React from 'react'
 import { motion } from 'framer-motion'
-import { EmptyList, SuspenseLoader, Title, Head, Data, Search, Update } from './exports'
+import { EmptyList, SuspenseLoader, Title, Head, Data, Search, Update, Remove } from './exports'
 import styles from './styles.module.css'
 import { useAppDispatch, useAppSelector } from '@/redux/hooks'
 import { toast } from 'react-toastify'
@@ -138,23 +138,20 @@ const UsersManagementPage = () => {
                         totalPages: totalPages
                     }))}
                 />
-            ) : app.hasOpenedEditDayPrompt ? (
+            ) : app.hasOpenedEditUserPrompt ? (
                 <Update />
+            ) : app.hasOpenedDeleteUserPrompt ? (
+                <Remove
+                    paginate={(page: number, totalItem: number, totalPages: number) => setStates(prev => ({
+                        ...prev,
+                        shouldGoTop: false,
+                        currentPage: page,
+                        totalCount: totalItem,
+                        totalPages: totalPages
+                    }))}
+                />
             ) : null}
-            {/* {app.hasOpenedEditDayPrompt ? (
-                // <Update />
-            ): app.hasOpenedDeleteDayPrompt ? (
-            <Remove
-                paginate={(page: number, totalItem: number, totalPages: number) => setStates(prev => ({
-                    ...prev,
-                    shouldGoTop: false,
-                    currentPage: page,
-                    totalCount: totalItem,
-                    totalPages: totalPages
-                }))}
-            />
-            ) : null} */}
-        </Box >
+        </Box>
     )
 }
 export default UsersManagementPage

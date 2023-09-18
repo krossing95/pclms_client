@@ -18,10 +18,10 @@ export default function Activity({ id }: ActivityProps) {
     const disabled = id === cookie?.user_id
     return (
         <React.Fragment>
-            <IconButton disabled={disabled} onClick={() => dispatch(SaveUsersPageState({ ...app, selectedUserId: id, hasOpenedDeleteDayPrompt: true }))} className={styles.activity_remove}>
+            <IconButton disabled={disabled} onClick={() => dispatch(SaveUsersPageState({ ...app, selectedUserId: id, hasOpenedDeleteUserPrompt: true }))} className={styles.activity_remove}>
                 <DeleteSweepOutlined fontSize='small' />
             </IconButton>
-            <IconButton disabled={disabled} onClick={() => dispatch(SaveUsersPageState({ ...app, selectedUserId: id, hasOpenedEditDayPrompt: true }))} className={styles.activity_edit}>
+            <IconButton disabled={disabled} onClick={() => dispatch(SaveUsersPageState({ ...app, selectedUserId: id, hasOpenedEditUserPrompt: true }))} className={styles.activity_edit}>
                 <ModeEditOutlineOutlined fontSize='small' />
             </IconButton>
         </React.Fragment>

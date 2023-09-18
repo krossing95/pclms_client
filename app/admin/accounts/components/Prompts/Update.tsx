@@ -38,7 +38,7 @@ const Update = () => {
     })
     const handleClose = () => {
         if (states.loading) return false
-        dispatch(SaveUsersPageState({ ...app, hasOpenedEditDayPrompt: false, selectedUserId: undefined }))
+        dispatch(SaveUsersPageState({ ...app, hasOpenedEditUserPrompt: false, selectedUserId: undefined }))
     }
     const submitHandler = async () => {
         const params = {
@@ -73,7 +73,7 @@ const Update = () => {
         }
     }
     return (
-        <Dialog open={app.hasOpenedEditDayPrompt} PaperComponent={MovablePrompt} aria-labelledby="draggable-dialog-title">
+        <Dialog open={app.hasOpenedEditUserPrompt} PaperComponent={MovablePrompt} aria-labelledby="draggable-dialog-title">
             <DialogTitle className='text' style={{ cursor: 'move', textAlign: 'center' }} id="draggable-dialog-title">Update user</DialogTitle>
             <MessageBox open={states.open}
                 isErrorFree={states.isErrorFree}

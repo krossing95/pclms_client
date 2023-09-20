@@ -65,7 +65,7 @@ const SideBarDrawer = React.forwardRef<() => void, DrawerProps>((props, ref) => 
                     </React.Fragment>
                 ) : null}
                 <ListItem disablePadding>
-                    <ListItemButton onClick={() => handleRoute(cookieObj?.usertype === Number(process.env.NEXT_PUBLIC_APP_ADMIN) ? 'equipment' : 'equipment-list')}>
+                    <ListItemButton onClick={() => handleRoute('equipment')}>
                         <ListItemIcon>
                             <HomeRepairServiceOutlined />
                         </ListItemIcon>
@@ -73,7 +73,7 @@ const SideBarDrawer = React.forwardRef<() => void, DrawerProps>((props, ref) => 
                     </ListItemButton>
                 </ListItem>
                 <ListItem disablePadding>
-                    <ListItemButton onClick={() => handleRoute(cookieObj?.usertype === Number(process.env.NEXT_PUBLIC_APP_ADMIN) ? 'a/bookings' : 'u/bookings')}>
+                    <ListItemButton onClick={() => handleRoute('bookings')}>
                         <ListItemIcon>
                             <MenuBookOutlined />
                         </ListItemIcon>

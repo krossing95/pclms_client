@@ -1,0 +1,95 @@
+@import url('https://fonts.cdnfonts.com/css/plance');
+
+.text {
+    font-family: 'Plance', sans-serif !important;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: first baseline;
+}
+
+.toolbar {
+    display: flex;
+}
+
+.toolbar button,
+.schedulerBack {
+    margin-right: 5px;
+    background-color: #000000;
+    color: #F9FAFB;
+}
+
+.toolbar button:hover,
+.schedulerBack:hover {
+    background-color: #026FBD !important;
+}
+
+.loadmoreContainer {
+    display: flex;
+    justify-content: center;
+    padding-top: 20px;
+}
+
+.input {
+    width: 100%;
+    padding: 14px 10px;
+    border-color: #000000;
+    font-family: 'Plance', sans-serif !important;
+    font-size: 18px;
+    border-left: hidden;
+    border-right: hidden;
+    border-top: hidden;
+    border-width: 1px;
+    background: #FFFFFF !important;
+}
+
+.input:focus {
+    border-width: 1.5px !important;
+    border-color: #026FBD !important;
+    outline: none;
+}
+
+.input_container {
+    display: flex;
+}
+
+.dashedBoaderBtn,
+.dashedBoaderBtn:hover {
+    color: #026FBD;
+    border: 0.4px #026FBD dashed;
+}
+
+.image {
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.image:hover {
+    filter: blur(3px);
+    transition: 1.5s ease-in-out;
+}
+
+.isTrue {
+    color: #07bc0c;
+}
+
+.isFalse {
+    color: #3498db;
+}
+
+.activity_remove,
+.activity_edit {
+    background-color: #000000;
+    color: #F9FAFB;
+    margin-left: 5px;
+}
+
+.activity_edit:hover {
+    background-color: #07bc0c !important;
+}
+
+.activity_remove:hover {
+    background-color: #ff2d55 !important;
+}

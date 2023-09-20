@@ -1,0 +1,5 @@
+export { default as Title } from '@/app/utils/components/Title'
+export { default as SuspenseLoader } from '@/app/components/Loader'
+export { default as DataDisplay } from '@/app/admin/equipment/[equipmentId]/components/DataDisplay'
+export { default as Texts } from '@/app/admin/equipment/[equipmentId]/components/Texts'
+export { default as PhotoDisplayer } from '@/app/admin/equipment/[equipmentId]/components/PhotoDisplayer'

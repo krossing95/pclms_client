@@ -1,18 +1,19 @@
 import axios from "axios"
-import Cookies from "js-cookie"
 
-const fetch_stats = async () => {
-    const cookieObj = Cookies.get('__signedInUserObj') || '{}'
-    const cookie = JSON.parse(cookieObj)?.user
+interface FetchStatisticsProps {
+    token: string
+}
+
+const fetch_stats = async ({ token }: FetchStatisticsProps) => {
     const HOST = process.env.NEXT_PUBLIC_HTTPHOST
-    const url = `${HOST}statistics/admin`
+    const url = `${HOST}dashboard`
     try {
         const res = await axios({
             method: 'GET',
             url,
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${cookie.token}`
+                'Authorization': `Bearer ${token}`
             }
         })
         return { data: res?.data }

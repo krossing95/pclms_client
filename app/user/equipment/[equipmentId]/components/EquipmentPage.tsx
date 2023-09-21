@@ -2,13 +2,15 @@
 
 import { Equipment } from '@/app/types/type.equipment'
 import * as React from 'react'
-import { Box, Grid, IconButton, Tooltip } from '@mui/material'
+import { Badge, Box, Grid, IconButton, Tooltip } from '@mui/material'
 import styles from '../../styles.module.css'
 import { useAppDispatch, useAppSelector } from '@/redux/hooks'
 import { FetchEquipment } from '@/redux/equipment/slice.equipment'
-import { BookmarksOutlined, StarBorderPurple500Outlined } from '@mui/icons-material'
+import { BookmarksOutlined, CommentOutlined } from '@mui/icons-material'
 import { SaveEquipmentPageState } from '@/redux/app/slice.app'
 import { Title, SuspenseLoader, PhotoDisplayer, Texts, DataDisplay } from '../exports'
+import Comment from './Prompts/Comment'
+import Comments from './Comments'
 
 interface SingleEquipmentStates {
     file: string
@@ -47,9 +49,16 @@ const EquipmentPage: React.FC<SingleEquipmentPageProps> = ({ data }) => {
                                     <Box component='div' className={styles.toolbar}>
                                         <React.Fragment>
                                             {/* <Save /> */}
-                                            <Tooltip title='Review and Comment'>
-                                                <IconButton onClick={() => dispatch(SaveEquipmentPageState({ ...app, hasOpenedEquipmentReview: true }))}>
-                                                    <StarBorderPurple500Outlined />
+                                            <Tooltip title='Comment'>
+                                                <IconButton onClick={() => dispatch(SaveEquipmentPageState({ ...app, hasOpenedEquipmentComment: true }))}>
+                                                    <Badge badgeContent={9} color='primary'
+                                                        anchorOrigin={{
+                                                            vertical: 'top',
+                                                            horizontal: 'left'
+                                                        }}
+                                                    >
+                                                        <CommentOutlined />
+                                                    </Badge>
                                                 </IconButton>
                                             </Tooltip>
                                             {equipment.availability_status ? (
@@ -73,13 +82,16 @@ const EquipmentPage: React.FC<SingleEquipmentPageProps> = ({ data }) => {
                                         </Grid>
                                     </Grid>
                                     <Texts />
-                                    {/* <EquipmentReviews /> */}
+                                    <Comments />
                                 </Box>
                             </React.Fragment>
                         ) : null}
                     </React.Fragment>
                 )}
             </React.Fragment>
+            {app.hasOpenedEquipmentComment ? (
+                <Comment />
+            ) : null}
         </Box>
     )
 }

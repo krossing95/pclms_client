@@ -74,10 +74,17 @@ const useValidations = () => {
         if (!User_Status.some(data => data.value === user_status)) return { error: 'Chosen user role was rejected' }
         next()
     }
+    const validateComment = ({ ...params }) => {
+        const { data, next } = params
+        const { equipment_id, comment } = data
+        if (!equipment_id.match(MONGODB)) return { error: 'Request was rejected' }
+        if (comment.length === 0) return { error: 'Comment field is required' }
+        next()
+    }
 
     return {
         validateRegistration, validateOTP, validateResendOTP, validateLogin,
-        validateEquipment, fileValidator, validateUserUpdate
+        validateEquipment, fileValidator, validateUserUpdate, validateComment
     }
 }
 export default useValidations

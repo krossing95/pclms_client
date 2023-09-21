@@ -6,7 +6,7 @@ export type EquipmentInterfaceStateManagement = {
     hasOpenedCreateEquipmentPrompt: boolean
     hasOpenedEquipmentFilter: boolean
     isFilteredResultDispayed: boolean
-    hasOpenedEquipmentReview: boolean
+    hasOpenedEquipmentComment: boolean
     hasOpenedEquipmentBooking: boolean
     hasOpenedEquipmentPhotoPreview: boolean
     selectedEquipmentId: string
@@ -16,6 +16,9 @@ export type EquipmentInterfaceStateManagement = {
         functionality_status: boolean | null,
         availability_status: boolean | null
     }
+    hasOpenedCommentDeletePrompt: boolean
+    hasOpenedCommentEditPrompt: boolean
+    selectedCommentId: string
 }
 
 export type BlockDaysInterfaceStateManagement = {

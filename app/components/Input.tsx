@@ -10,10 +10,11 @@ interface InputFieldProps {
     placeholder: string
     disabled: boolean
     preventCopyPaste?: (e: React.FormEvent<HTMLInputElement>) => boolean
+    readOnly?: boolean
 }
 
 const InputField: React.FC<InputFieldProps> = ({ value, type, onChange, classes,
-    placeholder, disabled, preventCopyPaste }) => {
+    placeholder, disabled, preventCopyPaste, readOnly }) => {
     return (
         <input
             value={value} type={type}
@@ -23,6 +24,7 @@ const InputField: React.FC<InputFieldProps> = ({ value, type, onChange, classes,
             disabled={disabled}
             onPaste={preventCopyPaste}
             onCopy={preventCopyPaste}
+            readOnly={readOnly}
         />
     )
 }

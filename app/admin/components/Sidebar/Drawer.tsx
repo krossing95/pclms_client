@@ -22,7 +22,7 @@ const SideBarDrawer = React.forwardRef<() => void, DrawerProps>((props, ref) => 
     const handleRoute = (route: string) => router.push(`/${usertype === 2 ? 'admin' : usertype === 1 ? 'user' : ''}/${route}`)
     const handleSignOut = async () => {
         await remove_cookie({ cookie_name: '__signedInUserObj' })
-        return router.push('/auth/register')
+        return router.push('/auth/login')
     }
     React.useEffect(() => {
         props.auto_close() // eslint-disable-next-line

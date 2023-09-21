@@ -4,6 +4,7 @@ import appReducer from "./app/slice.app"
 import daysReducer from "./days_management/slice.days_management"
 import equipmentReducer from "./equipment/slice.equipment"
 import usersReducer from "./user_management/slice.user_management"
+import commentsReducer from "./equipment/comments/slice.comments"
 
 export const store = configureStore({
     reducer: {
@@ -11,7 +12,8 @@ export const store = configureStore({
         appReducer,
         daysReducer,
         equipmentReducer,
-        usersReducer
+        usersReducer,
+        commentsReducer
     },
     devTools: process.env.NODE_ENV !== "production",
 })

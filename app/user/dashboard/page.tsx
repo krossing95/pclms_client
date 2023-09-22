@@ -10,10 +10,6 @@ import DashboardPanel from "./components/PanelPiece"
 
 export const metadata = { ...dashboard_meta }
 
-interface UserDashboardProps {
-    children: React.ReactNode
-}
-
 const getData = async () => {
     const cookieStore = cookies()
     const obj = cookieStore.get('__signedInUserObj')?.value || '{}'
@@ -34,7 +30,7 @@ const getData = async () => {
     }
 }
 
-const UserDashboardPage: React.FC<UserDashboardProps> = async () => {
+const UserDashboardPage = async () => {
     let dataLoaded = false
     const fetchedData: UserDashboard = {
         available_equipment: 0,

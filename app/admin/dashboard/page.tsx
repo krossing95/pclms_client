@@ -19,14 +19,14 @@ const DashboardPage = () => {
     const dispatch = useAppDispatch()
     React.useEffect(() => {
         const getData = async () => {
-            try {
-                const result = await fetch_stats()
-                setStates(prev => ({ ...prev, loading: false }))
-                if (parseInt(result.data?.code) !== 200) return toast(result.data?.message)
-                return dispatch(SaveDashboardData({ ...result.data.statistics }))
-            } catch (error) {
-                console.log('STATS_ERROR')
-            }
+            // try {
+            //     const result = await fetch_stats()
+            //     setStates(prev => ({ ...prev, loading: false }))
+            //     if (parseInt(result.data?.code) !== 200) return toast(result.data?.message)
+            //     return dispatch(SaveDashboardData({ ...result.data.statistics }))
+            // } catch (error) {
+            //     console.log('STATS_ERROR')
+            // }
         }
         getData()
     }, [])

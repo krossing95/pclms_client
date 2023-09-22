@@ -13,4 +13,5 @@ export type Equipment = {
     user_id: string
     firstname: string
     lastname: string
+    saved: boolean
 }

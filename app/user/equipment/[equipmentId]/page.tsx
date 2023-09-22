@@ -5,6 +5,7 @@ import { Metadata, ResolvingMetadata } from 'next'
 import { notFound } from 'next/navigation'
 import * as React from 'react'
 import EquipmentPage from './components/EquipmentPage'
+import { cookies } from 'next/headers'
 
 type Props = {
     params: { equipmentId: string }
@@ -18,7 +19,7 @@ export async function generateMetadata(
         const getData = await getone_equipment({ equipment_id: params.equipmentId })
         if (parseInt(getData.data?.code) !== 200) {
             return {
-                title: 'Single equipment',
+                title: 'Single equipment | PCLMS - Laboratory Management System',
                 description: 'This is description to the page'
             }
         }
@@ -32,15 +33,24 @@ export async function generateMetadata(
     }
 }
 
-const SingleEquipmentPage = async ({ params }: Props) => {
+const getEquipment = async ({ params }: Props) => {
+    const cookieStore = cookies()
+    const obj = cookieStore.get('__signedInUserObj')?.value || '{}'
+    const cookieObj = JSON.parse(obj)?.user
+    const token: string = cookieObj?.token
     let equipment: Equipment
     try {
-        const getData = await getone_equipment({ equipment_id: params.equipmentId })
+        const getData = await getone_equipment({ equipment_id: params.equipmentId, token })
         if (parseInt(getData.data?.code) !== 200) notFound()
         equipment = getData.data?.data
+        return equipment
     } catch (error) {
         notFound()
     }
+}
+
+const SingleEquipmentPage = async ({ params }: Props) => {
+    const equipment = await getEquipment({ params })
     return (
         <React.Suspense fallback={<SuspenseLoader text='Page is loading' issueOptionalHeight={false} />}>
             <EquipmentPage data={equipment} />

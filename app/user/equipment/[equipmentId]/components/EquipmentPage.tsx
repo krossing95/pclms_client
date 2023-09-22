@@ -10,6 +10,7 @@ import { BookmarksOutlined, CommentOutlined } from '@mui/icons-material'
 import { SaveEquipmentPageState } from '@/redux/app/slice.app'
 import { Title, SuspenseLoader, PhotoDisplayer, Texts, DataDisplay } from '../exports'
 import Comments from './Comments'
+import Save from './Save'
 
 interface SingleEquipmentStates {
     file: string
@@ -47,7 +48,6 @@ const EquipmentPage: React.FC<SingleEquipmentPageProps> = ({ data }) => {
                                     <Title text={equipment.name} variant_switch={false} />
                                     <Box component='div' className={styles.toolbar}>
                                         <React.Fragment>
-                                            {/* <Save /> */}
                                             <Tooltip title='Comment'>
                                                 <IconButton onClick={() => dispatch(SaveEquipmentPageState({ ...app, hasOpenedEquipmentComment: true }))}>
                                                     <Badge badgeContent={9} color='primary'
@@ -60,6 +60,7 @@ const EquipmentPage: React.FC<SingleEquipmentPageProps> = ({ data }) => {
                                                     </Badge>
                                                 </IconButton>
                                             </Tooltip>
+                                            <Save />
                                             {equipment.availability_status ? (
                                                 <Tooltip title='Make Reservation'>
                                                     <IconButton onClick={() => dispatch(SaveEquipmentPageState({ ...app, hasOpenedEquipmentBooking: true }))}>

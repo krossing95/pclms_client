@@ -4,9 +4,11 @@ import moment from 'moment'
 import styles from '../../styles.module.css'
 import Activity from './Activity'
 import { useAppSelector } from '@/redux/hooks'
+import useCustomMethods from '@/app/hooks/useCustomMethods'
 
 const Data = () => {
     const users = useAppSelector(state => state.usersReducer.users)
+    const useMethods = useCustomMethods()
     return (
         <TableBody>
             {users.map((user, i) => (
@@ -28,7 +30,7 @@ const Data = () => {
                                 user.is_verified ? 'Not verified' : '-'
                         }
                     </TableCell>
-                    <TableCell className={styles.tcell} align='right'>{moment(user.created_at?.split('T')?.[0]).format('ll')}</TableCell>
+                    <TableCell className={styles.tcell} align='right'>{useMethods.dateConterter(`${user.created_at}`, 'll')}</TableCell>
                     <TableCell align='right'>
                         <Activity id={user.id} />
                     </TableCell>

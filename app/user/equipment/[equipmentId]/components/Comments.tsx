@@ -8,6 +8,8 @@ import { Title, SuspenseLoader } from '../exports'
 import get_comments from '@/app/actions/equipment/equipment.get_comments'
 import { useParams } from 'next/navigation'
 import { FetchComments } from '@/redux/equipment/comments/slice.comments'
+import CommentList from './CommentList'
+import CommentUpdate from './Prompts/CommentUpdate'
 
 type EquipmentCommentsPageStates = {
     loading: boolean
@@ -20,6 +22,7 @@ const Comments = () => {
     const { equipmentId } = useParams()
     const dispatch = useAppDispatch()
     const comments = useAppSelector(state => state.commentsReducer.comments)
+    const app = useAppSelector(state => state.appReducer.equipment)
     const [states, setStates] = React.useState<EquipmentCommentsPageStates>({
         currentPage: 1, totalPages: 0, totalCount: 0, loading: true
     })
@@ -58,7 +61,7 @@ const Comments = () => {
                                 <Typography variant='body2' sx={{ fontWeight: 'bold' }}>No comments found</Typography>
                             </Box>
                         ) : (
-                            <p>wreaddf</p>
+                            <CommentList />
                         )}
                     </React.Fragment>
                 )}
@@ -73,6 +76,9 @@ const Comments = () => {
                     ) : null}
                 </Box>
             </Box>
+            {app.hasOpenedCommentEditPrompt ? (
+                <CommentUpdate />
+            ) : null}
         </Box>
     )
 }

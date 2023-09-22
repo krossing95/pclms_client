@@ -34,7 +34,7 @@ const getData = async () => {
     }
 }
 
-const UserDashboard: React.FC<UserDashboardProps> = async () => {
+const UserDashboardPage: React.FC<UserDashboardProps> = async () => {
     let dataLoaded = false
     const fetchedData: UserDashboard = {
         available_equipment: 0,
@@ -62,4 +62,4 @@ const UserDashboard: React.FC<UserDashboardProps> = async () => {
         </React.Suspense>
     )
 }
-export default UserDashboard
+export default UserDashboardPage

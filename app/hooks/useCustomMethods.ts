@@ -1,4 +1,4 @@
-import moment from 'moment'
+import moment from 'moment-timezone'
 import { DateSelectionTypes } from '../types/type.handleDateSelection'
 
 const useCustomMethods = () => {
@@ -22,8 +22,15 @@ const useCustomMethods = () => {
         return { ...data, status: true }
     }
 
+    const dateConterter = (date: string, format: string) => {
+        const timezone = moment.tz('Africa/Accra').zoneAbbr()
+        const convertedDate = moment.tz(date, timezone)
+        const formattedDate = convertedDate.format(format)
+        return formattedDate
+    }
+
     return {
-        preventCopyPaste, handleDateSelection
+        preventCopyPaste, handleDateSelection, dateConterter
     }
 }
 export default useCustomMethods

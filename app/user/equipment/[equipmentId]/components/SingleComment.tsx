@@ -9,6 +9,7 @@ import { useAppDispatch, useAppSelector } from '@/redux/hooks'
 import styles from '../../styles.module.css'
 import Cookies from 'js-cookie'
 import { SaveEquipmentPageState } from '@/redux/app/slice.app'
+import useCustomMethods from '@/app/hooks/useCustomMethods'
 
 interface SingleCommentProps {
     comment: Comment
@@ -21,6 +22,7 @@ interface SingleCommentStates {
 const SingleComment: React.FC<SingleCommentProps> = ({ comment }) => {
     const cookieObj = Cookies.get('__signedInUserObj') || '{}'
     const cookie = JSON.parse(cookieObj)?.user
+    const useMethods = useCustomMethods()
     const ExpandMore = styled((props: any) => {
         const { expand, ...other } = props
         return <IconButton {...other} />
@@ -35,11 +37,11 @@ const SingleComment: React.FC<SingleCommentProps> = ({ comment }) => {
     const handleExpandClick = () => setStates(prev => ({ ...prev, expanded: !prev.expanded }))
     return (
         <Card>
-            <CardHeader avatar={<Avatar sx={{ bgcolor: '#026FBD' }} aria-label="equipment_review">
+            <CardHeader avatar={<Avatar sx={{ bgcolor: '#026FBD' }} aria-label="equipment_comments">
                 {comment.firstname[0] || 'U'}
             </Avatar>}
                 title={`${comment.firstname} ${comment.lastname}`}
-                subheader={moment(comment.updated_at?.split('T')?.[0]).format('ll')}
+                subheader={useMethods.dateConterter(`${comment.created_at}`, 'll')}
             />
             {!states.expanded ? (
                 <CardContent>
@@ -47,12 +49,12 @@ const SingleComment: React.FC<SingleCommentProps> = ({ comment }) => {
                 </CardContent>
             ) : null}
             <CardActions disableSpacing>
-                {(cookie?.usertype === Number(process.env.NEXT_PUBLIC_APP_ADMIN) || cookie?.user_id === comment.id) ? (
+                {(cookie?.usertype === Number(process.env.NEXT_PUBLIC_APP_ADMIN) || cookie?.user_id === comment.user_id) ? (
                     <IconButton className={styles.activity_remove} onClick={() => dispatch(SaveEquipmentPageState({ ...app, hasOpenedCommentDeletePrompt: true, selectedCommentId: comment.id }))}>
                         <DeleteSweepOutlined />
                     </IconButton>
                 ) : null}
-                {cookie?.user_id === comment.id ? (
+                {cookie?.user_id === comment.user_id ? (
                     <IconButton className={styles.activity_edit} onClick={() => dispatch(SaveEquipmentPageState({ ...app, hasOpenedCommentEditPrompt: true, selectedCommentId: comment.id }))}>
                         <ModeEditOutlineOutlined />
                     </IconButton>

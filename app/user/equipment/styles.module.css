@@ -76,3 +76,16 @@
 .isFalse {
     color: #3498db !important;
 }
+
+.activity_remove,
+.activity_edit {
+    background-color: rgba(0, 0, 0, 0.08);
+    color: #6c6d6d;
+    margin-left: 5px;
+}
+
+.activity_edit:hover,
+.activity_remove:hover {
+    background-color: #222422 !important;
+    color: #b6b8ba;
+}

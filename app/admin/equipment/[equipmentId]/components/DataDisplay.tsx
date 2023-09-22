@@ -1,11 +1,12 @@
 import { Box, List, ListItem, ListItemIcon, ListItemText } from '@mui/material'
 import * as React from 'react'
-import moment from 'moment'
 import { CalendarMonthOutlined, AutoStoriesOutlined, BlockOutlined, AccountCircleOutlined, VpnKeyOutlined, AssessmentOutlined } from '@mui/icons-material'
 import { useAppSelector } from '@/redux/hooks'
+import useCustomMethods from '@/app/hooks/useCustomMethods'
 
 const DataDisplay = () => {
     const equipment = useAppSelector(state => state.equipmentReducer.equipment)?.[0]
+    const useMethods = useCustomMethods()
     return (
         <Box component='div' sx={{ pl: { xs: '0px', md: '10px' }, mt: { xs: '20px', sm: '0px' } }}>
             <List>
@@ -19,13 +20,13 @@ const DataDisplay = () => {
                     <ListItemIcon>
                         <CalendarMonthOutlined fontSize='small' />
                     </ListItemIcon>
-                    <ListItemText secondary={`Created on ${moment(equipment.created_at?.split('T')?.[0]).format('LL')}`} />
+                    <ListItemText secondary={`Created on ${useMethods.dateConterter(`${equipment.created_at}`, 'll')}`} />
                 </ListItem>
                 <ListItem disablePadding sx={{ pb: 2 }}>
                     <ListItemIcon>
                         <CalendarMonthOutlined fontSize='small' />
                     </ListItemIcon>
-                    <ListItemText secondary={`Last updated on ${moment(equipment.updated_at?.split('T')?.[0]).format('LL')}`} />
+                    <ListItemText secondary={`Last updated on ${useMethods.dateConterter(`${equipment.updated_at}`, 'll')}`} />
                 </ListItem>
                 <ListItem disablePadding sx={{ pb: 2 }}>
                     <ListItemIcon>

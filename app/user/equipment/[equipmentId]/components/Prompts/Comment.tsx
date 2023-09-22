@@ -23,7 +23,11 @@ interface CommentStates {
     comment: string
 }
 
-const Comment = () => {
+interface CommentCreatorProps {
+    paginate: (page: number, totalItem: number, totalPages: number) => void
+}
+
+const Comment: React.FC<CommentCreatorProps> = ({ paginate }) => {
     const app = useAppSelector(state => state.appReducer.equipment)
     const equipment = useAppSelector(state => state.equipmentReducer.equipment)?.[0]
     const dispatch = useAppDispatch()
@@ -60,6 +64,8 @@ const Comment = () => {
             if (parseInt(post.data?.code) !== 201) return setStates(prev => ({ ...prev, message: post.data?.message, open: true, isErrorFree: false }))
             const data = post.data?.data
             dispatch(FetchComments([...data?.comments]))
+            const page_data = data?.page_data
+            paginate(page_data?.currentPage, page_data?.totalCount, page_data?.totalPages)
             return setStates(prev => ({ ...prev, message: post.data?.message, open: true, isErrorFree: true }))
         } catch (error) {
             return setStates(prev => ({ ...prev, message: 'Something went wrong', open: true, isErrorFree: false }))

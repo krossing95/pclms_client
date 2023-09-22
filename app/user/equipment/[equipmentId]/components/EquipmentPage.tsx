@@ -9,7 +9,6 @@ import { FetchEquipment } from '@/redux/equipment/slice.equipment'
 import { BookmarksOutlined, CommentOutlined } from '@mui/icons-material'
 import { SaveEquipmentPageState } from '@/redux/app/slice.app'
 import { Title, SuspenseLoader, PhotoDisplayer, Texts, DataDisplay } from '../exports'
-import Comment from './Prompts/Comment'
 import Comments from './Comments'
 
 interface SingleEquipmentStates {
@@ -89,9 +88,6 @@ const EquipmentPage: React.FC<SingleEquipmentPageProps> = ({ data }) => {
                     </React.Fragment>
                 )}
             </React.Fragment>
-            {app.hasOpenedEquipmentComment ? (
-                <Comment />
-            ) : null}
         </Box>
     )
 }

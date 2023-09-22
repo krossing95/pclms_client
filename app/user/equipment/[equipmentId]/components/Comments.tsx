@@ -4,12 +4,14 @@ import { Box, Pagination, Typography } from '@mui/material'
 import * as React from 'react'
 import styles from '../../styles.module.css'
 import { useAppDispatch, useAppSelector } from '@/redux/hooks'
-import { Title, SuspenseLoader } from '../exports'
+import { SuspenseLoader } from '../exports'
 import get_comments from '@/app/actions/equipment/equipment.get_comments'
 import { useParams } from 'next/navigation'
 import { FetchComments } from '@/redux/equipment/comments/slice.comments'
 import CommentList from './CommentList'
 import CommentUpdate from './Prompts/CommentUpdate'
+import CommentDelete from './Prompts/CommentDelete'
+import Comment from './Prompts/Comment'
 
 type EquipmentCommentsPageStates = {
     loading: boolean
@@ -78,6 +80,24 @@ const Comments = () => {
             </Box>
             {app.hasOpenedCommentEditPrompt ? (
                 <CommentUpdate />
+            ) : app.hasOpenedCommentDeletePrompt ? (
+                <CommentDelete
+                    paginate={(page: number, totalItem: number, totalPages: number) => setStates(prev => ({
+                        ...prev,
+                        currentPage: page,
+                        totalCount: totalItem,
+                        totalPages: totalPages
+                    }))}
+                />
+            ) : app.hasOpenedEquipmentComment ? (
+                <Comment
+                    paginate={(page: number, totalItem: number, totalPages: number) => setStates(prev => ({
+                        ...prev,
+                        currentPage: page,
+                        totalCount: totalItem,
+                        totalPages: totalPages
+                    }))}
+                />
             ) : null}
         </Box>
     )

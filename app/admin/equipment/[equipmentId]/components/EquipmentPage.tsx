@@ -61,7 +61,7 @@ const EquipmentPage: React.FC<SingleEquipmentPageProps> = ({ data }) => {
         <Box component='div'>
             <React.Fragment>
                 {states.loading ? (
-                    <SuspenseLoader text='Loading equipment' issueOptionalHeight={true} />
+                    <SuspenseLoader text='Loading equipment' ignoreOptionalHeight={true} />
                 ) : (
                     <React.Fragment>
                         {typeof equipment?.id !== 'undefined' ? (

@@ -32,6 +32,7 @@ export async function generateMetadata(
         notFound()
     }
 }
+export const dynamic = 'force-dynamic'
 
 const getEquipment = async ({ params }: Props) => {
     const cookieStore = cookies()
@@ -52,7 +53,7 @@ const getEquipment = async ({ params }: Props) => {
 const SingleEquipmentPage = async ({ params }: Props) => {
     const equipment = await getEquipment({ params })
     return (
-        <React.Suspense fallback={<SuspenseLoader text='Page is loading' issueOptionalHeight={false} />}>
+        <React.Suspense fallback={<SuspenseLoader text='Page is loading' ignoreOptionalHeight={false} />}>
             <EquipmentPage data={equipment} />
         </React.Suspense>
     )

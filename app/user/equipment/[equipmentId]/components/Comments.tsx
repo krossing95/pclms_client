@@ -55,7 +55,7 @@ const Comments = () => {
         <Box component='div' sx={{ mt: 4 }}>
             <Box component='div'>
                 {states.loading ? (
-                    <SuspenseLoader text='Loading comments' issueOptionalHeight />
+                    <SuspenseLoader text='Loading comments' ignoreOptionalHeight />
                 ) : (
                     <React.Fragment>
                         {comments.length === 0 ? (

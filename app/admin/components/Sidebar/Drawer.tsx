@@ -82,11 +82,11 @@ const SideBarDrawer = React.forwardRef<() => void, DrawerProps>((props, ref) => 
                 </ListItem>
                 {cookieObj?.usertype === Number(process.env.NEXT_PUBLIC_APP_USER) ? (
                     <ListItem disablePadding>
-                        <ListItemButton onClick={() => handleRoute('favorites')}>
+                        <ListItemButton onClick={() => handleRoute('favorite_list')}>
                             <ListItemIcon>
                                 <FavoriteBorderOutlined />
                             </ListItemIcon>
-                            <ListItemText primary='Favorites' />
+                            <ListItemText primary='Favorite List' />
                         </ListItemButton>
                     </ListItem>
                 ) : null}
@@ -94,11 +94,11 @@ const SideBarDrawer = React.forwardRef<() => void, DrawerProps>((props, ref) => 
             <Divider />
             <List>
                 <ListItem disablePadding>
-                    <ListItemButton onClick={() => handleRoute('my-profile')}>
+                    <ListItemButton onClick={() => handleRoute('my_profile')}>
                         <ListItemIcon>
                             <AccountCircleOutlined />
                         </ListItemIcon>
-                        <ListItemText primary='Profile' />
+                        <ListItemText primary='My Profile' />
                     </ListItemButton>
                 </ListItem>
                 <ListItem disablePadding>

@@ -2,6 +2,7 @@ import { days_mgt_meta } from '@/app/utils/statics'
 import * as React from 'react'
 
 export const metadata = { ...days_mgt_meta }
+export const dynamic = 'force-dynamic'
 
 interface DaysManagementLayoutProps {
     children: React.ReactNode

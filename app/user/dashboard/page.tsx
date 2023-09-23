@@ -9,6 +9,7 @@ import * as React from "react"
 import DashboardPanel from "./components/PanelPiece"
 
 export const metadata = { ...dashboard_meta }
+export const dynamic = 'force-dynamic'
 
 const getData = async () => {
     const cookieStore = cookies()
@@ -43,16 +44,18 @@ const UserDashboardPage = async () => {
         dataLoaded = loaded
         fetchedData.available_equipment = data.available_equipment
         fetchedData.unavailable_equipment = data.unavailable_equipment
+        fetchedData.favorites = data.favorite_list
     } catch (error) {
         revalidatePath('/user/dashboard')
     }
 
     return (
-        <React.Suspense fallback={<SuspenseLoader text="Loading Data" issueOptionalHeight />}>
+        <React.Suspense fallback={<SuspenseLoader text="Loading Data" ignoreOptionalHeight />}>
             <Box component='div'>
                 <Grid container spacing={1}>
                     <DashboardPanel name="Available Equipment" figure={fetchedData.available_equipment} />
                     <DashboardPanel name="Unavailable Equipment" figure={fetchedData.unavailable_equipment} />
+                    <DashboardPanel name="Favorite List" figure={fetchedData.favorites} />
                 </Grid>
             </Box>
         </React.Suspense>

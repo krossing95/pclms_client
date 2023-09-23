@@ -31,6 +31,7 @@ export async function generateMetadata(
         notFound()
     }
 }
+export const dynamic = 'force-dynamic'
 
 const SingleEquipmentPage = async ({ params }: Props) => {
     let data: Equipment
@@ -42,7 +43,7 @@ const SingleEquipmentPage = async ({ params }: Props) => {
         notFound()
     }
     return (
-        <React.Suspense fallback={<SuspenseLoader text='Page is loading' issueOptionalHeight={false} />}>
+        <React.Suspense fallback={<SuspenseLoader text='Page is loading' ignoreOptionalHeight={false} />}>
             <EquipmentPage data={data} />
         </React.Suspense>
     )

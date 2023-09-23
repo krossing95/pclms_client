@@ -12,6 +12,7 @@ import EmptyList from '@/app/utils/components/EmptyList'
 type DashboardStates = {
     loading: boolean
 }
+export const dynamic = 'force-dynamic'
 
 const DashboardPage = () => {
     const statistics = useAppSelector(state => state.dashboardReducer.statistics)
@@ -34,7 +35,7 @@ const DashboardPage = () => {
     return (
         <Box component='div'>
             {states.loading ? (
-                <SuspenseLoader text='Loading statistics' issueOptionalHeight={true} />
+                <SuspenseLoader text='Loading statistics' ignoreOptionalHeight={true} />
             ) : (
                 <React.Fragment>
                     {Object.keys(statistics).length === 0 ? (

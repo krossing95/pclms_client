@@ -143,7 +143,7 @@ const Equipment = () => {
             </Box>
             <Box component='div'>
                 {states.loading ? (
-                    <SuspenseLoader text='Loading equipment' issueOptionalHeight />
+                    <SuspenseLoader text='Loading equipment' ignoreOptionalHeight />
                 ) : (
                     <React.Fragment>
                         {equipment.length === 0 ? (

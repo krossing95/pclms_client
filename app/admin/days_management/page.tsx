@@ -118,7 +118,7 @@ const DaysManagementPage = () => {
                 ) : (
                     <SuspenseLoader
                         text='Loading Blocked Days'
-                        issueOptionalHeight
+                        ignoreOptionalHeight
                     />
                 )}
                 <Box component='div' className={styles.loadmoreContainer} sx={{ mt: 4 }}>

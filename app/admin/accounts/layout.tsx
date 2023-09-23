@@ -2,6 +2,7 @@ import { accounts_meta } from '@/app/utils/statics'
 import * as React from 'react'
 
 export const metadata = { ...accounts_meta }
+export const dynamic = 'force-dynamic'
 
 interface AccountsLayoutProps {
     children: React.ReactNode

@@ -114,7 +114,7 @@ const UsersManagementPage = () => {
                 ) : (
                     <SuspenseLoader
                         text='Loading Users'
-                        issueOptionalHeight
+                        ignoreOptionalHeight
                     />
                 )}
                 <Box component='div' className={styles.loadmoreContainer} sx={{ mt: 4 }}>

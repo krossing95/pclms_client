@@ -11,6 +11,7 @@ import { SaveEquipmentPageState } from '@/redux/app/slice.app'
 import { Title, SuspenseLoader, PhotoDisplayer, Texts, DataDisplay } from '../exports'
 import Comments from './Comments'
 import Save from './Save'
+import BookingPage from './Bookings/BookingPage'
 
 interface SingleEquipmentStates {
     file: string
@@ -27,6 +28,7 @@ const EquipmentPage: React.FC<SingleEquipmentPageProps> = ({ data }) => {
     const dispatch = useAppDispatch()
     const app = useAppSelector(state => state.appReducer.equipment)
     const equipment = useAppSelector(state => state.equipmentReducer.equipment)?.[0]
+    const comments = useAppSelector(state => state.commentsReducer.comments)
     React.useEffect(() => {
         const getData = () => {
             dispatch(FetchEquipment([data]))
@@ -39,7 +41,7 @@ const EquipmentPage: React.FC<SingleEquipmentPageProps> = ({ data }) => {
         <Box component='div'>
             <React.Fragment>
                 {states.loading ? (
-                    <SuspenseLoader text='Loading equipment' issueOptionalHeight={true} />
+                    <SuspenseLoader text='Loading equipment' ignoreOptionalHeight={true} />
                 ) : (
                     <React.Fragment>
                         {typeof equipment?.id !== 'undefined' ? (
@@ -50,7 +52,7 @@ const EquipmentPage: React.FC<SingleEquipmentPageProps> = ({ data }) => {
                                         <React.Fragment>
                                             <Tooltip title='Comment'>
                                                 <IconButton onClick={() => dispatch(SaveEquipmentPageState({ ...app, hasOpenedEquipmentComment: true }))}>
-                                                    <Badge badgeContent={9} color='primary'
+                                                    <Badge showZero badgeContent={comments.length} color='primary'
                                                         anchorOrigin={{
                                                             vertical: 'top',
                                                             horizontal: 'left'
@@ -62,8 +64,8 @@ const EquipmentPage: React.FC<SingleEquipmentPageProps> = ({ data }) => {
                                             </Tooltip>
                                             <Save />
                                             {equipment.availability_status ? (
-                                                <Tooltip title='Make Reservation'>
-                                                    <IconButton onClick={() => dispatch(SaveEquipmentPageState({ ...app, hasOpenedEquipmentBooking: true }))}>
+                                                <Tooltip title='Book Equipment'>
+                                                    <IconButton onClick={() => dispatch(SaveEquipmentPageState({ ...app, hasOpenedBookingPrompt: true }))}>
                                                         <BookmarksOutlined />
                                                     </IconButton>
                                                 </Tooltip>
@@ -89,6 +91,9 @@ const EquipmentPage: React.FC<SingleEquipmentPageProps> = ({ data }) => {
                     </React.Fragment>
                 )}
             </React.Fragment>
+            {app.hasOpenedBookingPrompt ? (
+                <BookingPage />
+            ) : null}
         </Box>
     )
 }

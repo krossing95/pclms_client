@@ -19,6 +19,7 @@ type Slot = {
 interface BookingSystemStates {
     date: string
     slots: Slot[]
+    availableSlots: Slot[]
     need_assist: string | number
     loading: boolean
     open: boolean
@@ -38,7 +39,8 @@ const BookingSystem: React.FC<BookingPageProps> = ({ unavailable_days, shouldSub
     const methodHooks = useCustomMethods()
     const [states, setStates] = React.useState<BookingSystemStates>({
         date: '', slots: [], need_assist: '', fetching_slots: false,
-        loading: false, open: false, isErrorFree: false, message: ''
+        loading: false, open: false, isErrorFree: false, message: '',
+        availableSlots: []
     })
 
     const handleDateSelection = (date: string) => {
@@ -59,7 +61,7 @@ const BookingSystem: React.FC<BookingPageProps> = ({ unavailable_days, shouldSub
             }))
             const unavailable_slots: string[] = getSlots.data?.data?.unavailable_slots
             const available_slots = Slots_Array.filter(value => !unavailable_slots.includes(value.slot))
-            return setStates(prev => ({ ...prev, fetching_slots: false, slots: [...available_slots] }))
+            return setStates(prev => ({ ...prev, fetching_slots: false, availableSlots: [...available_slots] }))
         } catch (error) {
             return setStates(prev => ({
                 ...prev,
@@ -127,7 +129,7 @@ const BookingSystem: React.FC<BookingPageProps> = ({ unavailable_days, shouldSub
                                             limitTags={1}
                                             onChange={(e, v) => setStates(prev => ({ ...prev, slots: v }))}
                                             id="multiple-limit-tags"
-                                            options={states.slots}
+                                            options={states.availableSlots}
                                             getOptionLabel={(option) => option.slot}
                                             renderInput={(params) => (
                                                 <TextField {...params} label="Pick Slot" placeholder="Slots" />

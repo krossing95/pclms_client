@@ -102,7 +102,7 @@ const BookingSystem: React.FC<BookingPageProps> = ({ unavailable_days, shouldSub
             />
             <Box component='div' className={styles.loadmoreContainer}>
                 <Grid container spacing={1}>
-                    <Grid item xs={12} className={styles.input_container}>
+                    <Grid item xs={12} sm={6} md={12} className={styles.input_container}>
                         <InputField
                             value={states.date} type='date'
                             onChange={(e: React.SyntheticEvent<EventTarget>) => handleDateSelection((e.target as HTMLInputElement).value)}
@@ -139,7 +139,7 @@ const BookingSystem: React.FC<BookingPageProps> = ({ unavailable_days, shouldSub
                                             }}
                                         />
                                     </Grid>
-                                    <Grid item xs={12} sm={6} md={12} sx={{ mt: 2, mb: 2 }}>
+                                    <Grid item xs={12} sx={{ mt: 2, mb: 2 }}>
                                         <RadioGroup value={states.need_assist} onChange={(e) => setStates(prev => ({ ...prev, need_assist: e.target.value }))} aria-labelledby="demo-radio-buttons-group-label" name="radio-buttons-group" row>{<TechnicalAssistanceSelector />}</RadioGroup>
                                     </Grid>
                                 </React.Fragment>

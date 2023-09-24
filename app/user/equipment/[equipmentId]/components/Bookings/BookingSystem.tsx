@@ -10,6 +10,9 @@ import { SuspenseLoader } from '../../exports'
 import get_slots from '@/app/actions/bookings/booking.get_slots'
 import { Slots_Array } from '@/app/utils/statics'
 import TechnicalAssistanceSelector from '@/app/utils/components/Selectors/TechnicalAssistanceSelector'
+import { toast } from 'react-toastify'
+import useValidations from '@/app/hooks/useValidations'
+import book_equipment from '@/app/actions/bookings/booking.book_equipment'
 
 type Slot = {
     id: number
@@ -21,7 +24,6 @@ interface BookingSystemStates {
     slots: Slot[]
     availableSlots: Slot[]
     need_assist: string | number
-    loading: boolean
     open: boolean
     message: string
     isErrorFree: boolean
@@ -37,9 +39,10 @@ interface BookingPageProps {
 const BookingSystem: React.FC<BookingPageProps> = ({ unavailable_days, shouldSubmit, setButtonLoader }) => {
     const { equipmentId } = useParams()
     const methodHooks = useCustomMethods()
+    const validations = useValidations()
     const [states, setStates] = React.useState<BookingSystemStates>({
         date: '', slots: [], need_assist: '', fetching_slots: false,
-        loading: false, open: false, isErrorFree: false, message: '',
+        open: false, isErrorFree: false, message: '',
         availableSlots: []
     })
 
@@ -75,14 +78,36 @@ const BookingSystem: React.FC<BookingPageProps> = ({ unavailable_days, shouldSub
 
     React.useEffect(() => {
         const takeSlots = () => {
+            toast('Welcome to Our Booking Service')
             if (states.fetching_slots && states.date !== '') return getSlots()
         }
         takeSlots() // eslint-disable-next-line
     }, [states.date, states.fetching_slots])
 
     const handleBooking = async () => {
-        console.log('form submiited');
-        setButtonLoader(false)
+        const data = {
+            equipment_id: equipmentId,
+            date: states.date,
+            need_assist: Number(states.need_assist),
+            slots: states.slots.map(i => i.slot)
+        }
+        const params = {
+            data,
+            next: () => setButtonLoader(true)
+        }
+        const validate = validations.validateBooking({ ...params })
+        if (validate?.error !== undefined) return setStates(prev => ({ ...prev, message: validate?.error, open: true, isErrorFree: false }))
+        try {
+            const book = await book_equipment({
+                ...data,
+                need_assist: data.need_assist === 2 ? true : false
+            })
+            setButtonLoader(false)
+            if (parseInt(book.data?.code) !== 201) return setStates(prev => ({ ...prev, message: book.data?.message, open: true, isErrorFree: false }))
+            return setStates(prev => ({ ...prev, message: book.data?.message, open: true, isErrorFree: true }))
+        } catch (error) {
+            return setStates(prev => ({ ...prev, message: 'Something went wrong', open: true, isErrorFree: false }))
+        }
     }
 
     React.useEffect(() => {
@@ -107,7 +132,7 @@ const BookingSystem: React.FC<BookingPageProps> = ({ unavailable_days, shouldSub
                             value={states.date} type='date'
                             onChange={(e: React.SyntheticEvent<EventTarget>) => handleDateSelection((e.target as HTMLInputElement).value)}
                             classes={styles.input}
-                            disabled={states.loading}
+                            disabled={shouldSubmit}
                             placeholder='Select a date'
                         />
                     </Grid>

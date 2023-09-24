@@ -1,4 +1,6 @@
-import { Availability_Status, Functionality_Status, Regex, SelectableFiles, User_Status } from "../utils/statics"
+import { Technical_Assistance, Availability_Status, Functionality_Status, Regex, SelectableFiles, User_Status, Slots_Array } from "../utils/statics"
+import moment from 'moment'
+
 
 const useValidations = () => {
     const { ALPHA, EMAIL, PASSWORD, NUMERIC, MONGODB, CSVDOT_HYPHEN } = Regex
@@ -81,10 +83,21 @@ const useValidations = () => {
         if (comment.length === 0) return { error: 'Comment field is required' }
         next()
     }
+    const validateBooking = ({ ...params }) => {
+        const { data, next } = params
+        const { equipment_id, date, need_assist, slots } = data
+        if (!equipment_id.match(MONGODB)) return { error: 'Request was rejected' }
+        if (!moment(date).isValid()) return { error: 'Invalid date selected' }
+        if (slots.length === 0) return { error: 'No slots picked' }
+        if (!slots.every((slot: string) => Slots_Array.some(item => item.slot !== slot))) return { error: 'Invalid slots selected' }
+        if (!Technical_Assistance.some(item => item.value !== Number(need_assist))) return { error: 'Data rejected' }
+        next()
+    }
 
     return {
         validateRegistration, validateOTP, validateResendOTP, validateLogin,
-        validateEquipment, fileValidator, validateUserUpdate, validateComment
+        validateEquipment, fileValidator, validateUserUpdate, validateComment,
+        validateBooking
     }
 }
 export default useValidations

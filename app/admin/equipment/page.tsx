@@ -10,9 +10,9 @@ import { SaveEquipmentPageState } from '@/redux/app/slice.app'
 import { Title, SuspenseLoader, EmptyList, EquipmentList, Search, Filter, Create } from './exports'
 import get_equipment from '@/app/actions/equipment/equipment.get'
 import { FetchEquipment } from '@/redux/equipment/slice.equipment'
-import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import search_equipment from '@/app/actions/equipment/equipment.search'
 import filter_equipment from '@/app/actions/equipment/equipment.filter'
+import useCustomMethods from '@/app/hooks/useCustomMethods'
 
 export type EquipmentPageStates = {
     loading: boolean
@@ -23,10 +23,8 @@ export type EquipmentPageStates = {
 }
 
 const Equipment = () => {
-    const searchParams = useSearchParams()
-    const router = useRouter()
-    const pathname = usePathname()
     const dispatch = useAppDispatch()
+    const useMethods = useCustomMethods()
     const app = useAppSelector(state => state.appReducer.equipment)
     const equipment = useAppSelector(state => state.equipmentReducer.equipment)
     const [states, setStates] = React.useState<EquipmentPageStates>({
@@ -83,9 +81,7 @@ const Equipment = () => {
     React.useEffect(() => {
         const setPageUrl = () => {
             if (app.hasOpenedSearchBoxPrompt || app.isSearchResultDisplayed) return false
-            const existingQuery = new URLSearchParams(Array.from(searchParams.entries()))
-            existingQuery.delete('q')
-            router.replace(pathname, { shallow: true })
+            useMethods.removeQueryParameter('q')
         }
         setPageUrl() //eslint-disable-next-line
     }, [app.hasOpenedSearchBoxPrompt, app.isSearchResultDisplayed])
@@ -94,9 +90,7 @@ const Equipment = () => {
     }
     const refreshHandler = async () => {
         try {
-            const existingQuery = new URLSearchParams(Array.from(searchParams.entries()))
-            existingQuery.delete('q')
-            router.replace(pathname, { shallow: true })
+            useMethods.removeQueryParameter('q')
             setStates(prev => ({ ...prev, currentPage: 1, loading: true }))
             dispatch(SaveEquipmentPageState({
                 ...app,

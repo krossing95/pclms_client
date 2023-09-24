@@ -8,8 +8,8 @@ import MovablePrompt from '@/app/utils/components/MovablePrompt'
 import MessageBox from '@/app/utils/components/MessageBox'
 import InputField from '@/app/components/Input'
 import search_equipment from '@/app/actions/equipment/equipment.search'
-import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { FetchEquipment } from '@/redux/equipment/slice.equipment'
+import useCustomMethods from '@/app/hooks/useCustomMethods'
 
 interface EquipmentSearchStates {
     keyword: string
@@ -25,11 +25,9 @@ interface EquipmentSearchProps {
 
 const Search: React.FC<EquipmentSearchProps> = ({ paginate }) => {
     const app = useAppSelector(state => state.appReducer.equipment)
-    const router = useRouter()
-    const pathname = usePathname()
-    const searchParams = useSearchParams()
     const dispatch = useAppDispatch()
     const { textProcessor } = StringMethods()
+    const useMethods = useCustomMethods()
     const [states, setStates] = React.useState<EquipmentSearchStates>({
         keyword: '',
         open: false,
@@ -37,13 +35,6 @@ const Search: React.FC<EquipmentSearchProps> = ({ paginate }) => {
         isErrorFree: false,
         loading: false
     })
-    const appendQueryParameter = (str: string) => {
-        const existingQuery = new URLSearchParams(Array.from(searchParams.entries()))
-        existingQuery.set('q', str)
-        const search = existingQuery.toString()
-        const query = search ? `?${search}` : ""
-        router.replace(`${pathname}${query}`, { shallow: true })
-    }
     const handleClose = () => {
         if (states.loading) return false
         dispatch(SaveEquipmentPageState({ ...app, hasOpenedSearchBoxPrompt: false }))
@@ -52,7 +43,7 @@ const Search: React.FC<EquipmentSearchProps> = ({ paginate }) => {
         setStates(prev => ({ ...prev, open: false, message: '', isErrorFree: false }))
         const word = textProcessor(states.keyword).trim()
         if (word.length === 0) return setStates(prev => ({ ...prev, keyword: '' }))
-        appendQueryParameter(word)
+        useMethods.appendQueryParameter(word, 'q')
         setStates(prev => ({ ...prev, loading: true }))
         try {
             const result = await search_equipment({ page: 1, keyword: word })

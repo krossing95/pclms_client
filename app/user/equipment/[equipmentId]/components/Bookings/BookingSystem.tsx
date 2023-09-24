@@ -122,7 +122,7 @@ const BookingSystem: React.FC<BookingPageProps> = ({ unavailable_days, shouldSub
                         <React.Fragment>
                             {states.date.length > 0 ? (
                                 <React.Fragment>
-                                    <Grid item xs={12} sx={{ mt: 2 }}>
+                                    <Grid item xs={12} sm={6} md={12} sx={{ mt: 2 }}>
                                         <Autocomplete
                                             multiple
                                             value={states.slots}
@@ -134,10 +134,12 @@ const BookingSystem: React.FC<BookingPageProps> = ({ unavailable_days, shouldSub
                                             renderInput={(params) => (
                                                 <TextField {...params} label="Pick Slot" placeholder="Slots" />
                                             )}
-                                            sx={{ width: { xs: 260, sm: 285, md: 400 } }}
+                                            sx={{
+                                                width: { xs: 260, sm: 285, md: 260 },
+                                            }}
                                         />
                                     </Grid>
-                                    <Grid item xs={12} sx={{ mt: 2, mb: 2 }}>
+                                    <Grid item xs={12} sm={6} md={12} sx={{ mt: 2, mb: 2 }}>
                                         <RadioGroup value={states.need_assist} onChange={(e) => setStates(prev => ({ ...prev, need_assist: e.target.value }))} aria-labelledby="demo-radio-buttons-group-label" name="radio-buttons-group" row>{<TechnicalAssistanceSelector />}</RadioGroup>
                                     </Grid>
                                 </React.Fragment>

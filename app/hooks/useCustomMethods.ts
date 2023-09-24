@@ -1,7 +1,12 @@
 import moment from 'moment-timezone'
 import { DateSelectionTypes } from '../types/type.handleDateSelection'
+import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 
 const useCustomMethods = () => {
+    const router = useRouter()
+    const pathname = usePathname()
+    const searchParams = useSearchParams()
+
     const preventCopyPaste = (e: React.FormEvent<HTMLInputElement>) => {
         e.preventDefault()
         return false
@@ -38,8 +43,30 @@ const useCustomMethods = () => {
         return false
     }
 
+    const appendQueryParameter = (str: string, param_name: string) => {
+        const existingQuery = new URLSearchParams(Array.from(searchParams.entries()))
+        existingQuery.set(param_name, str)
+        const queriesToString = existingQuery.toString()
+        const query = queriesToString ? `?${queriesToString}` : ""
+        router.replace(`${pathname}${query}`, { shallow: true })
+    }
+
+    const removeQueryParameter = (param_name: string) => {
+        const existingQuery = new URLSearchParams(Array.from(searchParams.entries()))
+        existingQuery.delete(param_name)
+        router.replace(pathname, { shallow: true })
+    }
+
+    const checkQueryParameterExistence = (param_name: string) => {
+        const existingQuery = new URLSearchParams(Array.from(searchParams.entries()))
+        const value = existingQuery.get(param_name)
+        if (!value) return false
+        return true
+    }
+
     return {
-        preventCopyPaste, handleDateSelection, dateConterter, dateInclusiveChecker
+        preventCopyPaste, handleDateSelection, dateConterter, dateInclusiveChecker,
+        appendQueryParameter, removeQueryParameter, checkQueryParameterExistence
     }
 }
 export default useCustomMethods

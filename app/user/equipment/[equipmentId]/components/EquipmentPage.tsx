@@ -12,6 +12,7 @@ import { Title, SuspenseLoader, PhotoDisplayer, Texts, DataDisplay } from '../ex
 import Comments from './Comments'
 import Save from './Save'
 import BookingPage from './Bookings/BookingPage'
+import useCustomMethods from '@/app/hooks/useCustomMethods'
 
 interface SingleEquipmentStates {
     file: string
@@ -25,6 +26,7 @@ const EquipmentPage: React.FC<SingleEquipmentPageProps> = ({ data }) => {
     const [states, setStates] = React.useState<SingleEquipmentStates>({
         file: '', loading: true
     })
+    const useMethods = useCustomMethods()
     const dispatch = useAppDispatch()
     const app = useAppSelector(state => state.appReducer.equipment)
     const equipment = useAppSelector(state => state.equipmentReducer.equipment)?.[0]
@@ -33,9 +35,16 @@ const EquipmentPage: React.FC<SingleEquipmentPageProps> = ({ data }) => {
         const getData = () => {
             dispatch(FetchEquipment([data]))
             setStates(prev => ({ ...prev, loading: false }))
+            const checkState = useMethods.checkQueryParameterExistence('state')
+            if (!checkState) return false
+            dispatch(SaveEquipmentPageState({ ...app, hasOpenedBookingPrompt: true }))
         }
         getData() // eslint-disable-next-line
     }, [])
+    const handleOpeningBookingPage = () => {
+        useMethods.appendQueryParameter('booking', 'state')
+        dispatch(SaveEquipmentPageState({ ...app, hasOpenedBookingPrompt: true }))
+    }
 
     return (
         <Box component='div'>
@@ -65,7 +74,7 @@ const EquipmentPage: React.FC<SingleEquipmentPageProps> = ({ data }) => {
                                             <Save />
                                             {equipment.availability_status ? (
                                                 <Tooltip title='Book Equipment'>
-                                                    <IconButton onClick={() => dispatch(SaveEquipmentPageState({ ...app, hasOpenedBookingPrompt: true }))}>
+                                                    <IconButton onClick={() => handleOpeningBookingPage()}>
                                                         <BookmarksOutlined />
                                                     </IconButton>
                                                 </Tooltip>

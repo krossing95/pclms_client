@@ -12,6 +12,7 @@ import { toast } from 'react-toastify'
 import type { UnavailableDays } from '@/app/types/type.unavailable_days'
 import UnavailableDaysPage from './UnavailableDays'
 import BookingSystem from './BookingSystem'
+import useCustomMethods from '@/app/hooks/useCustomMethods'
 
 interface BookingPageStates {
     open: boolean
@@ -24,6 +25,7 @@ interface BookingPageStates {
 
 const BookingPage = () => {
     const { equipmentId } = useParams()
+    const useMethods = useCustomMethods()
     const app = useAppSelector(state => state.appReducer.equipment)
     const dispatch = useAppDispatch()
     const [states, setStates] = React.useState<BookingPageStates>({
@@ -53,6 +55,7 @@ const BookingPage = () => {
     }, [])
     const handleClose = () => {
         if (states.booking) return false
+        useMethods.removeQueryParameter('state')
         dispatch(SaveEquipmentPageState({ ...app, hasOpenedBookingPrompt: false }))
     }
     const submitHandler = () => setStates(prev => ({ ...prev, booking: true }))

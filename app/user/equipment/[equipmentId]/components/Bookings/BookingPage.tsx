@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Box, Button, CircularProgress, Dialog, DialogActions, DialogContent, DialogTitle, Grid, IconButton, Typography } from '@mui/material'
+import { Box, Button, CircularProgress, Dialog, Paper, DialogActions, DialogContent, DialogTitle, Grid, IconButton, Typography } from '@mui/material'
 import { useAppDispatch, useAppSelector } from '@/redux/hooks'
 import { SaveEquipmentPageState } from '@/redux/app/slice.app'
 import MovablePrompt from '@/app/utils/components/MovablePrompt'
@@ -11,6 +11,7 @@ import get_requirements from '@/app/actions/bookings/booking.get_requirements'
 import { toast } from 'react-toastify'
 import type { UnavailableDays } from '@/app/types/type.unavailable_days'
 import UnavailableDaysPage from './UnavailableDays'
+import BookingSystem from './BookingSystem'
 
 interface BookingPageStates {
     open: boolean
@@ -24,7 +25,6 @@ interface BookingPageStates {
 const BookingPage = () => {
     const { equipmentId } = useParams()
     const app = useAppSelector(state => state.appReducer.equipment)
-    const equipment = useAppSelector(state => state.equipmentReducer.equipment)?.filter(i => i.id === equipmentId)?.[0]
     const dispatch = useAppDispatch()
     const [states, setStates] = React.useState<BookingPageStates>({
         open: false,
@@ -55,9 +55,7 @@ const BookingPage = () => {
         if (states.booking) return false
         dispatch(SaveEquipmentPageState({ ...app, hasOpenedBookingPrompt: false }))
     }
-    const submitHandler = async () => {
-
-    }
+    const submitHandler = () => setStates(prev => ({ ...prev, booking: true }))
     return (
         <Dialog fullScreen open={app.hasOpenedBookingPrompt} PaperComponent={MovablePrompt} aria-labelledby="draggable-dialog-title">
             {states.loading ? (
@@ -73,18 +71,32 @@ const BookingPage = () => {
                         message={states.message}
                     />
                     <DialogContent>
-                        <Grid container spacing={3}>
-                            <Grid item xs={12} md={6}>
-                                <UnavailableDaysPage unavailable_days={states.unavailable_days} />
+                        <Box component='div' sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+                            <Grid container>
+                                <Grid item xs={12} md={7}>
+                                    <UnavailableDaysPage
+                                        unavailable_days={states.unavailable_days}
+                                    />
+                                </Grid>
+                                <Grid item xs={12} md={1} />
+                                <Grid item xs={12} md={4}>
+                                    <Box component='div' className={styles.bookingFormPanel}>
+                                        <Typography>{"Select a date below to continue"}</Typography>
+                                        <BookingSystem
+                                            shouldSubmit={states.booking}
+                                            setButtonLoader={
+                                                (progress: boolean) => setStates(prev => ({ ...prev, booking: progress }))
+                                            }
+                                            unavailable_days={states.unavailable_days}
+                                        />
+                                    </Box>
+                                </Grid>
                             </Grid>
-                            <Grid item xs={12} md={6}>
-
-                            </Grid>
-                        </Grid>
+                        </Box>
                     </DialogContent>
                     <DialogActions>
                         <Button className={styles.dashedBoaderBtn} autoFocus onClick={handleClose}>
-                            Cancel
+                            {"close"}
                         </Button>
                         <Button disabled={states.booking} className={styles.dashedBoaderBtn} onClick={submitHandler}>
                             {states.booking ? (

@@ -29,8 +29,17 @@ const useCustomMethods = () => {
         return formattedDate
     }
 
+    const dateInclusiveChecker = (dateToCheck: string, dateArray: string[]) => {
+        const dateToCheckString = (new Date(dateToCheck)).toISOString().split('T')[0]
+        for (const date of dateArray) {
+            const dateArrayItemString = (new Date(date)).toISOString().split('T')[0]
+            if (dateArrayItemString === dateToCheckString) return true
+        }
+        return false
+    }
+
     return {
-        preventCopyPaste, handleDateSelection, dateConterter
+        preventCopyPaste, handleDateSelection, dateConterter, dateInclusiveChecker
     }
 }
 export default useCustomMethods

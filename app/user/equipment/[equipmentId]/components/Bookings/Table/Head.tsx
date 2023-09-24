@@ -3,7 +3,7 @@ import * as React from 'react'
 import styles from '../styles.module.css'
 
 export default function Head() {
-    const list = ['SNo', 'Day', 'Date']
+    const list = ['SNo', 'Date', 'Day']
     return (
         <TableHead>
             <TableRow>

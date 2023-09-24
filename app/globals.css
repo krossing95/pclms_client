@@ -51,28 +51,28 @@ textarea {
   margin-top: 10px;
 }
 
-/* Style the scrollbar track */
 ::-webkit-scrollbar {
-  width: 7px;
-  /* Set the width of the scrollbar */
+  width: 4px;
+  height: 4px;
 }
 
-/* Style the scrollbar thumb */
 ::-webkit-scrollbar-thumb {
   background-color: #888;
-  /* Color of the thumb */
   border-radius: 6px;
-  /* Rounded corners */
 }
 
-/* Style the scrollbar track when not hovered */
 ::-webkit-scrollbar-track {
-  background-color: #f1f1f1;
-  /* Color of the track */
+  background-color: #F9FAFB;
 }
 
-/* Style the scrollbar thumb when hovered */
+/* Style the thumb of vertical scrollbar when hovered */
 ::-webkit-scrollbar-thumb:hover {
-  background-color: #555;
-  /* Color of the thumb when hovered */
+  background-color: #161718;
+  transition: background-color ease-in-out 2s;
+}
+
+/* Style the thumb of horizontal scrollbar when hovered */
+::-webkit-scrollbar-thumb:hover:horizontal {
+  background-color: #161718;
+  transition: background-color ease-in-out 2s;
 }

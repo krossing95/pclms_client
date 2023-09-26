@@ -13,6 +13,7 @@ import TechnicalAssistanceSelector from '@/app/utils/components/Selectors/Techni
 import { toast } from 'react-toastify'
 import useValidations from '@/app/hooks/useValidations'
 import book_equipment from '@/app/actions/bookings/booking.book_equipment'
+import moment from 'moment'
 
 type Slot = {
     id: number
@@ -32,11 +33,12 @@ interface BookingSystemStates {
 
 interface BookingPageProps {
     unavailable_days: UnavailableDays[]
+    daylist: UnavailableDays[]
     shouldSubmit: boolean
     setButtonLoader: (progress: boolean) => void
 }
 
-const BookingSystem: React.FC<BookingPageProps> = ({ unavailable_days, shouldSubmit, setButtonLoader }) => {
+const BookingSystem: React.FC<BookingPageProps> = ({ unavailable_days, shouldSubmit, setButtonLoader, daylist }) => {
     const { equipmentId } = useParams()
     const methodHooks = useCustomMethods()
     const validations = useValidations()
@@ -47,11 +49,13 @@ const BookingSystem: React.FC<BookingPageProps> = ({ unavailable_days, shouldSub
     })
 
     const handleDateSelection = (date: string) => {
+        if (date.length === 0) return false
         const { status, message } = methodHooks.handleDateSelection(date)
         if (!status) return setStates(prev => ({ ...prev, message, open: true, isErrorFree: false, date: '', fetching_slots: false }))
-        const datelist = unavailable_days.map(date => date.date)
+        const datelist = daylist.map(date => date.date)
         const checkDateExistenceInUnavailableDays = methodHooks.dateInclusiveChecker(date, datelist)
-        if (checkDateExistenceInUnavailableDays) return setStates(prev => ({ ...prev, message: 'Selected date cannot be booked', open: true, isErrorFree: false, date: '' }))
+        const correspondingUnavailableDay = daylist.filter(day => moment(day.date).isSame(moment(date)))?.[0]
+        if (checkDateExistenceInUnavailableDays) return setStates(prev => ({ ...prev, message: `${correspondingUnavailableDay.name} is selected`, open: true, isErrorFree: false, date: '' }))
         setStates(prev => ({ ...prev, date, fetching_slots: true, message: '', open: false, isErrorFree: false }))
     }
 
@@ -77,8 +81,12 @@ const BookingSystem: React.FC<BookingPageProps> = ({ unavailable_days, shouldSub
     }
 
     React.useEffect(() => {
+        const speakWelcome = () => toast('Welcome to Our Booking Service')
+        speakWelcome() // eslint-disable-next-line
+    }, [])
+
+    React.useEffect(() => {
         const takeSlots = () => {
-            toast('Welcome to Our Booking Service')
             if (states.fetching_slots && states.date !== '') return getSlots()
         }
         takeSlots() // eslint-disable-next-line
@@ -125,7 +133,7 @@ const BookingSystem: React.FC<BookingPageProps> = ({ unavailable_days, shouldSub
                 message={states.message}
                 isErrorFree={states.isErrorFree}
             />
-            <Box component='div' className={styles.loadmoreContainer}>
+            <Box component='div' sx={{ mt: 2 }} className={styles.loadmoreContainer}>
                 <Grid container spacing={1}>
                     <Grid item xs={12} sm={6} md={12} className={styles.input_container}>
                         <InputField

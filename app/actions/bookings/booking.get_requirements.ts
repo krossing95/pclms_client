@@ -3,13 +3,14 @@ import Cookies from 'js-cookie'
 
 interface GetBookingRequirementsProps {
     id: string
+    page: number
 }
 
-const get_requirements = async ({ id }: GetBookingRequirementsProps) => {
+const get_requirements = async ({ id, page }: GetBookingRequirementsProps) => {
     const cookieObj = Cookies.get('__signedInUserObj') || '{}'
     const cookie = JSON.parse(cookieObj)?.user
     const HOST = process.env.NEXT_PUBLIC_HTTPHOST
-    const url = `${HOST}bookings/requirements?equipment_id=${id}`
+    const url = `${HOST}bookings/requirements?equipment_id=${id}&page=${page}`
     try {
         const res = await axios({
             method: 'GET',

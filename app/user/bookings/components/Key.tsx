@@ -5,7 +5,7 @@ import { FiberManualRecord } from '@mui/icons-material'
 import styles from '../styles.module.css'
 
 
-interface KeyItemProps {
+export interface KeyItemProps {
     name: string
     styling?: string
 }

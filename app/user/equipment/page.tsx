@@ -117,7 +117,6 @@ const Equipment = () => {
         <Box component='div'>
             <Box component='div' className={styles.header}>
                 <Title text='Equipment' variant_switch={false} />
-                <EquipmentKeyRepresentation />
                 <Box component='div' className={styles.toolbar}>
                     {(equipment.length > 0 && !states.loading) ? (
                         <React.Fragment>
@@ -147,7 +146,10 @@ const Equipment = () => {
                         {equipment.length === 0 ? (
                             <EmptyList />
                         ) : (
-                            <EquipmentList />
+                            <React.Fragment>
+                                <EquipmentKeyRepresentation />
+                                <EquipmentList />
+                            </React.Fragment>
                         )}
                     </React.Fragment>
                 )}

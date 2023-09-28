@@ -1,7 +1,8 @@
 import React from "react"
-import { KeyContainer, KeyItem } from "../bookings/components/Key"
+import { KeyContainer, KeyItem, KeyItemProps } from "../bookings/components/Key"
 import styles from "./styles.module.css"
 import { Stack, Typography, Box } from "@mui/material"
+import { FiberManualRecordOutlined } from "@mui/icons-material"
 
 interface TextfulItemProps {
     styling?: string
@@ -16,6 +17,17 @@ export const TextfulItem: React.FC<TextfulItemProps> = ({ styling, leftText, rig
     </React.Fragment>
 )
 
+export const AvailabilityKeyItem: React.FC<KeyItemProps> = ({ name, styling }) => (
+    <React.Fragment>
+        <FiberManualRecordOutlined
+            fontSize='small'
+            sx={{ fontSize: '12px', pr: 0.5 }}
+            className={styling}
+        />
+        <Typography variant='body2'>{name}</Typography>
+    </React.Fragment>
+)
+
 export default function EquipmentKeyRepresentation() {
     return (
         <Box component='div'>
@@ -27,7 +39,9 @@ export default function EquipmentKeyRepresentation() {
                     <KeyItem name='Functionality status' />
                 </KeyContainer>
                 <KeyContainer>
-                    <KeyItem name='Availability status' />
+                    <AvailabilityKeyItem
+                        name="Availability status"
+                    />
                 </KeyContainer>
             </Stack>
             <Stack

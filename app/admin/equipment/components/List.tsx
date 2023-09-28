@@ -13,7 +13,6 @@ const EquipmentList = () => {
                 <EmptyList />
             ) : (
                 <React.Fragment>
-                    {/* <KeyRepresentation /> */}
                     <Grid container sx={{ mt: 2 }} spacing={1}>
                         {equipment.map((item, i) => (
                             <Grid key={item.id} item xs={12} sm={6} md={4} lg={3}>

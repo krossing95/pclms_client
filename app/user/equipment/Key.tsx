@@ -12,7 +12,7 @@ interface TextfulItemProps {
 
 export const TextfulItem: React.FC<TextfulItemProps> = ({ styling, leftText, rightText }) => (
     <React.Fragment>
-        <Typography variant='body2' className={styling}>{leftText}</Typography>
+        <Typography sx={{ pr: 1 }} variant='body2' className={styling}>{leftText}</Typography>
         <Typography variant='body2'>{rightText}</Typography>
     </React.Fragment>
 )
@@ -21,7 +21,7 @@ export const AvailabilityKeyItem: React.FC<KeyItemProps> = ({ name, styling }) =
     <React.Fragment>
         <FiberManualRecordOutlined
             fontSize='small'
-            sx={{ fontSize: '12px', pr: 0.5 }}
+            sx={{ fontSize: '14px', pr: 0.5 }}
             className={styling}
         />
         <Typography variant='body2'>{name}</Typography>

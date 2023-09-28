@@ -24,7 +24,7 @@ export const KeyItem: React.FC<KeyItemProps> = ({ name, styling }) => (
     <React.Fragment>
         <FiberManualRecord
             fontSize='small'
-            sx={{ fontSize: '12px', pr: 0.5 }}
+            sx={{ fontSize: '14px', pr: 0.5 }}
             className={styling}
         />
         <Typography variant='body2'>{name}</Typography>

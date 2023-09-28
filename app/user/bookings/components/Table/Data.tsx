@@ -4,6 +4,7 @@ import styles from '../../styles.module.css'
 import { useAppSelector } from '@/redux/hooks'
 import useCustomMethods from '@/app/hooks/useCustomMethods'
 import { FiberManualRecord } from '@mui/icons-material'
+import Activity from './Activity'
 
 const Data = () => {
     const bookings = useAppSelector(state => state.bookingsReducer.bookings)
@@ -21,16 +22,16 @@ const Data = () => {
                     </TableCell>
                     <TableCell className={styles.tcell} align='right'>
                         {booking.status === 1 ? (
-                            <FiberManualRecord fontSize='small' sx={{ color: '#f1c40f', fontSize: '12px' }} />
+                            <FiberManualRecord sx={{ color: '#f1c40f', fontSize: '14px' }} />
                         ) : booking.status === 2 ? (
-                            <FiberManualRecord fontSize='small' sx={{ color: '#07bc0c', fontSize: '12px' }} />
+                            <FiberManualRecord sx={{ color: '#07bc0c', fontSize: '14px' }} />
                         ) : booking.status === 3 ? (
-                            <FiberManualRecord fontSize='small' sx={{ color: '#e74c3c', fontSize: '12px' }} />
+                            <FiberManualRecord sx={{ color: '#e74c3c', fontSize: '14px' }} />
                         ) : null}
                     </TableCell>
                     <TableCell className={styles.tcell} align='right'>{useMethods.dateConterter(`${booking.updated_at}`, 'll')}</TableCell>
                     <TableCell align='right'>
-                        {/* <Activity id={day.id} /> */}
+                        <Activity id={booking.id} />
                     </TableCell>
                 </TableRow>
             ))}

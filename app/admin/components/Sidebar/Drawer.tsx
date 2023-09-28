@@ -77,7 +77,7 @@ const SideBarDrawer = React.forwardRef<() => void, DrawerProps>((props, ref) => 
                         <ListItemIcon>
                             <MenuBookOutlined />
                         </ListItemIcon>
-                        <ListItemText primary='Bookings' />
+                        <ListItemText primary='Booking List' />
                     </ListItemButton>
                 </ListItem>
                 {cookieObj?.usertype === Number(process.env.NEXT_PUBLIC_APP_USER) ? (

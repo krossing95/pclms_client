@@ -39,3 +39,13 @@ export type UserManagementInterfaceStateManagement = {
     selectedUserId: string
     userSearchQuery: string
 }
+
+export type BookingListManagementInterfaceStateManagement = {
+    isBookingSearchResultDisplayed: boolean
+    hasOpenedSearchBoxPrompt: boolean
+    hasOpenedDeleteBookingPrompt: boolean
+    hasOpenedEditBookingPrompt: boolean
+    hasOpenedCreateBookingPrompt: boolean
+    selectedBookingId: string
+    bookingSearchQuery: string
+}

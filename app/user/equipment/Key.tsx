@@ -1,0 +1,54 @@
+import React from "react"
+import { KeyContainer, KeyItem } from "../bookings/components/Key"
+import styles from "./styles.module.css"
+import { Stack, Typography, Box } from "@mui/material"
+
+interface TextfulItemProps {
+    styling?: string
+    leftText?: string
+    rightText?: string
+}
+
+export const TextfulItem: React.FC<TextfulItemProps> = ({ styling, leftText, rightText }) => (
+    <React.Fragment>
+        <Typography variant='body2' className={styling}>{leftText}</Typography>
+        <Typography variant='body2'>{rightText}</Typography>
+    </React.Fragment>
+)
+
+export default function EquipmentKeyRepresentation() {
+    return (
+        <Box component='div'>
+            <Stack
+                direction={{ xs: 'column', sm: 'row' }}
+                spacing={1}
+            >
+                <KeyContainer>
+                    <KeyItem name='Functionality status' />
+                </KeyContainer>
+                <KeyContainer>
+                    <KeyItem name='Availability status' />
+                </KeyContainer>
+            </Stack>
+            <Stack
+                direction={{ xs: 'column', sm: 'row' }}
+                spacing={1}
+            >
+                <KeyContainer>
+                    <TextfulItem
+                        styling={styles.isTrue}
+                        leftText="Green"
+                        rightText="Operational or available"
+                    />
+                </KeyContainer>
+                <KeyContainer>
+                    <TextfulItem
+                        styling={styles.isFalse}
+                        leftText="Blue"
+                        rightText="Inoperable or Unavailable"
+                    />
+                </KeyContainer>
+            </Stack>
+        </Box>
+    )
+}

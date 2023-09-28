@@ -13,6 +13,7 @@ import { FetchEquipment } from '@/redux/equipment/slice.equipment'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import search_equipment from '@/app/actions/equipment/equipment.search'
 import filter_equipment from '@/app/actions/equipment/equipment.filter'
+import EquipmentKeyRepresentation from './Key'
 
 export type EquipmentPageStates = {
     loading: boolean
@@ -116,6 +117,7 @@ const Equipment = () => {
         <Box component='div'>
             <Box component='div' className={styles.header}>
                 <Title text='Equipment' variant_switch={false} />
+                <EquipmentKeyRepresentation />
                 <Box component='div' className={styles.toolbar}>
                     {(equipment.length > 0 && !states.loading) ? (
                         <React.Fragment>

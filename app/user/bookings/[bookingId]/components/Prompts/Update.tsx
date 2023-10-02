@@ -125,7 +125,8 @@ const BookingUpdatePage = () => {
                                 <Grid item xs={12} md={1} />
                                 <Grid item xs={12} md={4}>
                                     <Box component='div' className={styles.bookingFormPanel}>
-                                        <Typography gutterBottom>{"Select a date below to continue"}</Typography>
+                                        <Typography gutterBottom>{"Select a new date or the initial one below to load new slots"}</Typography>
+                                        <Typography gutterBottom sx={{ fontWeight: 'bold', pt: 2 }}>{`Initial booked date is ${useMethods.dateConterter(booking.date, 'll')}`}</Typography>
                                         <BookingUpdateSystem
                                             shouldSubmit={states.booking}
                                             daylist={states.day_set}

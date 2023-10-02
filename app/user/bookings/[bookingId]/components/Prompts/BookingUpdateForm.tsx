@@ -53,7 +53,7 @@ const BookingUpdateSystem: React.FC<BookingPageProps> = ({ unavailable_days, sho
         return slotArray
     }
     const [states, setStates] = React.useState<BookingSystemStates>({
-        date: methodHooks.dateConterter(booking.date, 'mm/dd/yyyy'), slots: createSlotArray([...booking.slots]), need_assist: booking.need_assist ? '2' : '1', fetching_slots: false,
+        date: '', slots: createSlotArray([...booking.slots]), need_assist: booking.need_assist ? '2' : '1', fetching_slots: false,
         open: false, isErrorFree: false, message: '',
         availableSlots: []
     })

@@ -125,11 +125,9 @@ const BookingUpdatePage = () => {
                                 <Grid item xs={12} md={1} />
                                 <Grid item xs={12} md={4}>
                                     <Box component='div' className={styles.bookingFormPanel}>
-                                        <Typography variant='overline' gutterBottom>{"Select a new date or the initial one below to load new slots"}</Typography>
-                                        <br />
-                                        <Typography variant='overline' gutterBottom sx={{ fontWeight: 'bold', pt: 2 }}>{`Initial booked date is ${useMethods.dateConterter(booking.date, 'll')}`}</Typography>
-                                        <br />
-                                        <Typography variant='overline' gutterBottom sx={{ fontWeight: 'bold', pt: 1 }}>
+                                        <Typography variant='body2' gutterBottom>{"Select a new date or the initial one below to load new slots"}</Typography>
+                                        <Typography variant='body2' gutterBottom sx={{ fontWeight: 'bold', pt: 2 }}>{`Initial booked date is ${useMethods.dateConterter(booking.date, 'll')}`}</Typography>
+                                        <Typography variant='body2' gutterBottom sx={{ fontWeight: 'bold', pt: 1 }}>
                                             {"The following is/are your initial selected slots; "}
                                             {booking.slots.map((slot, i) => (
                                                 <React.Fragment key={i + 1}>

@@ -43,17 +43,17 @@ const BookingUpdateSystem: React.FC<BookingPageProps> = ({ unavailable_days, sho
     const booking = useAppSelector(state => state.bookingsReducer.bookings).filter(booking => booking.id === bookingId)?.[0]
     const methodHooks = useCustomMethods()
     const validations = useValidations()
-    const createSlotArray = (array: string[]) => {
-        let slotArray: Slot[] = []
-        Slots_Array.map(slot => {
-            if (array.includes(slot.slot)) {
-                slotArray = [...slotArray, { ...slot }]
-            }
-        })
-        return slotArray
-    }
+    // const createSlotArray = (array: string[]) => {
+    //     let slotArray: Slot[] = []
+    //     Slots_Array.map(slot => {
+    //         if (array.includes(slot.slot)) {
+    //             slotArray = [...slotArray, { ...slot }]
+    //         }
+    //     })
+    //     return slotArray
+    // }
     const [states, setStates] = React.useState<BookingSystemStates>({
-        date: '', slots: createSlotArray([...booking.slots]), need_assist: booking.need_assist ? '2' : '1', fetching_slots: false,
+        date: '', slots: [], need_assist: booking.need_assist ? '2' : '1', fetching_slots: false,
         open: false, isErrorFree: false, message: '',
         availableSlots: []
     })

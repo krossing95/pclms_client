@@ -48,7 +48,7 @@ const SingleBookingPage = () => {
                         <Avatar
                             alt={booking.name}
                             src={booking?.photo_url}
-                            sx={{ width: 56, height: 56 }}
+                            sx={{ width: 56, height: 56, border: '4px green solid', borderRadius: '100%' }}
                         />
                         <Box component='div' className={styles.toolbar}>
                             <React.Fragment>

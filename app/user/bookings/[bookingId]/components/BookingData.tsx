@@ -12,7 +12,7 @@ const BookingData = () => {
     const useMethods = useCustomMethods()
     return (
         <React.Fragment>
-            <Title text='Booking' variant_switch={false} />
+            <Title text='Booking' variant_switch={true} />
             <List>
                 <ListItem disablePadding sx={{ pb: 2 }}>
                     <ListItemIcon sx={{ pr: 2 }}>

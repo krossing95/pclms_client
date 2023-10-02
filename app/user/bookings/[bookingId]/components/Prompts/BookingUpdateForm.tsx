@@ -1,6 +1,5 @@
 import * as React from 'react'
 import { Autocomplete, Box, Grid, RadioGroup, TextField } from '@mui/material'
-import styles from './styles.module.css'
 import { useParams } from 'next/navigation'
 import InputField from '@/app/components/Input'
 import useCustomMethods from '@/app/hooks/useCustomMethods'
@@ -11,10 +10,10 @@ import { Slots_Array } from '@/app/utils/statics'
 import TechnicalAssistanceSelector from '@/app/utils/components/Selectors/TechnicalAssistanceSelector'
 import { toast } from 'react-toastify'
 import useValidations from '@/app/hooks/useValidations'
-import book_equipment from '@/app/actions/bookings/booking.book_equipment'
 import moment from 'moment'
 import { useAppSelector } from '@/redux/hooks'
 import { SuspenseLoader } from '../../../exports'
+import styles from '../../../styles.module.css'
 
 type Slot = {
     id: number

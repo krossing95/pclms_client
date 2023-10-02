@@ -13,6 +13,7 @@ import get_booking from '@/app/actions/bookings/booking.get_one'
 import { toast } from 'react-toastify'
 import DataRepresentation from './components/DataRepresentation'
 import Cancel from './components/Prompts/Cancel'
+import BookingUpdatePage from './components/Prompts/Update'
 
 interface SingleBookingState {
     loading: boolean
@@ -48,7 +49,7 @@ const SingleBookingPage = () => {
                         <Avatar
                             alt={booking.name}
                             src={booking?.photo_url}
-                            sx={{ width: 56, height: 56, border: '4px green solid', borderRadius: '100%' }}
+                            sx={{ width: 56, height: 56, border: '3px #F9FAFB solid', borderRadius: '100%' }}
                         />
                         <Box component='div' className={styles.toolbar}>
                             <React.Fragment>
@@ -71,10 +72,9 @@ const SingleBookingPage = () => {
             <React.Fragment>
                 {app?.hasOpenedBookingCancelPrompt ? (
                     <Cancel />
+                ) : app?.hasOpenedBookingEditPrompt ? (
+                    <BookingUpdatePage />
                 ) : null}
-                {/* // ) : app?.hasOpenedBookingEditPrompt ? (
-                //     <Update />
-                // ) : null} */}
             </React.Fragment>
         </Box>
     )

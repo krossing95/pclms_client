@@ -127,11 +127,13 @@ const BookingUpdatePage = () => {
                                     <Box component='div' className={styles.bookingFormPanel}>
                                         <Typography variant='overline' gutterBottom>{"Select a new date or the initial one below to load new slots"}</Typography>
                                         <Typography variant='overline' gutterBottom sx={{ fontWeight: 'bold', pt: 2 }}>{`Initial booked date is ${useMethods.dateConterter(booking.date, 'll')}`}</Typography>
-                                        <Typography variant='overline' gutterBottom sx={{ fontWeight: 'bold', pt: 1 }}>{`Your initial booked slots is/are as follows; ${booking.slots.map(slot => (
-                                            <React.Fragment>
-                                                {`${slot}, `}
-                                            </React.Fragment>
-                                        ))}`}
+                                        <Typography variant='overline' gutterBottom sx={{ fontWeight: 'bold', pt: 1 }}>
+                                            {"The following is/are your initial selected slots; "}
+                                            {booking.slots.map((slot, i) => (
+                                                <React.Fragment key={i + 1}>
+                                                    {`${slot}, `}
+                                                </React.Fragment>
+                                            ))}
                                         </Typography>
                                         <BookingUpdateSystem
                                             shouldSubmit={states.booking}

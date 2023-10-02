@@ -11,4 +11,5 @@ export type Booking = {
     user_id: string
     name: string
     equipment_id: string
+    photo_url?: string
 }

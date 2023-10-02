@@ -48,4 +48,7 @@ export type BookingListManagementInterfaceStateManagement = {
     hasOpenedCreateBookingPrompt: boolean
     selectedBookingId: string
     bookingSearchQuery: string
+    hasOpenedBookingApprovalPrompt: boolean
+    hasOpenedBookingCancelPrompt: boolean
+    hasOpenedBookingEditPrompt: boolean
 }

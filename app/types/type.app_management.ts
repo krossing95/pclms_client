@@ -51,4 +51,11 @@ export type BookingListManagementInterfaceStateManagement = {
     hasOpenedBookingApprovalPrompt: boolean
     hasOpenedBookingCancelPrompt: boolean
     hasOpenedBookingEditPrompt: boolean
+    hasOpenedBookingFilterPrompt: boolean
+    isFilteredResultDispayed: boolean
+    bookingFilters: {
+        to: string,
+        from: string
+        status: number | null
+    }
 }

@@ -1,13 +1,10 @@
 import axios from 'axios'
-import Cookies from 'js-cookie'
 
 interface GetOneBookingProp {
     id: string
 }
 
 const get_booking = async ({ id }: GetOneBookingProp) => {
-    const cookieObj = Cookies.get('__signedInUserObj') || '{}'
-    const cookie = JSON.parse(cookieObj)?.user
     const HOST = process.env.NEXT_PUBLIC_HTTPHOST
     const url = `${HOST}bookings/single?booking_id=${id}`
     try {
@@ -15,8 +12,7 @@ const get_booking = async ({ id }: GetOneBookingProp) => {
             method: 'GET',
             url,
             headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${cookie.token}`
+                'Content-Type': 'application/json'
             }
         })
         return { data: res?.data }

@@ -1,4 +1,4 @@
-import { Technical_Assistance, Availability_Status, Functionality_Status, Regex, SelectableFiles, User_Status, Slots_Array } from "../utils/statics"
+import { Technical_Assistance, Availability_Status, Functionality_Status, Regex, SelectableFiles, User_Status, Slots_Array, Booking_Status } from "../utils/statics"
 import moment from 'moment'
 
 
@@ -105,10 +105,22 @@ const useValidations = () => {
         next()
     }
 
+    const validateBookingFilter = ({ ...params }) => {
+        const { data, next } = params
+        const { from, to, status } = data
+        if (!moment(from).isValid() || !moment(to).isValid()) return { error: 'Invalid date range' }
+        if (moment(to).isBefore(moment(from))) return { error: 'Inappropriate date range formation' }
+        const statusIsBlank = status.toString().length === 0
+        if (!statusIsBlank) {
+            if (!Booking_Status.some(item => item.value !== Number(status))) return { error: 'Data rejected' }
+        }
+        next()
+    }
+
     return {
         validateRegistration, validateOTP, validateResendOTP, validateLogin,
         validateEquipment, fileValidator, validateUserUpdate, validateComment,
-        validateBooking, validateBookingUpdate
+        validateBooking, validateBookingUpdate, validateBookingFilter
     }
 }
 export default useValidations

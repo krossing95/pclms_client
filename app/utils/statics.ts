@@ -53,6 +53,11 @@ export const User_Status = [
     { value: 2, name: 'Admin' },
     { value: 3, name: 'Blocked' }
 ]
+export const Booking_Status = [
+    { value: 1, name: 'Pending' },
+    { value: 2, name: 'Approved' },
+    { value: 3, name: 'Closed' }
+]
 export const Technical_Assistance = [
     { value: 1, name: 'I do not need technical assistance' },
     { value: 2, name: 'I need technical assistance' }

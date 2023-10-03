@@ -53,7 +53,7 @@ const Cancel = () => {
                 message={states.message}
             />
             <DialogContent>
-                <Typography gutterBottom variant='body2'>{'Are you absolutely sure you want to cancel the targetted appointment?'}</Typography>
+                <Typography gutterBottom variant='body2'>{'Are you absolutely sure you want to cancel the targetted booking?'}</Typography>
                 <Typography gutterBottom variant='body2'>{"This action cannot be undone, therefore, tread cautiously."}</Typography>
             </DialogContent>
             <DialogActions>

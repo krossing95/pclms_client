@@ -13,6 +13,8 @@ import { Data, EmptyList, Head, SuspenseLoader, Title } from './exports'
 import get_bookings from '@/app/actions/bookings/bookings.get'
 import search_bookings from '@/app/actions/bookings/bookings.search'
 import BookingKeyRepresentation from './components/Key'
+import Search from './components/Prompts/Search'
+import filter_bookings from '@/app/actions/bookings/booking.filter'
 
 interface BookingListStates {
     loading: boolean
@@ -47,7 +49,11 @@ const BookingListPage = () => {
             const bokings = (app.isBookingSearchResultDisplayed &&
                 app.bookingSearchQuery.length > 0 &&
                 !refreshAction) ? await search_bookings({ page: states.currentPage, keyword: app.bookingSearchQuery }) :
-                await get_bookings({ page })
+                (app.isFilteredResultDispayed &&
+                    Object.keys(app.bookingFilters).length === 3 &&
+                    !refreshAction) ?
+                    await filter_bookings({ page: states.currentPage, from: app.bookingFilters.from, to: app.bookingFilters.to, status: Number(app.bookingFilters.status) }) :
+                    await get_bookings({ page })
             setStates(prev => ({ ...prev, loading: false }))
             if (parseInt(bokings.data?.code) !== 200) return toast('Something went wrong')
             const data = bokings.data?.data
@@ -64,7 +70,8 @@ const BookingListPage = () => {
         }
     }
     React.useEffect(() => {
-        const toRefresh = (app.isBookingSearchResultDisplayed && app.bookingSearchQuery.length > 0)
+        const toRefresh = (app.isBookingSearchResultDisplayed && app.bookingSearchQuery.length > 0) ||
+            (app.isFilteredResultDispayed && Object.keys(app.bookingFilters).length === 3)
         loadData(states.currentPage, toRefresh ? false : true) //eslint-disable-next-line
     }, [states.currentPage])
     const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
@@ -126,30 +133,17 @@ const BookingListPage = () => {
                     ) : null}
                 </Box>
             </Box>
-            {/* {app.hasOpenedSearchBoxPrompt ? (
+            {app.hasOpenedSearchBoxPrompt ? (
                 <Search
                     paginate={(page: number, totalItem: number, totalPages: number) => setStates(prev => ({
                         ...prev,
-                        shouldGoTop: false,
                         currentPage: page,
                         totalCount: totalItem,
                         totalPages: totalPages
                     }))}
                 />
-            ) : app.hasOpenedEditDayPrompt ? (
-                <Update />
-            ) : app.hasOpenedDeleteDayPrompt ? (
-                <Remove
-                    paginate={(page: number, totalItem: number, totalPages: number) => setStates(prev => ({
-                        ...prev,
-                        shouldGoTop: false,
-                        currentPage: page,
-                        totalCount: totalItem,
-                        totalPages: totalPages
-                    }))}
-                />
-            ) : null} */}
-        </Box >
+            ) : null}
+        </Box>
     )
 }
 export default BookingListPage

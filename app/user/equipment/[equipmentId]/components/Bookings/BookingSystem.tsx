@@ -104,7 +104,10 @@ const BookingSystem: React.FC<BookingPageProps> = ({ unavailable_days, shouldSub
             next: () => setButtonLoader(true)
         }
         const validate = validations.validateBooking({ ...params })
-        if (validate?.error !== undefined) return setStates(prev => ({ ...prev, message: validate?.error, open: true, isErrorFree: false }))
+        if (validate?.error !== undefined) {
+            setButtonLoader(false)
+            return setStates(prev => ({ ...prev, message: validate?.error, open: true, isErrorFree: false }))
+        }
         try {
             const book = await book_equipment({
                 ...data,

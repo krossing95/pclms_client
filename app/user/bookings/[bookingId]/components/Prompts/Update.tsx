@@ -131,7 +131,7 @@ const BookingUpdatePage = () => {
                                             {"The following is/are your initial selected slots; "}
                                             {booking.slots.map((slot, i) => (
                                                 <React.Fragment key={i + 1}>
-                                                    {`${slot}${booking.slots.length > i + 1 ? ', ' : ''} `}
+                                                    {`${slot}${booking.slots.length > i + 1 ? ', ' : booking.slots.length - (i + 1) === 1 ? 'and ' : ''} `}
                                                 </React.Fragment>
                                             ))}
                                         </Typography>
@@ -155,7 +155,7 @@ const BookingUpdatePage = () => {
                         <Button disabled={states.booking} className={styles.dashedBoaderBtn} onClick={submitHandler}>
                             {states.booking ? (
                                 <CircularProgress color='inherit' size={15} />
-                            ) : 'book'}
+                            ) : 'update'}
                         </Button>
                     </DialogActions>
                 </React.Fragment>

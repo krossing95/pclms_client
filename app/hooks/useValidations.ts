@@ -94,10 +94,21 @@ const useValidations = () => {
         next()
     }
 
+    const validateBookingUpdate = ({ ...params }) => {
+        const { data, next } = params
+        const { booking_id, date, need_assist, slots } = data
+        if (!booking_id.match(MONGODB)) return { error: 'Request was rejected' }
+        if (!moment(date).isValid()) return { error: 'Invalid date selected' }
+        if (slots.length === 0) return { error: 'No slots picked' }
+        if (!slots.every((slot: string) => Slots_Array.some(item => item.slot !== slot))) return { error: 'Invalid slots selected' }
+        if (!Technical_Assistance.some(item => item.value !== Number(need_assist))) return { error: 'Data rejected' }
+        next()
+    }
+
     return {
         validateRegistration, validateOTP, validateResendOTP, validateLogin,
         validateEquipment, fileValidator, validateUserUpdate, validateComment,
-        validateBooking
+        validateBooking, validateBookingUpdate
     }
 }
 export default useValidations

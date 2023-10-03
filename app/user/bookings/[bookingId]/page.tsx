@@ -59,7 +59,7 @@ const SingleBookingPage = () => {
                                     </IconButton>
                                 </Tooltip>
                                 <Tooltip title='Edit Booking'>
-                                    <IconButton onClick={() => dispatch(SaveBookingsPageState({ ...app, hasOpenedBookingEditPrompt: true }))}>
+                                    <IconButton disabled={booking.update_count === 3 ? true : false} onClick={() => dispatch(SaveBookingsPageState({ ...app, hasOpenedBookingEditPrompt: true }))}>
                                         <ModeEditOutlined />
                                     </IconButton>
                                 </Tooltip>

@@ -12,4 +12,5 @@ export type Booking = {
     name: string
     equipment_id: string
     photo_url?: string
+    update_count: number
 }

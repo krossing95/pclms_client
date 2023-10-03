@@ -11,9 +11,12 @@ import TechnicalAssistanceSelector from '@/app/utils/components/Selectors/Techni
 import { toast } from 'react-toastify'
 import useValidations from '@/app/hooks/useValidations'
 import moment from 'moment'
-import { useAppSelector } from '@/redux/hooks'
+import { useAppDispatch, useAppSelector } from '@/redux/hooks'
 import { SuspenseLoader } from '../../../exports'
 import styles from '../../../styles.module.css'
+import update_booking from '@/app/actions/bookings/booking.update'
+import { FetchBookings } from '@/redux/bookings/slice.bookings'
+import type { Booking } from '@/app/types/type.bookings'
 
 type Slot = {
     id: number
@@ -43,15 +46,7 @@ const BookingUpdateSystem: React.FC<BookingPageProps> = ({ unavailable_days, sho
     const booking = useAppSelector(state => state.bookingsReducer.bookings).filter(booking => booking.id === bookingId)?.[0]
     const methodHooks = useCustomMethods()
     const validations = useValidations()
-    // const createSlotArray = (array: string[]) => {
-    //     let slotArray: Slot[] = []
-    //     Slots_Array.map(slot => {
-    //         if (array.includes(slot.slot)) {
-    //             slotArray = [...slotArray, { ...slot }]
-    //         }
-    //     })
-    //     return slotArray
-    // }
+    const dispatch = useAppDispatch()
     const [states, setStates] = React.useState<BookingSystemStates>({
         date: '', slots: [], need_assist: booking.need_assist ? '2' : '1', fetching_slots: false,
         open: false, isErrorFree: false, message: '',
@@ -78,7 +73,12 @@ const BookingUpdateSystem: React.FC<BookingPageProps> = ({ unavailable_days, sho
             }))
             const unavailable_slots: string[] = getSlots.data?.data?.unavailable_slots
             const available_slots = Slots_Array.filter(value => !unavailable_slots.includes(value.slot))
-            return setStates(prev => ({ ...prev, fetching_slots: false, availableSlots: [...available_slots] }))
+            return setStates(prev => ({
+                ...prev,
+                fetching_slots: false,
+                availableSlots: [...available_slots],
+                slots: [...prev.slots.filter(slot => unavailable_slots.includes(slot.slot))]
+            }))
         } catch (error) {
             return setStates(prev => ({
                 ...prev,
@@ -102,36 +102,45 @@ const BookingUpdateSystem: React.FC<BookingPageProps> = ({ unavailable_days, sho
         takeSlots() // eslint-disable-next-line
     }, [states.date, states.fetching_slots])
 
-    const handleBooking = async () => {
-        // const data = {
-        //     equipment_id: booking.equipment_id,
-        //     date: states.date,
-        //     need_assist: Number(states.need_assist),
-        //     slots: states.slots.map(i => i.slot)
-        // }
-        // const params = {
-        //     data,
-        //     next: () => setButtonLoader(true)
-        // }
-        // const validate = validations.validateBooking({ ...params })
-        // if (validate?.error !== undefined) return setStates(prev => ({ ...prev, message: validate?.error, open: true, isErrorFree: false }))
-        // try {
-        //     const book = await book_equipment({
-        //         ...data,
-        //         need_assist: data.need_assist === 2 ? true : false
-        //     })
-        //     setButtonLoader(false)
-        //     if (parseInt(book.data?.code) !== 201) return setStates(prev => ({ ...prev, message: book.data?.message, open: true, isErrorFree: false }))
-        //     return setStates(prev => ({ ...prev, message: book.data?.message, open: true, isErrorFree: true }))
-        // } catch (error) {
-        //     return setStates(prev => ({ ...prev, message: 'Something went wrong', open: true, isErrorFree: false }))
-        // }
+    const handleBookingUpdate = async () => {
+        const data = {
+            booking_id: bookingId,
+            date: states.date,
+            need_assist: Number(states.need_assist),
+            slots: states.slots.map(i => i.slot)
+        }
+        const params = {
+            data,
+            next: () => setButtonLoader(true)
+        }
+        const validate = validations.validateBookingUpdate({ ...params })
+        if (validate?.error !== undefined) return setStates(prev => ({ ...prev, message: validate?.error, open: true, isErrorFree: false }))
+        try {
+            const update = await update_booking({
+                ...data,
+                need_assist: data.need_assist === 2 ? true : false
+            })
+            setButtonLoader(false)
+            if (parseInt(update.data?.code) !== 200) return setStates(prev => ({ ...prev, message: update.data?.message, open: true, isErrorFree: false }))
+            const updatedData: Booking = update.data?.data
+            setStates(prev => ({ ...prev, message: update.data?.message, open: true, isErrorFree: true }))
+            return dispatch(FetchBookings([{
+                ...booking,
+                date: updatedData.date,
+                need_assist: updatedData.need_assist,
+                slots: updatedData.slots,
+                updated_at: updatedData.updated_at,
+                update_count: updatedData.update_count
+            }]))
+        } catch (error) {
+            return setStates(prev => ({ ...prev, message: 'Something went wrong', open: true, isErrorFree: false }))
+        }
     }
 
     React.useEffect(() => {
         const submitData = () => {
             if (!shouldSubmit) return false
-            handleBooking()
+            handleBookingUpdate()
         }
         submitData() // eslint-disable-next-line
     }, [shouldSubmit])

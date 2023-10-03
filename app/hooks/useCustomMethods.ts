@@ -64,9 +64,17 @@ const useCustomMethods = () => {
         return true
     }
 
+    const reArrangeItems = (array: string[]) => {
+        const arrayObjects = array.map((value, index) => ({ value, index }))
+        arrayObjects.sort((a, b) => a.value.localeCompare(b.value))
+        const rearrangedArray = arrayObjects.map(item => item.value)
+        return rearrangedArray
+    }
+
     return {
         preventCopyPaste, handleDateSelection, dateConterter, dateInclusiveChecker,
-        appendQueryParameter, removeQueryParameter, checkQueryParameterExistence
+        appendQueryParameter, removeQueryParameter, checkQueryParameterExistence,
+        reArrangeItems
     }
 }
 export default useCustomMethods

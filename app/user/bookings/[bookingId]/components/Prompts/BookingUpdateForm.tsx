@@ -103,6 +103,7 @@ const BookingUpdateSystem: React.FC<BookingPageProps> = ({ unavailable_days, sho
     }, [states.date, states.fetching_slots])
 
     const handleBookingUpdate = async () => {
+        setStates(prev => ({ ...prev, message: '', open: false, isErrorFree: false }))
         const data = {
             booking_id: bookingId,
             date: states.date,
@@ -182,7 +183,7 @@ const BookingUpdateSystem: React.FC<BookingPageProps> = ({ unavailable_days, sho
                                             multiple
                                             value={states.slots}
                                             limitTags={1}
-                                            onChange={(e, v) => setStates(prev => ({ ...prev, slots: v }))}
+                                            onChange={(e, v) => setStates(prev => ({ ...prev, slots: v.sort((a, b) => a.id - b.id) }))}
                                             id="multiple-limit-tags"
                                             options={states.availableSlots}
                                             getOptionLabel={(option) => option.slot}

@@ -131,7 +131,7 @@ const BookingUpdatePage = () => {
                                             {"The following is/are your initial selected slots; "}
                                             {booking.slots.map((slot, i) => (
                                                 <React.Fragment key={i + 1}>
-                                                    {`${slot}${booking.slots.length > i + 1 ? ', ' : booking.slots.length - (i + 1) === 1 ? 'and ' : ''} `}
+                                                    {`${slot}${booking.slots.length > i + 1 ? ', ' : ''}`}
                                                 </React.Fragment>
                                             ))}
                                         </Typography>

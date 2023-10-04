@@ -37,6 +37,7 @@ const BookingListPage = () => {
             dispatch(SaveBookingsPageState({
                 ...app,
                 isBookingSearchResultDisplayed: false,
+                isFilteredResultDispayed: false,
                 bookingSearchQuery: "",
                 bookingFilters: {}
             }))
@@ -65,7 +66,11 @@ const BookingListPage = () => {
                 totalCount: data?.page_data?.totalCount,
                 totalPages: data?.page_data?.totalPages
             }))
-            dispatch(SaveBookingsPageState({ ...app, isBookingSearchResultDisplayed: data?.data_type === 'search' ? true : false }))
+            dispatch(SaveBookingsPageState({
+                ...app,
+                isBookingSearchResultDisplayed: data?.data_type === 'search' ? true : false,
+                isFilteredResultDispayed: data?.data_type === 'filter' ? true : false
+            }))
             return dispatch(FetchBookings([...data?.bookings]))
         } catch (error) {
             return toast('Something went wrong')

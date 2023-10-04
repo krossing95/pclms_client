@@ -66,6 +66,7 @@ const UserDashboardPage = async () => {
                     <DashboardPanel name="Available Equipment" figure={fetchedData.available_equipment} />
                     <DashboardPanel name="Unavailable Equipment" figure={fetchedData.unavailable_equipment} />
                     <DashboardPanel name="Favorite List" figure={fetchedData.saved_equipment} />
+                    <DashboardPanel name="Approved Bookings" figure={fetchedData.approved_bookings} />
                 </Grid>
                 <Grid sx={{ mt: 3 }} container spacing={3}>
                     <Grid item xs={12} sm={6} md={4}>

@@ -1,6 +1,6 @@
 'use server'
 
-import { cookies } from 'next/headers'
+import Cookies from "js-cookie"
 
 interface CookieSetUpParams {
     name: string
@@ -9,7 +9,6 @@ interface CookieSetUpParams {
 }
 
 const set_cookie = async ({ name, value, options }: CookieSetUpParams) => {
-    const cookieSystem = cookies()
-    cookieSystem.set(name, value, { ...options })
+    Cookies.set(name, value, { ...options, path: '', secure: true })
 }
 export default set_cookie

@@ -46,11 +46,11 @@ const FilterBookings: React.FC<FilterBookingsProps> = ({ paginate }) => {
         if (states.loading) return false
         dispatch(SaveBookingsPageState({ ...app, hasOpenedBookingFilterPrompt: false }))
     }
-    const handleDateSelection = (date: string) => {
-        const { status, message } = methodHooks.handleDateSelection(date)
-        if (!status) return setStates(prev => ({ ...prev, message, open: true, isErrorFree: false, date: '' }))
-        setStates(prev => ({ ...prev, date }))
-    }
+    // const handleDateSelection = (date: string) => {
+    //     const { status, message } = methodHooks.handleDateSelection(date)
+    //     if (!status) return setStates(prev => ({ ...prev, message, open: true, isErrorFree: false, date: '' }))
+    //     setStates(prev => ({ ...prev, date }))
+    // }
     const filterHandler = async () => {
         setStates(prev => ({ ...prev, message: '', open: false, isErrorFree: false }))
         const params = {
@@ -96,7 +96,7 @@ const FilterBookings: React.FC<FilterBookingsProps> = ({ paginate }) => {
                     <Grid item xs={12} sm={6} className={styles.input_container} sx={{ mt: 1 }}>
                         <InputField
                             value={states.from} type='date'
-                            onChange={(e: React.SyntheticEvent<EventTarget>) => handleDateSelection((e.target as HTMLInputElement).value)}
+                            onChange={(e: React.SyntheticEvent<EventTarget>) => setStates(prev => ({ ...prev, from: (e.target as HTMLInputElement).value }))}
                             classes={styles.input}
                             disabled={states.loading}
                             placeholder='Select a from date'
@@ -105,7 +105,7 @@ const FilterBookings: React.FC<FilterBookingsProps> = ({ paginate }) => {
                     <Grid item xs={12} sm={6} className={styles.input_container} sx={{ mt: 1 }}>
                         <InputField
                             value={states.to} type='date'
-                            onChange={(e: React.SyntheticEvent<EventTarget>) => handleDateSelection((e.target as HTMLInputElement).value)}
+                            onChange={(e: React.SyntheticEvent<EventTarget>) => setStates(prev => ({ ...prev, to: (e.target as HTMLInputElement).value }))}
                             classes={styles.input}
                             disabled={states.loading}
                             placeholder='Select a to date'

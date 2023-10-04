@@ -91,7 +91,7 @@ const FilterBookings: React.FC<FilterBookingsProps> = ({ paginate }) => {
                 isErrorFree={states.isErrorFree}
             />
             <DialogContent>
-                <Typography variant='body2'>{"Choose a date range or select a status below to retrieve most related bookings"}</Typography>
+                <Typography variant='body2'>{"Choose a date range or select a status below to retrieve most related bookings. NB: The dates to select are the scheduled dates"}</Typography>
                 <Grid container spacing={1}>
                     <Grid item xs={12} sm={6} className={styles.input_container} sx={{ mt: 1 }}>
                         <InputField

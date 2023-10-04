@@ -1,6 +1,6 @@
 'use client'
 
-import { ReplayOutlined, SearchRounded } from '@mui/icons-material'
+import { ReplayOutlined, SearchRounded, SortOutlined } from '@mui/icons-material'
 import { Box, IconButton, Pagination, TableContainer, Table, Tooltip } from '@mui/material'
 import * as React from 'react'
 import { motion } from 'framer-motion'
@@ -15,6 +15,7 @@ import search_bookings from '@/app/actions/bookings/bookings.search'
 import BookingKeyRepresentation from './components/Key'
 import Search from './components/Prompts/Search'
 import filter_bookings from '@/app/actions/bookings/booking.filter'
+import FilterBookings from './components/Prompts/Filter'
 
 interface BookingListStates {
     loading: boolean
@@ -36,7 +37,8 @@ const BookingListPage = () => {
             dispatch(SaveBookingsPageState({
                 ...app,
                 isBookingSearchResultDisplayed: false,
-                bookingSearchQuery: ""
+                bookingSearchQuery: "",
+                bookingFilters: {}
             }))
             await loadData(1, true)
         } catch (error) {
@@ -83,15 +85,24 @@ const BookingListPage = () => {
                 <Title text='Booking List' variant_switch={false} />
                 <Box component='div' className={styles.toolbar}>
                     {(!states.loading && bookings.length > 0) ? (
-                        <Tooltip title='Search bookings'>
-                            <IconButton onClick={app.isBookingSearchResultDisplayed ? refreshHandler : () => dispatch(SaveBookingsPageState({ ...app, hasOpenedSearchBoxPrompt: true }))}>
-                                {app.isBookingSearchResultDisplayed ? (
+                        <React.Fragment>
+                            <Tooltip title='Search bookings'>
+                                <IconButton onClick={app.isBookingSearchResultDisplayed ? refreshHandler : () => dispatch(SaveBookingsPageState({ ...app, hasOpenedSearchBoxPrompt: true }))}>
+                                    {app.isBookingSearchResultDisplayed ? (
+                                        <ReplayOutlined />
+                                    ) : (
+                                        <SearchRounded />
+                                    )}
+                                </IconButton>
+                            </Tooltip>
+                            <IconButton onClick={app.isFilteredResultDispayed ? refreshHandler : () => dispatch(SaveBookingsPageState({ ...app, hasOpenedBookingFilterPrompt: true }))}>
+                                {app.isFilteredResultDispayed ? (
                                     <ReplayOutlined />
                                 ) : (
-                                    <SearchRounded />
+                                    <SortOutlined />
                                 )}
                             </IconButton>
-                        </Tooltip>
+                        </React.Fragment>
                     ) : null}
                 </Box>
             </Box>
@@ -135,6 +146,15 @@ const BookingListPage = () => {
             </Box>
             {app.hasOpenedSearchBoxPrompt ? (
                 <Search
+                    paginate={(page: number, totalItem: number, totalPages: number) => setStates(prev => ({
+                        ...prev,
+                        currentPage: page,
+                        totalCount: totalItem,
+                        totalPages: totalPages
+                    }))}
+                />
+            ) : app.hasOpenedBookingFilterPrompt ? (
+                <FilterBookings
                     paginate={(page: number, totalItem: number, totalPages: number) => setStates(prev => ({
                         ...prev,
                         currentPage: page,

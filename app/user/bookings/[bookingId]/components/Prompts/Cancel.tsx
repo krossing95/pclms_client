@@ -46,7 +46,7 @@ const Cancel = () => {
     }
     return (
         <Dialog open={app.hasOpenedBookingCancelPrompt} PaperComponent={MovablePrompt} aria-labelledby="draggable-dialog-title">
-            <DialogTitle className={styles.text} style={{ cursor: 'move' }} id="draggable-dialog-title">Cancel appointment</DialogTitle>
+            <DialogTitle className={styles.text} style={{ cursor: 'move' }} id="draggable-dialog-title">{"Cancel booking"}</DialogTitle>
             <MessageBox
                 open={states.open}
                 isErrorFree={states.isErrorFree}

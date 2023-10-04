@@ -21,6 +21,20 @@ export type EquipmentInterfaceStateManagement = {
     hasOpenedBookingPrompt: boolean
 }
 
+export type FavoriteListInterfaceStateManagement = {
+    isSearchResultDisplayed: boolean
+    hasOpenedSearchBoxPrompt: boolean
+    hasOpenedFavoritesFilter: boolean
+    isFilteredResultDispayed: boolean
+    selectedFavoriteId: string
+    favoriteSearchQuery: string
+    favoriteFilters: {
+        functionality_status: boolean | null,
+        availability_status: boolean | null
+    }
+}
+
+
 export type BlockDaysInterfaceStateManagement = {
     isDaysSearchResultDisplayed: boolean
     hasOpenedSearchBoxPrompt: boolean

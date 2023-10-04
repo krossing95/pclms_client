@@ -1,18 +1,20 @@
-import type { BlockDaysInterfaceStateManagement, BookingListManagementInterfaceStateManagement, EquipmentInterfaceStateManagement, UserManagementInterfaceStateManagement } from "@/app/types/type.app_management"
+import type { BlockDaysInterfaceStateManagement, BookingListManagementInterfaceStateManagement, EquipmentInterfaceStateManagement, FavoriteListInterfaceStateManagement, UserManagementInterfaceStateManagement } from "@/app/types/type.app_management"
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 
 type AppDataState = {
     app: BlockDaysInterfaceStateManagement,
     equipment: EquipmentInterfaceStateManagement,
     users: UserManagementInterfaceStateManagement,
-    bookings: BookingListManagementInterfaceStateManagement
+    bookings: BookingListManagementInterfaceStateManagement,
+    favorites: FavoriteListInterfaceStateManagement
 }
 
 const initialState = {
     app: {},
     equipment: {},
     users: {},
-    bookings: {}
+    bookings: {},
+    favorites: {}
 } as AppDataState
 
 export const app = createSlice({
@@ -30,9 +32,12 @@ export const app = createSlice({
         },
         SaveBookingsPageState: (state, action: PayloadAction<{}>) => {
             state.bookings = { ...state.bookings, ...action.payload }
+        },
+        SaveFavoritesPageState: (state, action: PayloadAction<{}>) => {
+            state.favorites = { ...state.favorites, ...action.payload }
         }
     },
 })
 
-export const { SaveAppData, SaveEquipmentPageState, SaveUsersPageState, SaveBookingsPageState } = app.actions
+export const { SaveAppData, SaveEquipmentPageState, SaveUsersPageState, SaveBookingsPageState, SaveFavoritesPageState } = app.actions
 export default app.reducer

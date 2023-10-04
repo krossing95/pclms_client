@@ -10,7 +10,7 @@ import { SaveFavoritesPageState } from '@/redux/app/slice.app'
 import { FetchEquipment } from '@/redux/equipment/slice.equipment'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import get_favorites from '@/app/actions/favorites/favorite.get'
-import { EmptyList, EquipmentKeyRepresentation, FavoriteList, Search, SuspenseLoader, Title } from './exports'
+import { EmptyList, EquipmentKeyRepresentation, FavoriteList, Filter, Search, SuspenseLoader, Title } from './exports'
 import search_favorites from '@/app/actions/favorites/favorite.search'
 import filter_favorites from '@/app/actions/favorites/favorite.filter'
 
@@ -173,8 +173,7 @@ const FavoriteListPage = () => {
                         totalPages: totalPages
                     }))}
                 />
-            ) : null}
-            {/* app.hasOpenedFavoritesFilter ? (
+            ) : app.hasOpenedFavoritesFilter ? (
                 <Filter
                     paginate={(page: number, totalItem: number, totalPages: number) => setStates(prev => ({
                         ...prev,
@@ -184,7 +183,7 @@ const FavoriteListPage = () => {
                         totalPages: totalPages
                     }))}
                 />
-            ) : null} */}
+            ) : null}
         </Box>
     )
 }

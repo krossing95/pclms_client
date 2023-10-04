@@ -24,7 +24,7 @@ interface FavoriteSearchProps {
 }
 
 const Search: React.FC<FavoriteSearchProps> = ({ paginate }) => {
-    const app = useAppSelector(state => state.appReducer.equipment)
+    const app = useAppSelector(state => state.appReducer.favorites)
     const dispatch = useAppDispatch()
     const { textProcessor } = StringMethods()
     const useMethods = useCustomMethods()

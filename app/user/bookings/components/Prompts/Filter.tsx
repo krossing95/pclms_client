@@ -46,11 +46,6 @@ const FilterBookings: React.FC<FilterBookingsProps> = ({ paginate }) => {
         if (states.loading) return false
         dispatch(SaveBookingsPageState({ ...app, hasOpenedBookingFilterPrompt: false }))
     }
-    // const handleDateSelection = (date: string) => {
-    //     const { status, message } = methodHooks.handleDateSelection(date)
-    //     if (!status) return setStates(prev => ({ ...prev, message, open: true, isErrorFree: false, date: '' }))
-    //     setStates(prev => ({ ...prev, date }))
-    // }
     const filterHandler = async () => {
         setStates(prev => ({ ...prev, message: '', open: false, isErrorFree: false }))
         const params = {
@@ -64,6 +59,7 @@ const FilterBookings: React.FC<FilterBookingsProps> = ({ paginate }) => {
         const validate = validations.validateBookingFilter({ ...params })
         if (validate?.error !== undefined) return setStates(prev => ({ ...prev, message: validate?.error, open: true, isErrorFree: false }))
         const filter = await filter_bookings({ page: 1, from: states.from, to: states.to, status: params.data.status })
+        setStates(prev => ({ ...prev, loading: false }))
         if (parseInt(filter.data?.code) !== 200) return setStates(prev => ({ ...prev, message: 'Something went wrong', open: true, isErrorFree: false }))
         const collection = filter.data?.data
         if (collection?.bookings?.length === 0) return setStates(prev => ({ ...prev, message: 'No matching records found', open: true, isErrorFree: false }))

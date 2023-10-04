@@ -75,17 +75,17 @@ const Filter: React.FC<FavoriteListFilterProps> = ({ paginate }) => {
     }
     return (
         <Dialog open={app.hasOpenedFavoritesFilter} PaperComponent={MovablePrompt} aria-labelledby="draggable-dialog-title">
-            <DialogTitle className={styles.text} style={{ cursor: 'move' }} id="draggable-dialog-title">Filter equipment</DialogTitle>
+            <DialogTitle className={styles.text} style={{ cursor: 'move' }} id="draggable-dialog-title">{"Filter"}</DialogTitle>
             <MessageBox
                 open={states.open}
                 message={states.message}
                 isErrorFree={states.isErrorFree}
             />
             <DialogContent>
-                <Typography variant='body2'>Create a filter below to get most related equipment</Typography>
+                <Typography variant='body2'>{"Create a filter below to get most related equipment"}</Typography>
                 <Grid container spacing={1}>
                     <Grid item xs={12} sx={{ mt: 2 }}>
-                        <label className='text' htmlFor='func_status'>Functionality Status</label>
+                        <label className='text' htmlFor='func_status'>{"Functionality Status"}</label>
                         <RadioGroup
                             value={states.functionality_status}
                             onChange={(e: React.ChangeEvent<HTMLInputElement>) => setStates(prev => ({ ...prev, functionality_status: (e.target as HTMLInputElement).value }))}
@@ -94,7 +94,7 @@ const Filter: React.FC<FavoriteListFilterProps> = ({ paginate }) => {
                         </RadioGroup>
                     </Grid>
                     <Grid item xs={12} sx={{ mt: 2 }}>
-                        <label className='text' htmlFor='avail_status'>Availability Status</label>
+                        <label className='text' htmlFor='avail_status'>{"Availability Status"}</label>
                         <RadioGroup
                             value={states.availability_status}
                             onChange={(e: React.ChangeEvent<HTMLInputElement>) => setStates(prev => ({ ...prev, availability_status: (e.target as HTMLInputElement).value }))}

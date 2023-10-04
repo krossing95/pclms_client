@@ -67,14 +67,14 @@ const Search: React.FC<FavoriteSearchProps> = ({ paginate }) => {
     }
     return (
         <Dialog open={app.hasOpenedSearchBoxPrompt} PaperComponent={MovablePrompt} aria-labelledby="draggable-dialog-title">
-            <DialogTitle className={styles.text} style={{ cursor: 'move' }} id="draggable-dialog-title">Search equipment</DialogTitle>
+            <DialogTitle className={styles.text} style={{ cursor: 'move' }} id="draggable-dialog-title">{"Search"}</DialogTitle>
             <MessageBox
                 open={states.open}
                 isErrorFree={states.isErrorFree}
                 message={states.message}
             />
             <DialogContent>
-                <Typography variant='body2'>Enter a keyword in the search box below to search for related equipment</Typography>
+                <Typography variant='body2'>{"Enter a keyword in the search box below to search for related equipment"}</Typography>
                 <Grid container spacing={1}>
                     <Grid item xs={12} className={styles.input_container}>
                         <InputField

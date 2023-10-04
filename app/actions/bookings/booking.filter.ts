@@ -12,7 +12,7 @@ const filter_bookings = async ({ from, to, status, page }: BookingFilterProps) =
     const cookieObj = Cookies.get('__signedInUserObj') || '{}'
     const cookie = JSON.parse(cookieObj)?.user
     const HOST = process.env.NEXT_PUBLIC_HTTPHOST
-    const url = `${HOST}bookings/filter?page=${page}&from=${from}&to=${to}&status=${status}`
+    const url = `${HOST}bookings/filter?page=${page}&from=${from}&to=${to}&status=${status === 0 ? '' : status}`
     try {
         const res = await axios({
             method: 'GET',

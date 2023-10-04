@@ -7,12 +7,10 @@ import MovablePrompt from '@/app/utils/components/MovablePrompt'
 import { SaveBookingsPageState } from '@/redux/app/slice.app'
 import MessageBox from '@/app/utils/components/MessageBox'
 import InputField from '@/app/components/Input'
-import useCustomMethods from '@/app/hooks/useCustomMethods'
 import BookingStatusSelector from '@/app/utils/components/Selectors/BookingStatus'
 import useValidations from '@/app/hooks/useValidations'
 import filter_bookings from '@/app/actions/bookings/booking.filter'
 import { FetchBookings } from '@/redux/bookings/slice.bookings'
-
 
 interface FilterBookingsStates {
     from: string
@@ -31,7 +29,6 @@ interface FilterBookingsProps {
 const FilterBookings: React.FC<FilterBookingsProps> = ({ paginate }) => {
     const app = useAppSelector(state => state.appReducer.bookings)
     const dispatch = useAppDispatch()
-    const methodHooks = useCustomMethods()
     const validations = useValidations()
     const [states, setStates] = React.useState<FilterBookingsStates>({
         from: '',

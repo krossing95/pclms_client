@@ -103,7 +103,7 @@ const VerificationForm: React.FC<VerificationFormProps> = ({ page }) => {
             setStates(prev => ({ ...prev, loading: false, verification_code: prev.verification_code.map(() => '') }))
             if (parseInt(userVerification.data?.code) !== 200) return setStates(prev => ({ ...prev, message: userVerification.data?.message, open: true, isErrorFree: false }))
             const expiration = 0.083333
-            await remove_cookie({ cookie_name: '__requesting_verification' })
+            Cookies.remove('__requesting_verification', { path: '', secure: true })
             Cookies.set('__signedInUserObj', JSON.stringify({ ...userVerification.data?.data, __app: 'right' }), { expires: expiration, path: '', secure: true })
             const usertype = userVerification.data?.data?.user?.usertype
             setStates(prev => ({ ...prev, isErrorFree: true, message: userVerification?.data?.message, open: true }))

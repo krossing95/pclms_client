@@ -103,9 +103,8 @@ const VerificationForm: React.FC<VerificationFormProps> = ({ page }) => {
             setStates(prev => ({ ...prev, loading: false, verification_code: prev.verification_code.map(() => '') }))
             if (parseInt(userVerification.data?.code) !== 200) return setStates(prev => ({ ...prev, message: userVerification.data?.message, open: true, isErrorFree: false }))
             const expiration = 0.083333
-            // Cookies.remove('__requesting_verification', { path: '', secure: true })
             await remove_cookie({ cookie_name: '__requesting_verification' })
-            Cookies.set('__signedInUserObj', JSON.stringify({ ...userVerification.data?.data, __app: 'right' }), { expires: expiration, path: '' })
+            await set_cookie({ name: '__signedInUserObj', value: JSON.stringify({ ...userVerification.data?.data, __app: 'right' }), options: { expires: expiration } })
             const usertype = userVerification.data?.data?.user?.usertype
             setStates(prev => ({ ...prev, isErrorFree: true, message: userVerification?.data?.message, open: true }))
             return navigate.push(parseInt(usertype) === 2 ? '/admin/dashboard' : '/user/dashboard')

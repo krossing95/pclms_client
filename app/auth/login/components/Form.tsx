@@ -73,7 +73,7 @@ const LoginForm = () => {
             const app_login = await login({ ...params.data })
             setStates(prev => ({ ...prev, loading: false, captcha: '' }))
             if (parseInt(app_login.data?.code) !== 200) return setStates(prev => ({ ...prev, isErrorFree: false, message: app_login?.data?.message, open: true }))
-            const expiration = 0.00694444
+            const expiration = 600000
             await set_cookie({ name: '__requesting_verification', value: JSON.stringify({ ...app_login.data?.data }), options: { expires: expiration } })
             setStates(prev => ({ ...prev, isErrorFree: true, message: app_login?.data?.message, open: true }))
             return navigate.push('/auth/login/verify')

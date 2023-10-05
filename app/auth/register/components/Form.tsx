@@ -77,7 +77,7 @@ const Form = () => {
             const create = await register({ ...params.data })
             setStates(prev => ({ ...prev, loading: false }))
             if (parseInt(create.data?.code) !== 201) return setStates(prev => ({ ...prev, isErrorFree: false, message: create?.data?.message, open: true }))
-            const expiration = 0.00694444
+            const expiration = 600000
             await set_cookie({ name: '__requesting_verification', value: JSON.stringify({ ...create.data?.data }), options: { expires: expiration } })
             setStates(prev => ({ ...prev, isErrorFree: true, message: create?.data?.message, open: true }))
             return navigate.push('/auth/register/verify')

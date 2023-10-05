@@ -15,7 +15,6 @@ import Link from 'next/link'
 import ReCAPTCHA from 'react-google-recaptcha'
 import login from '@/app/actions/authentication/auth.login'
 import set_cookie from '@/app/actions/cookies/cookie.set'
-import Cookies from 'js-cookie'
 
 const Recaptcha_SiteKey = process.env.NEXT_PUBLIC_RECAPTCHA
 
@@ -36,7 +35,6 @@ interface MappableObject {
 }
 
 const LoginForm = () => {
-    const logoutMSg = Cookies.get('__logout_message') || ''
     let btnClasses: SubmitButtonClasses = {}
     const captchaRef = React.useRef<ReCAPTCHA>(null)
     const { validateLogin } = useValidations()
@@ -45,9 +43,9 @@ const LoginForm = () => {
         phone: '',
         password: '',
         loading: false,
-        open: logoutMSg.length > 0 ? true : false,
-        isErrorFree: logoutMSg.length > 0 ? true : false,
-        message: logoutMSg.length > 0 ? logoutMSg : ''
+        open: false,
+        isErrorFree: false,
+        message: ''
     })
     const { preventCopyPaste } = useCustomMethods()
     const navigate = useRouter()
@@ -80,8 +78,8 @@ const LoginForm = () => {
             const app_login = await login({ ...params.data })
             setStates(prev => ({ ...prev, loading: false, captcha: '' }))
             if (parseInt(app_login.data?.code) !== 200) return setStates(prev => ({ ...prev, isErrorFree: false, message: app_login?.data?.message, open: true }))
-            const expiration = Date.now() + 600000
-            await set_cookie({ name: '__requesting_verification', value: JSON.stringify({ ...app_login.data?.data }), options: { expires: expiration } })
+            const expiration = 600
+            await set_cookie({ name: '__requesting_verification', value: JSON.stringify({ ...app_login.data?.data }), options: { maxAge: expiration } })
             setStates(prev => ({ ...prev, isErrorFree: true, message: app_login?.data?.message, open: true }))
             return navigate.push('/auth/login/verify')
         } catch (error) {

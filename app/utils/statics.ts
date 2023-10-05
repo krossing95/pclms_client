@@ -7,7 +7,7 @@ export const login_meta = {
     description: 'Sign into the platform to elevate your research career'
 }
 export const verify_meta = {
-    title: 'User Verification | PCLMS - Laboratory Management System',
+    title: 'User verification | PCLMS - Laboratory Management System',
     description: 'Sign up to the platform to elevate your research career'
 }
 export const dashboard_meta = {
@@ -15,15 +15,15 @@ export const dashboard_meta = {
     description: 'Sign up to the platform to elevate your research career'
 }
 export const days_mgt_meta = {
-    title: 'Blocked Days Management | PCLMS - Laboratory Management System',
+    title: 'Blocked days management | PCLMS - Laboratory Management System',
     description: 'Sign up to the platform to elevate your research career'
 }
 export const equipment_meta = {
-    title: 'Lab Equipment | PCLMS - Laboratory Management System',
+    title: 'Lab equipment | PCLMS - Laboratory Management System',
     description: 'Sign up to the platform to elevate your research career'
 }
 export const accounts_meta = {
-    title: 'User Management | PCLMS - Laboratory Management System',
+    title: 'User management | PCLMS - Laboratory Management System',
     description: 'Sign up to the platform to elevate your research career'
 }
 export const bookings_meta = {
@@ -31,7 +31,11 @@ export const bookings_meta = {
     description: 'Sign up to the platform to elevate your research career'
 }
 export const favorite_list_meta = {
-    title: 'Favorite List | PCLMS - Laboratory Management System',
+    title: 'Favorite list | PCLMS - Laboratory Management System',
+    description: 'Sign up to the platform to elevate your research career'
+}
+export const user_profile_meta = {
+    title: 'My profile | PCLMS - Laboratory Management System',
     description: 'Sign up to the platform to elevate your research career'
 }
 export const Regex = {

@@ -1,0 +1,106 @@
+@import url('https://fonts.cdnfonts.com/css/plance');
+
+.text,
+.profilename {
+    font-family: 'Plance', sans-serif !important;
+}
+
+.container {
+    background-color: rgb(255, 255, 255);
+    overflow: hidden;
+    border-radius: 1em;
+    text-align: center;
+    font-size: 1em;
+}
+
+.userImage {
+    padding: 1em 0;
+}
+
+.userImage img {
+    width: 5em;
+    height: 5em;
+    border-radius: 50%;
+    border-style: inset;
+    border-width: 10px;
+    border-top-color: #308DEA;
+    border-left-color: #308DEA;
+    border-right-color: #11AC58;
+    border-bottom-color: #11AC58;
+    object-fit: cover;
+    padding: 1em;
+}
+
+.contentBox {
+    margin-top: 10px;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+
+.profilename {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    padding-bottom: 10px;
+}
+
+.toolbar {
+    display: flex;
+    justify-content: space-evenly;
+    margin-top: 30px;
+}
+
+.toolbar button {
+    margin-right: 5px;
+    background-color: #000000;
+    color: #F9FAFB;
+}
+
+.toolbar button:hover {
+    background-color: #026FBD !important;
+}
+
+.profileLoadingErr {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-top: 20vh;
+}
+
+.profileLoadingErr img {
+    padding-bottom: 20px;
+}
+
+.profileLoadingErr p {
+    text-align: center;
+}
+
+.profileLoadingErr button,
+.profileLoadingErr button:hover {
+    background-color: #5986E8;
+}
+
+.input {
+    width: 100%;
+    padding: 14px 12px;
+    border-color: #000000;
+    font-family: 'Plance', sans-serif !important;
+    font-size: 18px;
+    border-left: hidden;
+    border-right: hidden;
+    border-top: hidden;
+    border-width: 1px;
+    background: #FFFFFF !important;
+}
+
+.input:focus {
+    border-width: 1.5px !important;
+    border-color: #026FBD !important;
+    outline: none;
+}
+
+.input_container {
+    display: flex;
+}

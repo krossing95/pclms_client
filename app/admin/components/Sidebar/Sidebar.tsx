@@ -1,6 +1,5 @@
 'use client'
 
-import get_cookie from '@/app/actions/cookies/cookie.get'
 import { Drawer } from '@mui/material'
 import * as React from 'react'
 import SideBarDrawer from './Drawer'

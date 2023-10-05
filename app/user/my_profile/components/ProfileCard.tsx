@@ -2,7 +2,7 @@
 
 import * as React from 'react'
 import { Card, CardContent, Typography, Box, Alert } from '@mui/material'
-import styles from './styles.module.css'
+import styles from '../styles.module.css'
 import { motion } from 'framer-motion'
 import { useAppSelector } from '@/redux/hooks'
 import useCustomMethods from '@/app/hooks/useCustomMethods'

@@ -1,6 +1,6 @@
 import * as React from 'react'
-import { Box, Card, CardContent, Grid, LinearProgress, Button, Typography } from '@mui/material'
-import styles from './styles.module.css'
+import { Box, Card, CardContent, Grid, Typography } from '@mui/material'
+import styles from '../styles.module.css'
 import { useAppDispatch, useAppSelector } from '@/redux/hooks'
 import useValidations from '@/app/hooks/useValidations'
 import update_self from '@/app/actions/users/user.update_self'

@@ -9,6 +9,7 @@ import get_authed_user from '@/app/actions/users/user.authed'
 import { FetchUsers } from '@/redux/user_management/slice.user_management'
 import { useAppDispatch } from '@/redux/hooks'
 import ProfileCard from './components/ProfileCard'
+import ProfileUpdate from './components/ProfileUpdate'
 
 interface ProfilePageStates {
     loading: boolean
@@ -60,10 +61,10 @@ const ProfilePage = () => {
                             <Grid item xs={12} sm={6} md={4}>
                                 <ProfileCard />
                             </Grid>
-                            {/* <Grid item xs={12} sm={6} md={4}>
-                                <Edit />
-                            </Grid>
                             <Grid item xs={12} sm={6} md={4}>
+                                <ProfileUpdate />
+                            </Grid>
+                            {/* <Grid item xs={12} sm={6} md={4}>
                                 <Password />
                             </Grid> */}
                         </Grid>

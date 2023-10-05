@@ -78,7 +78,7 @@ const Form = () => {
             setStates(prev => ({ ...prev, loading: false }))
             if (parseInt(create.data?.code) !== 201) return setStates(prev => ({ ...prev, isErrorFree: false, message: create?.data?.message, open: true }))
             const expiration = 0.00694444
-            Cookies.set('__requesting_verification', JSON.stringify({ ...create.data?.data }), { expires: expiration, path: '', secure: true })
+            Cookies.set('__requesting_verification', JSON.stringify({ ...create.data?.data }), { expires: expiration, path: '' })
             setStates(prev => ({ ...prev, isErrorFree: true, message: create?.data?.message, open: true }))
             return navigate.push('/auth/register/verify')
         } catch (error) {

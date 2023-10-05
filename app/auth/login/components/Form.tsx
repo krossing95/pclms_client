@@ -15,7 +15,6 @@ import Link from 'next/link'
 import ReCAPTCHA from 'react-google-recaptcha'
 import login from '@/app/actions/authentication/auth.login'
 import set_cookie from '@/app/actions/cookies/cookie.set'
-import Cookies from 'js-cookie'
 
 const Recaptcha_SiteKey = process.env.NEXT_PUBLIC_RECAPTCHA
 
@@ -73,7 +72,7 @@ const LoginForm = () => {
             const app_login = await login({ ...params.data })
             setStates(prev => ({ ...prev, loading: false, captcha: '' }))
             if (parseInt(app_login.data?.code) !== 200) return setStates(prev => ({ ...prev, isErrorFree: false, message: app_login?.data?.message, open: true }))
-            const expiration = 600000
+            const expiration = Date.now() + (10 * 60 * 1000)
             await set_cookie({ name: '__requesting_verification', value: JSON.stringify({ ...app_login.data?.data }), options: { expires: expiration } })
             setStates(prev => ({ ...prev, isErrorFree: true, message: app_login?.data?.message, open: true }))
             return navigate.push('/auth/login/verify')

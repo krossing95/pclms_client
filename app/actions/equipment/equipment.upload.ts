@@ -1,4 +1,3 @@
-import useAuthPotencyChecker from '@/helpers/helper.logout_on_request'
 import axios from 'axios'
 import Cookies from 'js-cookie'
 
@@ -23,7 +22,6 @@ const upload_equipment_file = async ({ img_url, id }: EquipmentFileUploadProps) 
             },
             data
         })
-        await useAuthPotencyChecker({ code: parseInt(res?.data?.code) })
         return { data: res?.data }
     } catch (error: any) {
         return { data: error?.response?.data }

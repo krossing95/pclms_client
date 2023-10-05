@@ -1,3 +1,4 @@
+import useAuthPotencyChecker from '@/helpers/helper.logout_on_request'
 import axios from 'axios'
 import Cookies from 'js-cookie'
 
@@ -21,6 +22,7 @@ const save_as_favourite = async ({ id }: EquipmentSaveFavouriteProps) => {
             },
             data
         })
+        await useAuthPotencyChecker({ code: parseInt(res?.data?.code) })
         return { data: res?.data }
     } catch (error: any) {
         return { data: error?.response?.data }

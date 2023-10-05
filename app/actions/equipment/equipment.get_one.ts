@@ -1,5 +1,6 @@
 // 'use server'
 
+import useAuthPotencyChecker from "@/helpers/helper.logout_on_request"
 import axios from "axios"
 
 interface GetEquipmentProps {
@@ -19,6 +20,7 @@ const getone_equipment = async ({ equipment_id, token }: GetEquipmentProps) => {
                 'Authorization': `Bearer ${token}`
             }
         })
+        await useAuthPotencyChecker({ code: parseInt(res?.data?.code) })
         return { data: res?.data }
     } catch (error: any) {
         return { data: error?.response?.data }

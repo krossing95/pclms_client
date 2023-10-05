@@ -1,3 +1,4 @@
+import useAuthPotencyChecker from '@/helpers/helper.logout_on_request'
 import axios from 'axios'
 import Cookies from 'js-cookie'
 
@@ -26,6 +27,7 @@ const update_user = async ({ id, firstname, lastname, email, phone, usertype }: 
             },
             data
         })
+        await useAuthPotencyChecker({ code: parseInt(res?.data?.code) })
         return { data: res?.data }
     } catch (error: any) {
         return { data: error?.response?.data }

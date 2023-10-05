@@ -1,3 +1,4 @@
+import useAuthPotencyChecker from "@/helpers/helper.logout_on_request"
 import axios from "axios"
 import Cookies from "js-cookie"
 
@@ -23,6 +24,7 @@ const save_date = async ({ name, date }: SaveDayProps) => {
             },
             data
         })
+        await useAuthPotencyChecker({ code: parseInt(res?.data?.code) })
         return { data: res?.data }
     } catch (error: any) {
         return { data: error?.response?.data }

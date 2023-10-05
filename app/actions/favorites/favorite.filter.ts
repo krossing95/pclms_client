@@ -1,3 +1,4 @@
+import useAuthPotencyChecker from "@/helpers/helper.logout_on_request"
 import axios from "axios"
 import Cookies from "js-cookie"
 
@@ -21,6 +22,7 @@ const filter_favorites = async ({ functionality_status, availability_status, pag
                 'Authorization': `Bearer ${cookie.token}`
             }
         })
+        await useAuthPotencyChecker({ code: parseInt(res?.data?.code) })
         return { data: res?.data }
     } catch (error: any) {
         return { data: error?.response?.data }

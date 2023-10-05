@@ -1,3 +1,4 @@
+import useAuthPotencyChecker from '@/helpers/helper.logout_on_request'
 import axios from 'axios'
 import Cookies from 'js-cookie'
 
@@ -19,6 +20,7 @@ const get_bookings = async ({ page }: GetBookingsProps) => {
                 'Authorization': `Bearer ${cookie.token}`
             }
         })
+        await useAuthPotencyChecker({ code: parseInt(res?.data?.code) })
         return { data: res?.data }
     } catch (error: any) {
         return { data: error?.response?.data }

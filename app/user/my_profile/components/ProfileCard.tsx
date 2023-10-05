@@ -35,7 +35,7 @@ const ProfileCard = () => {
             <CardContent>
                 <Box className={styles.container}>
                     <Box className={styles.userImage}>
-                        <img src="/images/app/user.webp" alt="this image contains user-image" />
+                        <img src="/images/user.webp" alt="this image contains user-image" />
                     </Box>
                 </Box>
                 <Box component='div' className={styles.contentBox}>

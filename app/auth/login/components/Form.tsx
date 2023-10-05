@@ -15,6 +15,7 @@ import Link from 'next/link'
 import ReCAPTCHA from 'react-google-recaptcha'
 import login from '@/app/actions/authentication/auth.login'
 import set_cookie from '@/app/actions/cookies/cookie.set'
+import Cookies from 'js-cookie'
 
 const Recaptcha_SiteKey = process.env.NEXT_PUBLIC_RECAPTCHA
 
@@ -35,11 +36,18 @@ interface MappableObject {
 }
 
 const LoginForm = () => {
+    const logoutMSg = Cookies.get('__logout_message') || ''
     let btnClasses: SubmitButtonClasses = {}
     const captchaRef = React.useRef<ReCAPTCHA>(null)
     const { validateLogin } = useValidations()
     const [states, setStates] = React.useState<LoginStates>({
-        captcha: '', phone: '', password: '', loading: false, open: false, isErrorFree: false, message: ''
+        captcha: '',
+        phone: '',
+        password: '',
+        loading: false,
+        open: logoutMSg.length > 0 ? true : false,
+        isErrorFree: logoutMSg.length > 0 ? true : false,
+        message: logoutMSg.length > 0 ? logoutMSg : ''
     })
     const { preventCopyPaste } = useCustomMethods()
     const navigate = useRouter()

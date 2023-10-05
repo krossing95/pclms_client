@@ -28,6 +28,7 @@ const ProfilePage = () => {
             setStates(prev => ({ ...prev, trying: false }))
             if (parseInt(getUser.data?.code) !== 200) return setStates(prev => ({ ...prev, loaded: false }))
             dispatch(FetchUsers([{ ...getUser.data?.data }]))
+            console.log({ ...getUser.data?.data })
             return setStates(prev => ({ ...prev, loaded: true, loading: false }))
         } catch (error) {
             return toast('Something went wrong')
@@ -43,7 +44,7 @@ const ProfilePage = () => {
     return (
         <Box component='div'>
             {states.loading ? (
-                <SuspenseLoader text='Loading profile' ignoreOptionalHeight={false} />
+                <SuspenseLoader text='Loading profile' ignoreOptionalHeight={true} />
             ) : (
                 <React.Fragment>
                     {!states.loaded ? (

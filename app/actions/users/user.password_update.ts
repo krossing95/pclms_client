@@ -16,7 +16,7 @@ const password_update = async ({ id, old_password, new_password, confirm_passwor
     const data = { id, old_password, new_password, confirm_password }
     try {
         const res = await axios({
-            method: 'DELETE',
+            method: 'PATCH',
             url,
             headers: {
                 'Content-Type': 'application/json',

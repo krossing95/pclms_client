@@ -13,7 +13,7 @@ const useValidations = () => {
         if (!firstname.length || !lastname.length || !email.length || !phone.length || !password.length || !password_confirmation.length) return { error: 'All fields are required' }
         if (!firstname.match(ALPHA) || !lastname.match(ALPHA)) return { error: 'Only English alphabets and whitespaces are allowed in names' }
         if (!email.match(EMAIL)) return { error: 'Incorrect email address' }
-        if (!password.match(PASSWORD)) return { error: 'Password must contain numbers and special chars' }
+        if (!password.match(PASSWORD)) return { error: 'Password must contain uppercase, lowercase alphabets, numbers and special chars' }
         if (!phone.match(NUMERIC) || phone.length !== 10) return { error: 'Phone number must be a numeric entity of 10 chars' }
         if (firstname.length < 3 || firstname.length > 30 || lastname.length < 3 || lastname.length > 30) return { error: 'Names must be in the range of 3 to 30 chars' }
         if (password.length < 8) return { error: 'Password must be at least 8 chars' }
@@ -117,10 +117,21 @@ const useValidations = () => {
         next()
     }
 
+    const validatePasswordUpdate = ({ ...params }) => {
+        const { data, next, takeOutPassword } = params
+        const { old_password, new_password, confirm_password } = data
+        takeOutPassword((prev: any) => ({ ...prev, old_password: '', new_password: '', confirm_password: '' }))
+        if (!old_password.match(PASSWORD) || !new_password.match(PASSWORD) || !confirm_password.match(PASSWORD)) return { error: 'Password must contain uppercase, lowercase alphabets, numbers and special chars' }
+        if (old_password.length < 8 || new_password.length < 8) return { error: 'Password must contain at least 8 chars' }
+        if (new_password !== confirm_password) return { error: 'Password do not match' }
+        next()
+    }
+
     return {
         validateRegistration, validateOTP, validateResendOTP, validateLogin,
         validateEquipment, fileValidator, validateUserUpdate, validateComment,
-        validateBooking, validateBookingUpdate, validateBookingFilter
+        validateBooking, validateBookingUpdate, validateBookingFilter,
+        validatePasswordUpdate
     }
 }
 export default useValidations

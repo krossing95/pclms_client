@@ -4,7 +4,7 @@ import { ReplayOutlined, SearchRounded, SortOutlined } from '@mui/icons-material
 import { Box, IconButton, Pagination, TableContainer, Table, Tooltip } from '@mui/material'
 import * as React from 'react'
 import { motion } from 'framer-motion'
-import styles from './styles.module.css'
+import styles from '@/app/user/bookings/styles.module.css'
 import { useAppDispatch, useAppSelector } from '@/redux/hooks'
 import { toast } from 'react-toastify'
 import { SaveBookingsPageState } from '@/redux/app/slice.app'

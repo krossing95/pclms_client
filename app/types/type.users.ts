@@ -8,5 +8,4 @@ export type User = {
     is_verified?: boolean
     created_at?: string
     updated_at?: string
-    verified: number
 }

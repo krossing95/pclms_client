@@ -17,10 +17,10 @@ const Tools: React.FC<ToolsProp> = ({ handleClick }) => {
             <IconButton onClick={() => handleClick(`Phone number is ${user.phone}`)}>
                 <PhoneOutlined />
             </IconButton>
-            <IconButton onClick={() => handleClick(user.verified === 2 ? "You're a verified LMS user" : 'LMS account is not verified')}>
+            <IconButton onClick={() => handleClick(user.is_verified ? "Verified LMS account" : 'LMS account is not verified')}>
                 <VerifiedOutlined />
             </IconButton>
-            <IconButton onClick={() => handleClick(user.usertype === 2 ? 'You are an administrator' : 'You are a normal system user')}>
+            <IconButton onClick={() => handleClick(user.usertype === 2 ? 'Assigned administrative roles' : 'Assigned non-administrative roles')}>
                 <AccountCircleOutlined />
             </IconButton>
         </React.Fragment>

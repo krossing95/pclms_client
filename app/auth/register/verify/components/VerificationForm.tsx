@@ -186,7 +186,7 @@ const VerificationForm: React.FC<VerificationFormProps> = ({ page }) => {
             </Grid>
             <Grid container>
                 <Grid item xs>
-                    <Button onClick={toggleResend} className={styles.ahref}>
+                    <Button disabled={states.loading} onClick={toggleResend} className={styles.ahref}>
                         {!states.formSwitcher ? "resend otp" : "have received otp"}
                     </Button>
                 </Grid>

@@ -37,7 +37,6 @@ const VerificationForm: React.FC<VerificationFormProps> = ({ page }) => {
     let btnClasses: SubmitButtonClasses = {}
     const { validateOTP, validateResendOTP } = useValidations()
     const navigate = useRouter()
-    // const handleSetCookie = (name: string, value: string, expires: any) => Cookies.set(name, value, { expires: expires })
     const [cookieState, setCookieState] = React.useState<CookieState>({ cookie: null })
     const [states, setStates] = React.useState<VerificationStates>({
         loading: false, open: false, isErrorFree: false, message: '', formSwitcher: false,
@@ -109,7 +108,7 @@ const VerificationForm: React.FC<VerificationFormProps> = ({ page }) => {
             setStates(prev => ({ ...prev, isErrorFree: true, message: userVerification?.data?.message, open: true }))
             return navigate.push(parseInt(usertype) === 2 ? '/admin/dashboard' : '/user/dashboard')
         } catch (error) {
-            console.log('VERIFICATION_ERROR')
+            return setStates(prev => ({ ...prev, message: 'Something went wrong', open: true, isErrorFree: false }))
         }
     }
     return (

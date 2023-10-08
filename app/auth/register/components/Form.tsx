@@ -81,7 +81,7 @@ const Form = () => {
             setStates(prev => ({ ...prev, isErrorFree: true, message: create?.data?.message, open: true }))
             return navigate.push('/auth/register/verify')
         } catch (error) {
-            console.log('REGISTER_ERROR')
+            return setStates(prev => ({ ...prev, message: 'Something went wrong', open: true, isErrorFree: false }))
         }
     }
 
@@ -167,10 +167,10 @@ const Form = () => {
                         />
                     </Grid>
                     <Grid item xs>
-                        <Typography gutterBottom variant='body2' color='GrayText'>By clicking on the create button above, you have accepted all our terms and conditions</Typography>
+                        <Typography gutterBottom variant='body2' color='GrayText'>{"By clicking on the create button above, you have accepted all our terms and conditions"}</Typography>
                     </Grid>
                     <Grid item xs>
-                        <Link href="/auth/login" as={"/auth/login"} className={styles.ahref}>I already have an account <LinkIcon /></Link>
+                        <Link href="/auth/login" as={"/auth/login"} className={styles.ahref}>{"Click here to login"}</Link>
                     </Grid>
                 </React.Fragment>
             </Grid>

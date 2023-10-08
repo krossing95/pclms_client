@@ -123,7 +123,28 @@ const useValidations = () => {
         takeOutPassword((prev: any) => ({ ...prev, old_password: '', new_password: '', confirm_password: '' }))
         if (!old_password.match(PASSWORD) || !new_password.match(PASSWORD) || !confirm_password.match(PASSWORD)) return { error: 'Password must contain uppercase, lowercase alphabets, numbers and special chars' }
         if (old_password.length < 8 || new_password.length < 8) return { error: 'Password must contain at least 8 chars' }
-        if (new_password !== confirm_password) return { error: 'Password do not match' }
+        if (new_password !== confirm_password) return { error: 'Passwords do not match' }
+        next()
+    }
+
+    const validateForgotPassword = ({ ...params }) => {
+        const { data, next } = params
+        const { phone, captcha } = data
+        if (captcha.length === 0) return { error: 'Please check the box' }
+        if (!phone.length || !captcha.length) return { error: 'Field is required' }
+        if (!phone.match(NUMERIC) || phone.length !== 10 ||
+            parseInt(phone.charAt(0)) !== 0) return { error: 'Incorrect credentials' }
+        next()
+    }
+
+    const validatePasswordReset = ({ ...params }) => {
+        const { data, next, takeOutPassword } = params
+        const { password, password_confirmation, captcha } = data
+        takeOutPassword((prev: any) => ({ ...prev, password: '', password_confirmation: '' }))
+        if (captcha.length === 0) return { error: 'Please check the box' }
+        if (!password.match(PASSWORD) || !password_confirmation.match(PASSWORD)) return { error: 'Password must contain uppercase, lowercase alphabets, numbers and special chars' }
+        if (password.length < 8) return { error: 'Password must contain at least 8 chars' }
+        if (password !== password_confirmation) return { error: 'Passwords do not match' }
         next()
     }
 
@@ -131,7 +152,7 @@ const useValidations = () => {
         validateRegistration, validateOTP, validateResendOTP, validateLogin,
         validateEquipment, fileValidator, validateUserUpdate, validateComment,
         validateBooking, validateBookingUpdate, validateBookingFilter,
-        validatePasswordUpdate
+        validatePasswordUpdate, validateForgotPassword, validatePasswordReset
     }
 }
 export default useValidations

@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
+import { Regex } from './app/utils/statics'
 
 export default function middleware(request: NextRequest) {
     const signedInCookie = request.cookies?.get('__signedInUserObj')?.value || '{}'
@@ -10,12 +11,20 @@ export default function middleware(request: NextRequest) {
     const verificationCookieObj = JSON.parse(verificationCookie)
     const isMissingVerificationCookieObj = Object.keys(verificationCookieObj).length === 0
     const pathname = request.nextUrl.pathname
+    const urlQueryParams = request.nextUrl.searchParams
+    const regex = Regex
 
     const unauthorizedBasePath = '/auth'
     const adminBasePath = '/admin'
     const userBasePath = '/user'
 
-    if (unauthorizedBasePath === pathname) return NextResponse.redirect(new URL(`${unauthorizedBasePath}/register`, request.url))
+    if (unauthorizedBasePath === pathname || pathname === '/') return NextResponse.redirect(new URL(`${unauthorizedBasePath}/register`, request.url))
+    if (pathname === `${unauthorizedBasePath}/password_reset`) {
+        const user = urlQueryParams.get('user') || ''
+        const code = urlQueryParams.get('code') || ''
+        const shouldHault = !user.match(regex.MONGODB) && code.length < 10
+        if (shouldHault) return NextResponse.redirect(new URL(`${unauthorizedBasePath}/login`, request.url))
+    }
     if (isMissingVerificationCookieObj && pathname === `${unauthorizedBasePath}/register/verify`) return NextResponse.redirect(new URL(`${unauthorizedBasePath}/register`, request.url))
     if (isMissingVerificationCookieObj && pathname === `${unauthorizedBasePath}/login/verify`) return NextResponse.redirect(new URL(`${unauthorizedBasePath}/login`, request.url))
 

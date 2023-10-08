@@ -6,6 +6,14 @@ export const login_meta = {
     title: 'Login | PCLMS - Laboratory Management System',
     description: 'Sign into the platform to elevate your research career'
 }
+export const forgot_password_meta = {
+    title: 'Forgot password? | PCLMS - Laboratory Management System',
+    description: 'Sign into the platform to elevate your research career'
+}
+export const reset_password_meta = {
+    title: 'Reset password | PCLMS - Laboratory Management System',
+    description: 'Sign into the platform to elevate your research career'
+}
 export const verify_meta = {
     title: 'User verification | PCLMS - Laboratory Management System',
     description: 'Sign up to the platform to elevate your research career'

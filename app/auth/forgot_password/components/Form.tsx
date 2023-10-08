@@ -1,27 +1,22 @@
-'use client'
-
 import { Box, Grid } from '@mui/material'
-import { LoginOutlined } from '@mui/icons-material'
-import styles from '../../register/styles.module.css'
-import { SubmitButtonClasses } from '@/app/components/types'
-import useCustomMethods from '@/app/hooks/useCustomMethods'
-import useValidations from '@/app/hooks/useValidations'
-import MessageBox from '@/app/utils/components/MessageBox'
-import { useRouter } from 'next/navigation'
+import { PasswordOutlined } from '@mui/icons-material'
 import * as React from 'react'
-import InputField from '@/app/components/Input'
+import ReCAPTCHA from 'react-google-recaptcha'
+import styles from '../../register/styles.module.css'
+import MessageBox from '@/app/utils/components/MessageBox'
+import type { SubmitButtonClasses } from '@/app/components/types'
 import SubmitButton from '@/app/components/SubmitButton'
 import Link from 'next/link'
-import ReCAPTCHA from 'react-google-recaptcha'
-import login from '@/app/actions/authentication/auth.login'
-import set_cookie from '@/app/actions/cookies/cookie.set'
+import InputField from '@/app/components/Input'
+import useValidations from '@/app/hooks/useValidations'
+import forgot_password from '@/app/actions/authentication/auth.forgot_password'
 
 const Recaptcha_SiteKey = process.env.NEXT_PUBLIC_RECAPTCHA
 
-interface LoginStates {
+
+interface ForgotPasswordStates {
     captcha: string
     phone: string
-    password: string
     loading: boolean
     open: boolean
     isErrorFree: boolean
@@ -31,36 +26,30 @@ interface LoginStates {
 interface MappableObject {
     captcha: string
     phone: string
-    password: string
 }
 
-const LoginForm = () => {
+
+const Form = () => {
+    const [states, setStates] = React.useState<ForgotPasswordStates>({
+        phone: '',
+        captcha: '',
+        loading: false,
+        message: '',
+        open: false,
+        isErrorFree: false
+    })
     let btnClasses: SubmitButtonClasses = {}
     const captchaRef = React.useRef<ReCAPTCHA>(null)
-    const { validateLogin } = useValidations()
-    const [states, setStates] = React.useState<LoginStates>({
-        captcha: '',
-        phone: '',
-        password: '',
-        loading: false,
-        open: false,
-        isErrorFree: false,
-        message: ''
-    })
-    const { preventCopyPaste } = useCustomMethods()
-    const navigate = useRouter()
+    const { validateForgotPassword } = useValidations()
     const handleSubmit = async () => {
         setStates(prev => ({ ...prev, isErrorFree: false, message: '', open: false }))
-        const takeOutPassword = () => setStates(prev => ({ ...prev, password: '' }))
         const params = {
             data: {
-                phone: states.phone, password: states.password, captcha: states.captcha
+                phone: states.phone, captcha: states.captcha
             },
-            takeOutPassword: () => takeOutPassword(),
             next: async () => {
                 const emptinessCheckerObject: MappableObject = {
                     phone: states.phone,
-                    password: states.password,
                     captcha: states.captcha
                 }
                 let isNull = false
@@ -71,22 +60,18 @@ const LoginForm = () => {
                 setStates(prev => ({ ...prev, loading: true }))
             }
         }
-        const validate = validateLogin({ ...params })
+        const validate = validateForgotPassword({ ...params })
         captchaRef.current?.reset()
         if (validate?.error !== undefined) return setStates(prev => ({ ...prev, message: validate?.error, open: true, isErrorFree: false, captcha: '' }))
         try {
-            const app_login = await login({ ...params.data })
+            const submit = await forgot_password({ phone: params.data.phone, captcha: params.data.captcha })
             setStates(prev => ({ ...prev, loading: false, captcha: '' }))
-            if (parseInt(app_login.data?.code) !== 200) return setStates(prev => ({ ...prev, isErrorFree: false, message: app_login?.data?.message, open: true }))
-            const expiration = 600
-            await set_cookie({ name: '__requesting_verification', value: JSON.stringify({ ...app_login.data?.data }), options: { maxAge: expiration } })
-            setStates(prev => ({ ...prev, isErrorFree: true, message: app_login?.data?.message, open: true }))
-            return navigate.push('/auth/login/verify')
+            const trueStatus = parseInt(submit.data?.code) === 200
+            return setStates(prev => ({ ...prev, isErrorFree: trueStatus ? true : false, message: submit?.data?.message, open: true }))
         } catch (error) {
             return setStates(prev => ({ ...prev, message: 'Something went wrong', open: true, isErrorFree: false }))
         }
     }
-
     return (
         <Box component='div'>
             <MessageBox
@@ -100,25 +85,15 @@ const LoginForm = () => {
                             onChange={(e: React.SyntheticEvent<EventTarget>) => setStates(prev => ({ ...prev, phone: (e.target as HTMLInputElement).value }))}
                             classes={styles.login_input}
                             disabled={states.loading}
-                            placeholder='Enter your phone number'
+                            placeholder='Enter your registered phone number'
                         />
                     </Grid>
-                    <Grid item xs={12} className={styles.input_container}>
-                        <InputField
-                            value={states.password} type='password'
-                            onChange={(e: React.SyntheticEvent<EventTarget>) => setStates(prev => ({ ...prev, password: (e.target as HTMLInputElement).value }))}
-                            classes={styles.login_input}
-                            disabled={states.loading}
-                            placeholder='Enter your password'
-                            preventCopyPaste={(e) => preventCopyPaste(e)}
-                        />
-                    </Grid>
-                    <Grid item xs={12} className={styles.input_container}>
+                    <Grid item xs={12} sx={{ justifyContent: { xs: 'center', sm: 'flex-start', md: 'flex-start' } }} className={styles.input_container}>
                         <ReCAPTCHA ref={captchaRef} sitekey={Recaptcha_SiteKey || ''} onChange={(e) => setStates(prev => ({ ...prev, captcha: e || '' }))} />
                     </Grid>
-                    <Grid item xs={12} className={styles.input_container} >
+                    <Grid item xs={12} className={styles.input_container}>
                         <SubmitButton
-                            text='sign in' icon={() => <LoginOutlined />}
+                            text='submit' icon={() => <PasswordOutlined />}
                             loading={states.loading}
                             design='contained'
                             handleSubmit={handleSubmit}
@@ -135,15 +110,14 @@ const LoginForm = () => {
                         />
                     </Grid>
                     <Grid item xs>
-                        <Link href="/auth/forgot_password" as={"/auth/forgot_password"} className={styles.ahref}>{"Forgot password?"}</Link>
+                        <Link href="/auth/login" as={"/auth/login"} className={styles.ahref}>{"Click here to sign in"}</Link>
                     </Grid>
                     <Grid item xs>
-                        <Link href="/auth/register" as={"/auth/register"} className={styles.ahref}>Don&apos;t have an account? <strong>Click here</strong></Link>
+                        <Link href="/auth/register" className={styles.ahref}>Don&apos;t have an account? <strong>Click here</strong></Link>
                     </Grid>
                 </React.Fragment>
             </Grid>
         </Box>
     )
 }
-
-export default LoginForm
+export default Form

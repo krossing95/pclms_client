@@ -11,7 +11,7 @@ const GraphicalRepresentationForBookings: React.FC<GraphicalData> = ({ approved_
     return (
         <PieChart
             data={{
-                labels: ['Pending', 'Approved'],
+                labels: ['Pending bookings', 'Approved bookings'],
                 datasets: [
                     {
                         label: 'Total',

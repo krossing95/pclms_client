@@ -12,7 +12,7 @@ const GraphicalRepresentationForBookings: React.FC<GraphicalData> = ({ closed_bo
     return (
         <PieChart
             data={{
-                labels: ['Pending', 'Approved', 'Closed'],
+                labels: ['Pending bookings', 'Approved bookings', 'Closed bookings'],
                 datasets: [
                     {
                         label: 'Total',

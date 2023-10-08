@@ -11,7 +11,7 @@ const GraphicalRepresentationForUsers: React.FC<GraphicalData> = ({ admins, non_
     return (
         <PieChart
             data={{
-                labels: ['Administrators', 'Non administrators', 'Blocked users'],
+                labels: ['Administrators', 'Customers', 'Blocked users'],
                 datasets: [
                     {
                         label: 'Total',

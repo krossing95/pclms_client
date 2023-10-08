@@ -110,7 +110,7 @@ const Form = () => {
                         <InputField
                             value={states.password} type='password'
                             onChange={(e: React.SyntheticEvent<EventTarget>) => setStates(prev => ({ ...prev, password: (e.target as HTMLInputElement).value }))}
-                            classes={styles.input}
+                            classes={styles.login_input}
                             disabled={states.loading}
                             preventCopyPaste={(e) => methodHooks.preventCopyPaste(e)}
                             placeholder='Enter your new password'
@@ -120,7 +120,7 @@ const Form = () => {
                         <InputField
                             value={states.password_confirmation} type='password'
                             onChange={(e: React.SyntheticEvent<EventTarget>) => setStates(prev => ({ ...prev, password_confirmation: (e.target as HTMLInputElement).value }))}
-                            classes={styles.input}
+                            classes={styles.login_input}
                             disabled={states.loading}
                             preventCopyPaste={(e) => methodHooks.preventCopyPaste(e)}
                             placeholder='Repeat the password'

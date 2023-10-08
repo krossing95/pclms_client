@@ -133,7 +133,7 @@ const useValidations = () => {
         if (captcha.length === 0) return { error: 'Please check the box' }
         if (!phone.length || !captcha.length) return { error: 'Field is required' }
         if (!phone.match(NUMERIC) || phone.length !== 10 ||
-            parseInt(phone.charAt(0)) !== 0) return { error: 'Incorrect credentials' }
+            parseInt(phone.charAt(0)) !== 0) return { error: 'Incorrect phone number' }
         next()
     }
 

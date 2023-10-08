@@ -8,6 +8,8 @@ export type Booking = {
     updated_at?: string
     firstname: string
     lastname: string
+    email: string
+    phone: string
     user_id: string
     name: string
     equipment_id: string

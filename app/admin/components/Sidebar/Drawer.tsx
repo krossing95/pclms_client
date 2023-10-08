@@ -1,6 +1,6 @@
 import { Box, Divider, List, ListItem, ListItemButton, ListItemIcon, ListItemText } from '@mui/material'
 import * as React from 'react'
-import { AccountCircleOutlined, CalendarMonthOutlined, DashboardOutlined, FavoriteBorderOutlined, HomeRepairServiceOutlined, LogoutOutlined, MenuBookOutlined, PeopleAltOutlined } from '@mui/icons-material'
+import { AccountCircleOutlined, CalendarMonthOutlined, DashboardOutlined, FavoriteBorderOutlined, HomeRepairServiceOutlined, LogoutOutlined, MenuBookOutlined, PeopleAltOutlined, RecyclingOutlined } from '@mui/icons-material'
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
 // import get_cookie from '@/app/actions/cookies/cookie.get'
@@ -87,6 +87,15 @@ const SideBarDrawer = React.forwardRef<() => void, DrawerProps>((props, ref) => 
                                 <FavoriteBorderOutlined />
                             </ListItemIcon>
                             <ListItemText primary='Favorite List' />
+                        </ListItemButton>
+                    </ListItem>
+                ) : cookieObj?.usertype === Number(process.env.NEXT_PUBLIC_APP_ADMIN) ? (
+                    <ListItem disablePadding>
+                        <ListItemButton onClick={() => handleRoute('recycle_bin')}>
+                            <ListItemIcon>
+                                <RecyclingOutlined />
+                            </ListItemIcon>
+                            <ListItemText primary='Recycle Bin' />
                         </ListItemButton>
                     </ListItem>
                 ) : null}

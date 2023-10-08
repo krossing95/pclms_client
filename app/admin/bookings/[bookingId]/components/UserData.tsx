@@ -28,7 +28,7 @@ const UserData = () => {
                     <ListItemIcon sx={{ pr: 2 }}>
                         <PhoneAndroidOutlined fontSize='small' />
                     </ListItemIcon>
-                    <ListItemText secondary={`0${booking.phone}`} />
+                    <ListItemText secondary={booking.phone} />
                 </ListItem>
             </List>
         </React.Fragment>

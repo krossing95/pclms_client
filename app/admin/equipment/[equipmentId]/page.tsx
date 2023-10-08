@@ -19,7 +19,7 @@ export async function generateMetadata(
         const getData = await getone_equipment({ equipment_id: params.equipmentId })
         if (parseInt(getData.data?.code) !== 200) {
             return {
-                title: 'Single equipment',
+                title: 'Single equipment | PCLMS - Laboratory Management System',
                 description: 'This is description to the page'
             }
         }

@@ -31,7 +31,7 @@ const MarkAttendance = () => {
     }
     return (
         <React.Fragment>
-            {moment(booking.date).isSameOrAfter(moment(new Date())) ? (
+            {moment(booking.date).isSameOrBefore(moment(new Date())) ? (
                 <Tooltip title={booking.has_attended ? 'Mark as unattended' : 'Mark as attended'}>
                     <span>
                         <IconButton disabled={states.loading} onClick={handleAttendance}>

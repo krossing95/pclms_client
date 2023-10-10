@@ -12,6 +12,7 @@ import { SaveEquipmentPageState } from '@/redux/app/slice.app'
 import Cookies from 'js-cookie'
 import useValidations from '@/app/hooks/useValidations'
 import { Texts, DataDisplay, PhotoDisplayer, Remove, Preview, Update, Title, SuspenseLoader } from '../exports'
+import Comments from '@/app/user/equipment/[equipmentId]/components/Comments'
 
 interface SingleEquipmentStates {
     file: string
@@ -92,6 +93,7 @@ const EquipmentPage: React.FC<SingleEquipmentPageProps> = ({ data }) => {
                                         </Grid>
                                     </Grid>
                                     <Texts />
+                                    <Comments />
                                 </Box>
                             </React.Fragment>
                         ) : null}

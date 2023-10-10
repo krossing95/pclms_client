@@ -87,7 +87,7 @@ const BookingListPage = () => {
     return (
         <Box component='div' sx={{ mt: '50px' }}>
             <Box component='div' className={styles.header}>
-                <Title text='Booking List' variant_switch={false} />
+                <Title text='Bookings' variant_switch={false} />
                 <Box component='div' className={styles.toolbar}>
                     {(!states.loading && bookings.length > 0) ? (
                         <React.Fragment>

@@ -17,12 +17,12 @@ const GraphicalRepresentationForBookings: React.FC<GraphicalData> = ({ approved_
                         label: 'Total',
                         data: [pending_bookings, approved_bookings],
                         backgroundColor: [
-                            '#4cd964',
-                            '#ff2d55'
+                            '#CCCCFF',
+                            '#6495ED'
                         ],
                         borderColor: [
-                            '#4cd964',
-                            '#ff2d55'
+                            '#CCCCFF',
+                            '#6495ED'
                         ],
                         borderWidth: 1
                     }

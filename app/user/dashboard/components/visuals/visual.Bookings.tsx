@@ -18,13 +18,13 @@ const GraphicalRepresentationForBookings: React.FC<GraphicalData> = ({ closed_bo
                         label: 'Total',
                         data: [pending_bookings, approved_bookings, closed_bookings],
                         backgroundColor: [
-                            '#bb86fc',
-                            '#4cd964',
+                            '#CCCCFF',
+                            '#6495ED',
                             '#ff2d55'
                         ],
                         borderColor: [
-                            '#bb86fc',
-                            '#4cd964',
+                            '#CCCCFF',
+                            '#6495ED',
                             '#ff2d55'
                         ],
                         borderWidth: 1

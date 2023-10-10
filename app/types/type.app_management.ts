@@ -19,6 +19,7 @@ export type EquipmentInterfaceStateManagement = {
     hasOpenedCommentEditPrompt: boolean
     selectedCommentId: string
     hasOpenedBookingPrompt: boolean
+    hasOpenedPermanentDeletePrompt: boolean
 }
 
 export type FavoriteListInterfaceStateManagement = {

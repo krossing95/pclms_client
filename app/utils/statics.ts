@@ -51,7 +51,7 @@ export const recycle_bin_meta = {
     description: 'Sign up to the platform to elevate your research career'
 }
 export const Regex = {
-    PASSWORD: new RegExp(/^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{7,100}$/), //eslint-disable-line
+    PASSWORD: new RegExp(/^(?=(.*[a-z]){1,})(?=(.*[A-Z]){1,})(?=(.*[0-9]){1,})(?=(.*['"{}|:;<>,?!@#$%^&*()\-__+.]){1,}).{8,}$/), //eslint-disable-line
     ALPHANUMERIC: new RegExp(/^([a-zA-Z0-9 _-]+)$/), //eslint-disable-line
     EMAIL: new RegExp(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/), //eslint-disable-line
     NUMERIC: new RegExp(/^[0-9]+$/), //eslint-disable-line

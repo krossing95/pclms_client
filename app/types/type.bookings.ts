@@ -15,4 +15,5 @@ export type Booking = {
     equipment_id: string
     photo_url?: string
     update_count: number
+    has_attended: boolean
 }

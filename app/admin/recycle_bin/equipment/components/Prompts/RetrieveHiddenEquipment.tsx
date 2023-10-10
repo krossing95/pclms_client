@@ -73,7 +73,7 @@ const RetrieveHiddenEquipment: React.FC<HiddenEquipmentRetrieveProps> = ({ pagin
                 <Button disabled={states.loading} className={styles.dashedBoaderBtn} onClick={retrieveHandler}>
                     {states.loading ? (
                         <CircularProgress color='inherit' size={15} />
-                    ) : 'retrieve'}
+                    ) : 'restore'}
                 </Button>
             </DialogActions>
         </Dialog>

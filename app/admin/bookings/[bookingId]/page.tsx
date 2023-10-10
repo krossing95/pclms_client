@@ -15,6 +15,7 @@ import Cancel from '@/app/user/bookings/[bookingId]/components/Prompts/Cancel'
 import SuspenseLoader from '@/app/components/Loader'
 import moment from 'moment'
 import BookingStatusUpdate from './components/Prompts/StatusUpdate'
+import MarkAttendance from './components/MarkAsAttended'
 
 interface SingleBookingState {
     loading: boolean
@@ -54,6 +55,7 @@ const SingleBookingPage = () => {
                         />
                         <Box component='div' className={styles.toolbar}>
                             <React.Fragment>
+                                <MarkAttendance />
                                 <Tooltip title='Cancel Booking'>
                                     <IconButton onClick={() => dispatch(SaveBookingsPageState({ ...app, hasOpenedBookingCancelPrompt: true }))}>
                                         <DeleteSweepOutlined />

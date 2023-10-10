@@ -32,12 +32,12 @@ const Item: React.FC<HiddenEquipmentItemProps> = ({ equipment }) => {
                 </CardContent>
             </CardActionArea>
             <CardActions sx={{ display: 'flex', justifyContent: 'space-between' }}>
-                <Box component='div' sx={{ flexGrow: 1 }}>
+                <Box component='div' className={styles.toolbar}>
                     <IconButton>
-                        <RestoreFromTrashOutlined sx={{ fontSize: '15px' }} />
+                        <RestoreFromTrashOutlined sx={{ fontSize: '18px' }} />
                     </IconButton>
                     <IconButton>
-                        <DeleteForeverOutlined sx={{ fontSize: '15px' }} />
+                        <DeleteForeverOutlined sx={{ fontSize: '18px' }} />
                     </IconButton>
                 </Box>
             </CardActions>

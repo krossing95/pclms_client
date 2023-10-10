@@ -57,14 +57,14 @@ const RetrieveHiddenEquipment: React.FC<HiddenEquipmentRetrieveProps> = ({ pagin
     }
     return (
         <Dialog open={app.hasOpenedRetrieveHiddenEquipmentPrompt} PaperComponent={MovablePrompt} aria-labelledby="draggable-dialog-title">
-            <DialogTitle className={styles.text} style={{ cursor: 'move' }} id="draggable-dialog-title">{"Clear items"}</DialogTitle>
+            <DialogTitle className={styles.text} style={{ cursor: 'move' }} id="draggable-dialog-title">{"Restore item"}</DialogTitle>
             <MessageBox
                 open={states.open}
                 message={states.message}
                 isErrorFree={states.isErrorFree}
             />
             <DialogContent>
-                <Typography gutterBottom variant='body2'>{"Are you sure you want to retrieve the selected hidden equipment?"}</Typography>
+                <Typography gutterBottom variant='body2'>{"Are you sure you want to restore the selected hidden equipment?"}</Typography>
             </DialogContent>
             <DialogActions>
                 <Button className={styles.dashedBoaderBtn} autoFocus onClick={handleClose}>

@@ -1,5 +1,5 @@
 import { DeleteForeverOutlined, RestoreFromTrashOutlined } from '@mui/icons-material'
-import { Box, Card, CardActionArea, CardActions, CardContent, CardMedia, IconButton, Typography } from '@mui/material'
+import { Box, Card, CardActionArea, CardActions, CardContent, CardMedia, IconButton, Tooltip, Typography } from '@mui/material'
 import * as React from 'react'
 import styles from '@/app/admin/equipment/styles.module.css'
 import { Equipment } from '@/app/types/type.equipment'
@@ -37,12 +37,16 @@ const Item: React.FC<HiddenEquipmentItemProps> = ({ equipment }) => {
             </CardActionArea>
             <CardActions sx={{ display: 'flex', justifyContent: 'space-between' }}>
                 <Box component='div' className={styles.toolbar}>
-                    <IconButton onClick={() => dispatch(SaveEquipmentPageState({ ...app, hasOpenedRetrieveHiddenEquipmentPrompt: true, selectedEquipmentId: equipment.id }))}>
-                        <RestoreFromTrashOutlined sx={{ fontSize: '18px' }} />
-                    </IconButton>
-                    <IconButton>
-                        <DeleteForeverOutlined sx={{ fontSize: '18px' }} />
-                    </IconButton>
+                    <Tooltip title='Restore equipment'>
+                        <IconButton onClick={() => dispatch(SaveEquipmentPageState({ ...app, hasOpenedRetrieveHiddenEquipmentPrompt: true, selectedEquipmentId: equipment.id }))}>
+                            <RestoreFromTrashOutlined sx={{ fontSize: '18px' }} />
+                        </IconButton>
+                    </Tooltip>
+                    <Tooltip title='Delete equipment'>
+                        <IconButton>
+                            <DeleteForeverOutlined sx={{ fontSize: '18px' }} />
+                        </IconButton>
+                    </Tooltip>
                 </Box>
             </CardActions>
         </Card>

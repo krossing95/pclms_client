@@ -17,6 +17,7 @@ import search_hidden_equipment from '@/app/actions/recycle_bin/bin.search_equipm
 import Search from './components/Prompts/Search'
 import List from './components/List'
 import ClearHiddenEquipmentPermanently from './components/Prompts/ClearHiddenEquipmentPermanently'
+import RetrieveHiddenEquipment from './components/Prompts/RetrieveHiddenEquipment'
 
 export type EquipmentInRecycleBinPageStates = {
     loading: boolean
@@ -159,6 +160,16 @@ const EquipmentInRecycleBin = () => {
                 />
             ) : app.hasOpenedPermanentDeletePrompt ? (
                 <ClearHiddenEquipmentPermanently />
+            ) : app.hasOpenedRetrieveHiddenEquipmentPrompt ? (
+                <RetrieveHiddenEquipment
+                    paginate={(page: number, totalItem: number, totalPages: number) => setStates(prev => ({
+                        ...prev,
+                        shouldGoTop: false,
+                        currentPage: page,
+                        totalCount: totalItem,
+                        totalPages: totalPages
+                    }))}
+                />
             ) : null}
         </Box>
     )

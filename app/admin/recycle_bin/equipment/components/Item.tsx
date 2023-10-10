@@ -3,12 +3,16 @@ import { Box, Card, CardActionArea, CardActions, CardContent, CardMedia, IconBut
 import * as React from 'react'
 import styles from '@/app/admin/equipment/styles.module.css'
 import { Equipment } from '@/app/types/type.equipment'
+import { useAppSelector, useAppDispatch } from '@/redux/hooks'
+import { SaveEquipmentPageState } from '@/redux/app/slice.app'
 
 interface HiddenEquipmentItemProps {
     equipment: Equipment
 }
 
 const Item: React.FC<HiddenEquipmentItemProps> = ({ equipment }) => {
+    const app = useAppSelector(state => state.appReducer.equipment)
+    const dispatch = useAppDispatch()
     const name_styling = {
         fontSize: '17px',
         overflow: 'hidden',
@@ -33,7 +37,7 @@ const Item: React.FC<HiddenEquipmentItemProps> = ({ equipment }) => {
             </CardActionArea>
             <CardActions sx={{ display: 'flex', justifyContent: 'space-between' }}>
                 <Box component='div' className={styles.toolbar}>
-                    <IconButton>
+                    <IconButton onClick={() => dispatch(SaveEquipmentPageState({ ...app, hasOpenedRetrieveHiddenEquipmentPrompt: true, selectedEquipmentId: equipment.id }))}>
                         <RestoreFromTrashOutlined sx={{ fontSize: '18px' }} />
                     </IconButton>
                     <IconButton>

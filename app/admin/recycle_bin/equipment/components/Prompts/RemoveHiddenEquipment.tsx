@@ -62,7 +62,7 @@ const Remove: React.FC<HiddenEquipmentRemoveProps> = ({ paginate }) => {
                 isErrorFree={states.isErrorFree}
             />
             <DialogContent>
-                <Typography gutterBottom variant='body2'>{"Are you sure you want to remove this item?"}</Typography>
+                <Typography gutterBottom variant='body2'>{"Deleting this data carries the risk of losing associated records in history. Do you want to continue?"}</Typography>
                 <Typography gutterBottom variant='body2'>{'To confirm the action, enter '}<strong style={{ color: '#026FBD' }}>{`sudo delete ${equipment.name.toLowerCase()}`}</strong></Typography>
                 <Grid container spacing={1}>
                     <Grid item xs={12} className={styles.input_container}>

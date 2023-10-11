@@ -65,6 +65,7 @@ const RemoveHiddenBooking: React.FC<HiddenBookingRemoveProps> = ({ paginate }) =
             />
             <DialogContent>
                 <Typography gutterBottom variant='body2'>{"Are you sure you want to permanently remove the selected hidden booking?"}</Typography>
+                <Typography gutterBottom variant='body2'>{"Deleting this data carries the risk of losing associated records in history"}</Typography>
             </DialogContent>
             <DialogActions>
                 <Button className={styles.dashedBoaderBtn} autoFocus onClick={handleClose}>

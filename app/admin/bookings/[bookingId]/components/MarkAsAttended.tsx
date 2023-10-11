@@ -23,7 +23,7 @@ const MarkAttendance = () => {
             const mark = await mark_attendance({ id: booking.id })
             setStates(prev => ({ ...prev, loading: false }))
             if (parseInt(mark.data?.code) !== 200) return toast(mark.data?.message)
-            dispatch(FetchBookings([{ ...booking, has_attended: mark.data?.data?.is_saved }]))
+            dispatch(FetchBookings([{ ...booking, has_attended: mark.data?.data?.has_attended }]))
             return toast(mark.data?.message)
         } catch (error) {
             return toast('Something went wrong')
@@ -40,9 +40,9 @@ const MarkAttendance = () => {
                             ) : (
                                 <React.Fragment>
                                     {booking.has_attended ? (
-                                        <TurnedInNotOutlined />
-                                    ) : (
                                         <TurnedInOutlined />
+                                    ) : (
+                                        <TurnedInNotOutlined />
                                     )}
                                 </React.Fragment>
                             )}

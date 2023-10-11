@@ -28,6 +28,7 @@ const ClearHiddenEquipmentPermanently = () => {
         dispatch(SaveEquipmentPageState({ ...app, hasOpenedPermanentDeletePrompt: false }))
     }
     const removeHandler = async () => {
+        setStates(prev => ({ ...prev, open: false, message: '', isErrorFree: false }))
         if (confirmStatement !== states.name.trim().toLowerCase()) return false
         setStates(prev => ({ ...prev, loading: true, name: '' }))
         try {

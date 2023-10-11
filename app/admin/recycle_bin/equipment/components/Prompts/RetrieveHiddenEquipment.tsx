@@ -37,7 +37,7 @@ const RetrieveHiddenEquipment: React.FC<HiddenEquipmentRetrieveProps> = ({ pagin
         }))
     }
     const retrieveHandler = async () => {
-        setStates(prev => ({ ...prev, loading: true, name: '' }))
+        setStates(prev => ({ ...prev, loading: true, open: false, message: '', isErrorFree: false }))
         try {
             const retrieve = await retrieve_hidden_equipment({ id: app.selectedEquipmentId })
             setStates(prev => ({ ...prev, loading: false }))

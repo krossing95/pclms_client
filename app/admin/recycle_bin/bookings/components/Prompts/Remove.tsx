@@ -37,7 +37,7 @@ const RemoveHiddenBooking: React.FC<HiddenBookingRemoveProps> = ({ paginate }) =
         }))
     }
     const removeHandler = async () => {
-        setStates(prev => ({ ...prev, loading: true, name: '' }))
+        setStates(prev => ({ ...prev, loading: true, message: '', open: false, isErrorFree: false }))
         try {
             const remove = await remove_hidden_booking({ id: app.selectedBookingId })
             setStates(prev => ({ ...prev, loading: false }))

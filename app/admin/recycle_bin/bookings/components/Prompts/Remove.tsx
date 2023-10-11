@@ -43,7 +43,7 @@ const RemoveHiddenBooking: React.FC<HiddenBookingRemoveProps> = ({ paginate }) =
             setStates(prev => ({ ...prev, loading: false }))
             if (parseInt(remove.data?.code) !== 200) return setStates(prev => ({ ...prev, message: remove.data?.message, open: true, isErrorFree: false }))
             const collection = remove.data?.data
-            dispatch(FetchBookings([...collection?.equipment]))
+            dispatch(FetchBookings([...collection?.bookings]))
             const page_data = collection?.page_data
             dispatch(SaveBookingsPageState({
                 ...app,

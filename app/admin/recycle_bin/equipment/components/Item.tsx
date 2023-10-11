@@ -43,7 +43,7 @@ const Item: React.FC<HiddenEquipmentItemProps> = ({ equipment }) => {
                         </IconButton>
                     </Tooltip>
                     <Tooltip title='Delete equipment'>
-                        <IconButton>
+                        <IconButton onClick={() => dispatch(SaveEquipmentPageState({ ...app, hasOpenedDeleteEquipmentPrompt: true, selectedEquipmentId: equipment.id }))}>
                             <DeleteForeverOutlined sx={{ fontSize: '18px' }} />
                         </IconButton>
                     </Tooltip>

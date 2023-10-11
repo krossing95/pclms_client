@@ -52,8 +52,6 @@ const RemoveHiddenBooking: React.FC<HiddenBookingRemoveProps> = ({ paginate }) =
             }))
             paginate(page_data?.currentPage, page_data?.totalCount, page_data?.totalPages)
         } catch (error) {
-            console.log(error);
-
             return setStates(prev => ({ ...prev, message: 'Something went wrong', open: true, isErrorFree: false }))
         }
     }

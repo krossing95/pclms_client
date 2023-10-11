@@ -79,9 +79,9 @@
 
 .activity_remove,
 .activity_edit {
-    background-color: rgba(0, 0, 0, 0.08);
-    color: #6c6d6d;
-    margin-left: 5px;
+    background-color: rgba(0, 0, 0, 0.08) !important;
+    color: #6c6d6d !important;
+    margin-left: 5px !important;
 }
 
 .activity_edit:hover,

@@ -81,9 +81,9 @@
 
 .activity_remove,
 .activity_edit {
-    background-color: #000000;
-    color: #F9FAFB;
-    margin-left: 5px;
+    background-color: #000000 !important;
+    color: #F9FAFB !important;
+    margin-left: 5px !important;
 }
 
 .activity_edit:hover {

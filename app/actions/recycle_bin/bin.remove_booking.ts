@@ -1,11 +1,15 @@
 import axios from "axios"
 import Cookies from "js-cookie"
 
-const clear_hidden_equipment = async () => {
+interface HiddenBookingRemoveProp {
+    id: string
+}
+
+const remove_hidden_booking = async ({ id }: HiddenBookingRemoveProp) => {
     const cookieObj = Cookies.get('__signedInUserObj') || '{}'
     const cookie = JSON.parse(cookieObj)?.user
     const HOST = process.env.NEXT_PUBLIC_HTTPHOST
-    const url = `${HOST}equipment/hidden`
+    const url = `${HOST}bookings/hidden?id=${id}`
     try {
         const res = await axios({
             method: 'DELETE',
@@ -20,4 +24,4 @@ const clear_hidden_equipment = async () => {
         return { data: error?.response?.data }
     }
 }
-export default clear_hidden_equipment
+export default remove_hidden_booking

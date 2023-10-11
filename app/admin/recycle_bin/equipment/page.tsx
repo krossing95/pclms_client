@@ -18,6 +18,7 @@ import Search from './components/Prompts/Search'
 import List from './components/List'
 import ClearHiddenEquipmentPermanently from './components/Prompts/ClearHiddenEquipmentPermanently'
 import RetrieveHiddenEquipment from './components/Prompts/RetrieveHiddenEquipment'
+import Remove from './components/Prompts/RemoveHiddenEquipment'
 
 export type EquipmentInRecycleBinPageStates = {
     loading: boolean
@@ -162,6 +163,16 @@ const EquipmentInRecycleBin = () => {
                 <ClearHiddenEquipmentPermanently />
             ) : app.hasOpenedRetrieveHiddenEquipmentPrompt ? (
                 <RetrieveHiddenEquipment
+                    paginate={(page: number, totalItem: number, totalPages: number) => setStates(prev => ({
+                        ...prev,
+                        shouldGoTop: false,
+                        currentPage: page,
+                        totalCount: totalItem,
+                        totalPages: totalPages
+                    }))}
+                />
+            ) : app.hasOpenedDeleteEquipmentPrompt ? (
+                <Remove
                     paginate={(page: number, totalItem: number, totalPages: number) => setStates(prev => ({
                         ...prev,
                         shouldGoTop: false,

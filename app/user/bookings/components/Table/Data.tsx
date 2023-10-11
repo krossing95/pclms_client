@@ -29,7 +29,7 @@ const Data = () => {
                             <FiberManualRecord sx={{ color: '#e74c3c', fontSize: '14px' }} />
                         ) : null}
                     </TableCell>
-                    <TableCell className={styles.tcell} align='right'>{useMethods.dateConterter(`${booking.updated_at}`, 'll')}</TableCell>
+                    <TableCell className={styles.tcell} align='right'>{booking.has_attended ? 'Yes' : 'No'}</TableCell>
                     <TableCell align='right'>
                         <Activity id={booking.id} />
                     </TableCell>

@@ -16,6 +16,7 @@ import search_hidden_bookings from '@/app/actions/recycle_bin/bin.search_booking
 import Search from './components/Prompts/Search'
 import Head from '../../bookings/components/Table/Head'
 import Data from './components/Table/Data'
+import RemoveHiddenBooking from './components/Prompts/Remove'
 
 interface HiddenBookingListStates {
     loading: boolean
@@ -92,13 +93,6 @@ const BookingListPage = () => {
                                     )}
                                 </IconButton>
                             </Tooltip>
-                            <IconButton onClick={app.isFilteredResultDispayed ? refreshHandler : () => dispatch(SaveBookingsPageState({ ...app, hasOpenedBookingFilterPrompt: true }))}>
-                                {app.isFilteredResultDispayed ? (
-                                    <ReplayOutlined />
-                                ) : (
-                                    <SortOutlined />
-                                )}
-                            </IconButton>
                         </React.Fragment>
                     ) : null}
                 </Box>
@@ -143,6 +137,15 @@ const BookingListPage = () => {
             </Box>
             {app.hasOpenedSearchBoxPrompt ? (
                 <Search
+                    paginate={(page: number, totalItem: number, totalPages: number) => setStates(prev => ({
+                        ...prev,
+                        currentPage: page,
+                        totalCount: totalItem,
+                        totalPages: totalPages
+                    }))}
+                />
+            ) : app.hasOpenedBookingCancelPrompt ? (
+                <RemoveHiddenBooking
                     paginate={(page: number, totalItem: number, totalPages: number) => setStates(prev => ({
                         ...prev,
                         currentPage: page,

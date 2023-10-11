@@ -4,7 +4,7 @@ import styles from '@/app/user/bookings/styles.module.css'
 
 
 export default function Head() {
-    const list = ['SNo', 'Equipment', 'Firstname', 'Lastname', 'Date', 'Slots', 'Need assist?', 'Status', 'Booked on', 'Activity']
+    const list = ['SNo', 'Equipment', 'Firstname', 'Lastname', 'Date', 'Slots', 'Need assist?', 'Status', 'Has attended', 'Activity']
     return (
         <TableHead>
             <TableRow>

@@ -22,7 +22,7 @@ interface BookingStatusUpdateStates {
 const BookingStatusUpdate = () => {
     const { bookingId } = useParams()
     const app = useAppSelector(state => state.appReducer.bookings)
-    const booking = useAppSelector(state => state.bookingsReducer.bookings).filter(booking => booking.id === bookingId)?.[0]
+    const booking = useAppSelector(state => state.bookingsReducer.bookings).filter(booking => booking.id === (bookingId as string))?.[0]
     const [states, setStates] = React.useState<BookingStatusUpdateStates>({
         status: booking.status || '',
         loading: false,
@@ -42,7 +42,7 @@ const BookingStatusUpdate = () => {
         if (booking.status === status) return setStates(prev => ({ ...prev, message: 'No changes found yet', open: true, isErrorFree: false }))
         setStates(prev => ({ ...prev, loading: true }))
         try {
-            const statusAssignment = await assign_status({ id: bookingId, status })
+            const statusAssignment = await assign_status({ id: bookingId as string, status })
             setStates(prev => ({ ...prev, loading: false }))
             if (parseInt(statusAssignment.data?.code) !== 200) return setStates(prev => ({ ...prev, message: statusAssignment.data?.message, open: true, isErrorFree: false }))
             dispatch(FetchBookings([{ ...booking, status }]))

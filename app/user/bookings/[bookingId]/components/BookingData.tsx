@@ -8,7 +8,7 @@ import useCustomMethods from '@/app/hooks/useCustomMethods'
 
 const BookingData = () => {
     const { bookingId } = useParams()
-    const booking = useAppSelector(state => state.bookingsReducer.bookings).filter(booking => booking.id === bookingId)?.[0]
+    const booking = useAppSelector(state => state.bookingsReducer.bookings).filter(booking => booking.id === (bookingId as string))?.[0]
     const useMethods = useCustomMethods()
     return (
         <React.Fragment>

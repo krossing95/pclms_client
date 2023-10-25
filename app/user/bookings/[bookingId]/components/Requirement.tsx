@@ -7,7 +7,7 @@ import useCustomMethods from "@/app/hooks/useCustomMethods"
 export default function Requirement() {
     const { bookingId } = useParams()
     const useMethods = useCustomMethods()
-    const booking = useAppSelector(state => state.bookingsReducer.bookings).filter(booking => booking.id === bookingId)?.[0]
+    const booking = useAppSelector(state => state.bookingsReducer.bookings).filter(booking => booking.id === (bookingId as string))?.[0]
     return (
         <Box component='div'>
             <List sx={{ mt: 4 }}>

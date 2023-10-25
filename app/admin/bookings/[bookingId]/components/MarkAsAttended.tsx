@@ -14,7 +14,7 @@ interface MarkAttendanceState {
 
 const MarkAttendance = () => {
     const { bookingId } = useParams()
-    const booking = useAppSelector(state => state.bookingsReducer.bookings).filter(item => item.id === bookingId)?.[0]
+    const booking = useAppSelector(state => state.bookingsReducer.bookings).filter(item => item.id === (bookingId as string))?.[0]
     const dispatch = useAppDispatch()
     const [states, setStates] = React.useState<MarkAttendanceState>({ loading: false })
     const handleAttendance = async () => {

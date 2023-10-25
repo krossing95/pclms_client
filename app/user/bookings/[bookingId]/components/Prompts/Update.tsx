@@ -32,7 +32,7 @@ const BookingUpdatePage = () => {
     const { bookingId } = useParams()
     const useMethods = useCustomMethods()
     const app = useAppSelector(state => state.appReducer.bookings)
-    const booking = useAppSelector(state => state.bookingsReducer.bookings).filter(booking => booking.id === bookingId)?.[0]
+    const booking = useAppSelector(state => state.bookingsReducer.bookings).filter(booking => booking.id === (bookingId as string))?.[0]
     const dispatch = useAppDispatch()
     const [states, setStates] = React.useState<BookingUdatePageStates>({
         open: false,

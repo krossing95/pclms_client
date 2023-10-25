@@ -35,7 +35,7 @@ const Cancel = () => {
         setStates(prev => ({ ...prev, open: false, message: '', isErrorFree: false }))
         setStates(prev => ({ ...prev, loading: true }))
         try {
-            const cancel = await cancel_booking({ id: bookingId })
+            const cancel = await cancel_booking({ id: bookingId as string })
             setStates(prev => ({ ...prev, loading: false }))
             if (parseInt(cancel.data?.code) !== 200) return setStates(prev => ({ ...prev, message: cancel.data?.message, open: true, isErrorFree: false }))
             setStates(prev => ({ ...prev, message: cancel.data?.message, open: true, isErrorFree: true }))

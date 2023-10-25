@@ -48,7 +48,7 @@ const BookingPage = () => {
     })
     const getRequirements = async () => {
         try {
-            const requirements = await get_requirements({ id: equipmentId, page: states.currentPage })
+            const requirements = await get_requirements({ id: equipmentId as string, page: states.currentPage })
             if (parseInt(requirements.data?.code) !== 200) {
                 toast(requirements.data?.message)
                 return handleClose()

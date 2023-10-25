@@ -61,7 +61,7 @@ const BookingSystem: React.FC<BookingPageProps> = ({ unavailable_days, shouldSub
 
     const getSlots = async () => {
         try {
-            const getSlots = await get_slots({ date: states.date, equipment_id: equipmentId })
+            const getSlots = await get_slots({ date: states.date, equipment_id: equipmentId as string })
             if (parseInt(getSlots.data?.code) !== 200) return setStates(prev => ({
                 ...prev, date: '', fetching_slots: false, message: getSlots.data?.message,
                 open: true, isErrorFree: false
@@ -95,7 +95,7 @@ const BookingSystem: React.FC<BookingPageProps> = ({ unavailable_days, shouldSub
     const handleBooking = async () => {
         setStates(prev => ({ ...prev, message: '', open: false, isErrorFree: false }))
         const data = {
-            equipment_id: equipmentId,
+            equipment_id: equipmentId as string,
             date: states.date,
             need_assist: Number(states.need_assist),
             slots: states.slots.map(i => i.slot)

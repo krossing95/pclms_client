@@ -30,7 +30,7 @@ const Comments = () => {
     })
     const getComments = async (page: number) => {
         try {
-            const getComments = await get_comments({ page, equipment_id: equipmentId })
+            const getComments = await get_comments({ page, equipment_id: equipmentId as string })
             if (parseInt(getComments.data?.code) !== 200) return false
             setStates(prev => ({ ...prev, loading: false }))
             const data = getComments.data?.data

@@ -43,7 +43,7 @@ interface BookingPageProps {
 
 const BookingUpdateSystem: React.FC<BookingPageProps> = ({ unavailable_days, shouldSubmit, setButtonLoader, daylist }) => {
     const { bookingId } = useParams()
-    const booking = useAppSelector(state => state.bookingsReducer.bookings).filter(booking => booking.id === bookingId)?.[0]
+    const booking = useAppSelector(state => state.bookingsReducer.bookings).filter(booking => booking.id === (bookingId as string))?.[0]
     const methodHooks = useCustomMethods()
     const validations = useValidations()
     const dispatch = useAppDispatch()
@@ -105,7 +105,7 @@ const BookingUpdateSystem: React.FC<BookingPageProps> = ({ unavailable_days, sho
     const handleBookingUpdate = async () => {
         setStates(prev => ({ ...prev, message: '', open: false, isErrorFree: false }))
         const data = {
-            booking_id: bookingId,
+            booking_id: booking.id,
             date: states.date,
             need_assist: Number(states.need_assist),
             slots: states.slots.map(i => i.slot)

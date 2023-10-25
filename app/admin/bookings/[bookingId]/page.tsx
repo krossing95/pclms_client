@@ -26,10 +26,10 @@ const SingleBookingPage = () => {
     const app = useAppSelector(state => state.appReducer.bookings)
     const [states, setStates] = React.useState<SingleBookingState>({ loading: true })
     const dispatch = useAppDispatch()
-    const booking = useAppSelector(state => state.bookingsReducer.bookings).filter(booking => booking.id === bookingId)?.[0]
+    const booking = useAppSelector(state => state.bookingsReducer.bookings).filter(booking => booking.id === (bookingId as string))?.[0]
     const loadData = async () => {
         try {
-            const getBooking = await get_booking({ id: bookingId })
+            const getBooking = await get_booking({ id: bookingId as string })
             if (parseInt(getBooking.data?.code) !== 200) return toast(getBooking.data?.message)
             const data = getBooking.data?.data
             setStates(prev => ({ ...prev, loading: false }))

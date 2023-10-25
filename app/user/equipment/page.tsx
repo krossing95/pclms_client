@@ -85,7 +85,7 @@ const Equipment = () => {
             if (app.hasOpenedSearchBoxPrompt || app.isSearchResultDisplayed) return false
             const existingQuery = new URLSearchParams(Array.from(searchParams.entries()))
             existingQuery.delete('q')
-            router.replace(pathname, { shallow: true })
+            router.replace(pathname)
         }
         setPageUrl() //eslint-disable-next-line
     }, [app.hasOpenedSearchBoxPrompt, app.isSearchResultDisplayed])
@@ -96,7 +96,7 @@ const Equipment = () => {
         try {
             const existingQuery = new URLSearchParams(Array.from(searchParams.entries()))
             existingQuery.delete('q')
-            router.replace(pathname, { shallow: true })
+            router.replace(pathname)
             setStates(prev => ({ ...prev, currentPage: 1, loading: true }))
             dispatch(SaveEquipmentPageState({
                 ...app,

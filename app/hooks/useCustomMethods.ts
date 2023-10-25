@@ -48,13 +48,13 @@ const useCustomMethods = () => {
         existingQuery.set(param_name, str)
         const queriesToString = existingQuery.toString()
         const query = queriesToString ? `?${queriesToString}` : ""
-        router.replace(`${pathname}${query}`, { shallow: true })
+        router.replace(`${pathname}${query}`)
     }
 
     const removeQueryParameter = (param_name: string) => {
         const existingQuery = new URLSearchParams(Array.from(searchParams.entries()))
         existingQuery.delete(param_name)
-        router.replace(pathname, { shallow: true })
+        router.replace(pathname)
     }
 
     const checkQueryParameterExistence = (param_name: string) => {
